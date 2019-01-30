@@ -1,12 +1,20 @@
+import { Category } from './Category';
+import { Type } from './Type';
+import { Level } from './Level';
+import { Tag } from './Tag';
+import { User } from './User';
+import { Answer } from './Answer';
+
 export class Question {
   id: string;
-  category_id: number;
+  category: Category;
   content: string;
-  type_id: number;
-  level_id: number;
+  type: Type;
+  level: Level;
   suggestion: string;
-  tag_id: number;
+  tag: Tag;
   status: number;
   date_created: Date;
-  user_id_created: string;
+  user_id_created: User;
+  listAnswer: Answer[];
 }
