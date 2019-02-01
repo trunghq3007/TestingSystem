@@ -13,7 +13,8 @@ import { TestCreateComponent } from './admin/test-create/test-create.component';
 import { SemesterExamRoutingModule } from './semester-exam-routing.module';
 import { SemesterEditComponent } from './admin/semester-edit/semester-edit.component';
 import { CommonComponent } from './admin/common/common.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [SemesterDetailComponent,
     SemesterListComponent, CandidateListComponent,
@@ -24,7 +25,9 @@ import { CommonComponent } from './admin/common/common.component';
 
   imports: [
     CommonModule,
-    SemesterExamRoutingModule
+    SemesterExamRoutingModule,
+    MatTabsModule,
+    BrowserAnimationsModule
   ],
   exports: []
 
