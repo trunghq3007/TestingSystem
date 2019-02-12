@@ -34,7 +34,7 @@
         </a>
       </li>
       <li class="treeview">
-        <a [routerLink]="['/question']" >
+        <a [routerLink]="['/question']">
           <i class="fa fa-files-o"></i>
           <span>Question</span>
           <span class="pull-right-container">
@@ -57,6 +57,22 @@
             <small class="label pull-right bg-green"></small>
           </span>
         </a>
+      </li>
+      <li class="treeview">
+        <a [routerLink]="['/manager/semester']">
+          <i class="fa fa-files-o"></i>
+          <span>Semester</span>
+          <span class="pull-right-container">
+            <span class="label label-primary pull-right"></span>
+          </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['manager', 'semester']"><i class="fa fa-circle-o"></i> Semester List</a></li>
+          <li><a [routerLink]="['manager','semester', 'create']"><i class="fa fa-circle-o"></i> Create</a></li>
+        </ul>
       </li>
     </ul>
   </section>
