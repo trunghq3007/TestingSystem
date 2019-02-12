@@ -1,87 +1,49 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
-import { CandidateListComponent } from './admin/candidate-list/candidate-list.component';
-import { CandidateCreateComponent } from './admin/candidate-create/candidate-create.component';
-import { CandidateDetailComponent } from './admin/candidate-detail/candidate-detail.component';
-import { SemesterListComponent } from './admin/semester-list/semester-list.component';
-import { SemesterCreateComponent } from './admin/semester-create/semester-create.component';
-import { SemesterDetailComponent } from './admin/semester-detail/semester-detail.component';
-import { SemesterEditComponent } from './admin/semester-edit/semester-edit.component';
-import { TestListComponent } from './admin/test-list/test-list.component';
-import { TestCreateComponent } from './admin/test-create/test-create.component';
-import { TestDetailComponent } from './admin/test-detail/test-detail.component';
-import { StatisticalComponent } from './admin/statistical/statistical.component';
+import { ListComponent } from './semester/list/list.component';
+import { CreateComponent } from './semester/create/create.component';
+import { DetailComponent } from './semester/detail/detail.component';
+import { InfoComponent } from './semester/detail/info/info.component';
+import { ReportComponent } from './semester/detail/report/report.component';
+import { CandidateComponent } from './semester/detail/candidate/candidate.component';
+import { ExamComponent } from './semester/detail/exam/exam.component';
 
 const managerSemesterRouting: Routes = [
   {
-    path: 'manager',
+    path: 'manager/semester',
     children: [
       {
-        path: 'semesters',
+        path: '',
+        component: ListComponent,
+      },
+      {
+        path: 'create',
+        component: CreateComponent
+      },
+      {
+        path: ':id',
+        component: DetailComponent,
         children: [
           {
-            path: '',
-            component: SemesterListComponent
+            path: 'info',
+            component: InfoComponent
           },
           {
-            path: 'create',
-            component: SemesterCreateComponent
+            path: 'report',
+            component: ReportComponent
           },
           {
-            path: ':id',
-            children: [
-              {
-                path: '',
-                component: SemesterDetailComponent
-              },
-              {
-                path: 'edit',
-                component: SemesterEditComponent
-              },
-              {
-                path: 'candidates',
-                children: [
-                  {
-                    path: '',
-                    component: CandidateListComponent
-                  },
-                  {
-                    path: 'create',
-                    component: CandidateCreateComponent
-                  },
-                  {
-                    path: ':id',
-                    component: CandidateDetailComponent
-                  }
-                ]
-              },
-              {
-                path: 'tests',
-                children: [
-                  {
-                    path: '',
-                    component: TestListComponent
-                  },
-                  {
-                    path: 'create',
-                    component: TestCreateComponent
-                  },
-                  {
-                    path: ':id',
-                    component: TestDetailComponent
-                  }
-                ]
-              },
-              {
-                path: 'statistical',
-                component: StatisticalComponent
-              }
-            ]
+            path: 'candidate',
+            component: CandidateComponent
+          },
+          {
+            path: 'exam',
+            component: ExamComponent
           }
+
         ]
       },
     ]
-
   }
 ]
 
