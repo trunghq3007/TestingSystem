@@ -1,5 +1,7 @@
 <section class="content-header">
 
+<!-- open tag -->
+
     <div class="col-sm-6">
         <a href="#a" class="btn btn-success" data-toggle="modal">
           <i class="glyphicon glyphicon-plus-sign"></i> 
@@ -29,9 +31,10 @@
                       <input  class="form-control" 
                               type="text" 
                               formControlName="tag_name"
-                              id="example-text-input"  
+                              id="example-text-input" 
+                             
                               [ngClass]="{
-                                'is-valid': tagFrm.get('tag_name').valid,
+                                'is-valid': tagFrm.get('tag_name').valid,    
                                 'is-invalid': tagFrm.get('tag_name').invalid
                                 && tagFrm.get('tag_name').touched
                               }"
@@ -124,6 +127,8 @@
           </div>
         </div>
       </div> 
+
+<!-- close tag -->
 
 </section>
 
