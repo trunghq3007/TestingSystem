@@ -30,6 +30,16 @@ export class ServiceService {
       catchError(er => of([]))
     );
   }
+  private baseUrl = 'http://localhost:8080/api/tag';
+
+  getTag(id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  createTag(tag: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}` + `/create`, tag);
+  }
+  //abc
 
   //update multi question
   updateMutilQuestion(question: Question, id: string): Observable<Question> {
