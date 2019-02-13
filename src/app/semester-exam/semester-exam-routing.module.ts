@@ -9,47 +9,28 @@ import { CandidateComponent } from './semester/detail/candidate/candidate.compon
 import { ExamComponent } from './semester/detail/exam/exam.component';
 
 const managerSemesterRouting: Routes = [
-  {
-    path: 'manager/semester',
-    children: [
-      {
-        path: '',
-        component: ListComponent,
-      },
-      {
-        path: 'create',
-        component: CreateComponent
-      },
-      {
-        path: ':id',
-        component: DetailComponent,
-        children: [
-          {
-            path: 'info',
-            component: InfoComponent
-          },
-          {
-            path: 'report',
-            component: ReportComponent
-          },
-          {
-            path: 'candidate',
-            component: CandidateComponent
-          },
-          {
-            path: 'exam',
-            component: ExamComponent
-          }
-
-        ]
-      },
-    ]
-  }
+   {
+      path: 'manager/semester',
+      children: [
+         {
+            path: '',
+            component: ListComponent,
+         },
+         {
+            path: 'create',
+            component: CreateComponent
+         },
+         {
+            path: ':id',
+            component: DetailComponent,
+         },
+      ]
+   }
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(managerSemesterRouting)],
-  exports: [RouterModule]
+   imports: [RouterModule.forRoot(managerSemesterRouting)],
+   exports: [RouterModule]
 }) export class SemesterExamRoutingModule {
 
 }

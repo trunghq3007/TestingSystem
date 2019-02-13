@@ -18,17 +18,8 @@ const routes: Routes = [
    },
    {
       path: 'semester',
-      children: [
-         {
-            path: ':semesterId',
-            children: [
-               {
-                  path: ':examId',
-                  component: UserTestingComponent
-               }
-            ]
-         }
-      ]
+      pathMatch: 'full',
+      redirectTo: '/semester'
    }
 ];
 
