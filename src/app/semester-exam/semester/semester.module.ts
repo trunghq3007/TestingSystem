@@ -14,6 +14,7 @@ import { ReportComponent } from './detail/report/report.component';
 import { CandidateComponent } from './detail/candidate/candidate.component';
 import { ExamComponent } from './detail/exam/exam.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatNativeDateModule } from '@angular/material';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, M
       MatInputModule,
       MatRippleModule,
       MatDatepickerModule,
-      MatNativeDateModule
+      MatNativeDateModule,
+      TabsModule.forRoot(),
    ]
 })
 export class SemesterModule { }
