@@ -266,7 +266,7 @@
                   Name Tag:
                 </label>
                 <div class="col-10">
-                  <input class="form-control" type="text" formControlName="tag_name" id="example-text-input" [ngClass]="{
+                  <input class="form-control" type="text" formControlName="tag_name" [ngClass]="{
                               'is-valid': tagFrm.get('tag_name').valid,
                               'is-invalid': tagFrm.get('tag_name').invalid
                               && tagFrm.get('tag_name').touched
@@ -290,7 +290,7 @@
                   Description:
                 </label>
                 <div class="col-10">
-                  <input class="form-control" type="text" formControlName="description" id="example-text-input"
+                  <input class="form-control" type="text" formControlName="description"
                     [ngClass]="{
                           'is-valid': tagFrm.get('description').valid,
                           'is-invalid': tagFrm.get('description').invalid
@@ -315,26 +315,12 @@
               <div class="form-group row">
                 <label for="example-text-input" class="col-2 col-form-label">Status:</label>
                 <div class="col-10">
-                  <input class="form-control" type="number" maxlength=11 required formControlName="status" id="example-text-input"
-                    [ngClass]="{
-                            'is-valid': tagFrm.get('status').valid,
-                            'is-invalid': tagFrm.get('status').invalid
-                            && tagFrm.get('status').touched
-                          }">
+
+                  <mat-checkbox color='primary'> Show/Hide</mat-checkbox>
                 </div>
               </div>
 
-              <div *ngIf="tagFrm.get('status').invalid && tagFrm.get('status').touched" class="alert alert-danger">
-                <ng-container *ngIf="tagFrm.get('status').hasError('required')">
-                  chưa có trạng thái
-                </ng-container>
-                <ng-container *ngIf="tagFrm.get('status').hasError('minlength')">
-                  nhập ít nhất {{tagFrm.get('status').getError('minlength').requiredLength}} số
-                </ng-container>
-                <ng-container *ngIf="tagFrm.get('status').hasError('maxlength')">
-                  nhập nhiều nhất {{tagFrm.get('status').getError('maxlength').requiredLength}} số
-                </ng-container>
-              </div>
+
 
             </div>
 

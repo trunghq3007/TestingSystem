@@ -50,7 +50,7 @@ export class ListQuestionComponent implements OnInit {
     this.tagFrm = this.fb.group({
       tag_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(225)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(225)]],
-      status: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(11)]]
+      status: ['', [Validators.required]]
     });
     this.service.getListQuestion().subscribe(
       lquestion => {

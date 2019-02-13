@@ -12,6 +12,7 @@ import { Tag } from 'src/entity/Tag';
 export class ServiceService {
 
   private url = "http://localhost:8080/";
+  private baseUrl = 'http://localhost:8080/api/tag';
   httpOption = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -30,7 +31,6 @@ export class ServiceService {
       catchError(er => of([]))
     );
   }
-  private baseUrl = 'http://localhost:8080/api/tag';
 
   getTag(id: number): Observable<Object> {
     return this.http.get(`${this.baseUrl}/${id}`);
