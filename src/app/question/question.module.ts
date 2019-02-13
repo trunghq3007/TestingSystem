@@ -7,6 +7,9 @@ import { ViewQuestionComponent } from './view-question/view-question.component';
 import { IplistQuestionComponent } from './iplist-question/iplist-question.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
   imports: [
     CommonModule,
     MatTableModule,
-    MatButtonModule, MatCheckboxModule
+    MatButtonModule, MatCheckboxModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     ListQuestionComponent,

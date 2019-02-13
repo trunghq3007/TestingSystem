@@ -10,41 +10,90 @@
 </section>
 <section class="content">
   <div class="box">
-    <div class="box-header with-border">
-      <h3 class="box-title">Title</h3>
-    </div>
     <div class="box-body">
       <div class="table-wrapper">
         <div class="table-title">
           <div class="row">
             <div class="col-sm-6">
-              <h2>Manage <b>Employees</b></h2>
+              <h2>Manage <b>Question</b></h2>
             </div>
             <div class="col-sm-6">
-              <a class="btn btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
+              <a class="btn btn-primary" ><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add Tag</span></a>
-              <a class="btn btn-success" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
-                <span>Add New Employee</span></a>
-              <a href="#updateMultiQuestion" (click)="loadPopupUpdate()" class="btn btn-warning" data-toggle="modal"><i class="glyphicon glyphicon-list-alt"></i>
+              <a class="btn btn-success" [routerLink]="['/question','create']"><i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Add New Question</span></a>
+              <a href="" (click)="loadPopupUpdate()" class="btn btn-warning" ><i class="glyphicon glyphicon-list-alt"></i>
                 <span>Update Many Question</span></a>
             </div>
           </div>
         </div>
         <div class="table-title-2">
+            <!-- <div class="row">
+                <div class="col-sm-4">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Filter by...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go</button>
+                    </span>
+                  </div>
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Filter by...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go</button>
+                      </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Filter by...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Go</button>
+                        </span>
+                      </div>
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Filter by...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go</button>
+                          </span>
+                        </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Filter by...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Go</button>
+                        </span>
+                      </div>
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Filter by...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go</button>
+                          </span>
+                        </div>
+                </div>
+              </div> -->
           <div class="row">
             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Filter by...">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Go</button>
-                </span>
-              </div>
+                <div class="input-group">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option selected>Filter by...</option>
+                      <option value="1">Category</option>
+                      <option value="2">Create by</option>
+                      <option value="3">Date</option>
+                      <option value="4">Level</option>
+                      <option value="5">Content</option>
+                      <option value="6">Tag</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">Filter</button>
+                      </span>
+                  </div>
             </div>
             <div class="col-sm-6">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by content">
+                <input type="text" class="form-control" placeholder="Search by content" [(ngModel)]="searchText">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Search</button>
+                  <button class="btn btn-primary" type="button" (click)="searchByContent(contentQuestion)">Search</button>
                 </span>
               </div>
 
@@ -69,26 +118,54 @@
             </td>
           </ng-container>
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          <!-- Category Column -->
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+            aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 100px; font-size: 18px; font-weight: bold;"> Category </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionCategory.categoryName}} </td>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Content </th>
+           <!-- Creat_by Column -->
+           <ng-container matColumnDef="create_by">
+              <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+              aria-label="Date registered: activate to sort column ascending" style="width: 130px; font-size: 18px; font-weight: bold;"> Create By </th>
+              <td mat-cell *matCellDef="let element"> {{element.userQuestion.fullName}} </td>
+            </ng-container>
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+            aria-label="Role: activate to sort column ascending" style="width: 230px; font-size: 18px; font-weight: bold;"> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateCreated}} </td>
+          </ng-container>
+
+          <!-- Level Column -->
+          <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+            aria-label="Status: activate to sort column ascending" style="width: 121.8px; font-size: 18px; font-weight: bold;"> Level </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionLevel.levelName}} </td>
+          </ng-container>
+          <!-- Content Column -->
+          <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+            aria-label="Status: activate to sort column ascending" style="width: 240.2px; font-size: 18px; font-weight: bold;"> Content </th>
             <td mat-cell *matCellDef="let element"> {{element.content}} </td>
           </ng-container>
-
+            <!-- Tag Column -->
+            <ng-container matColumnDef="tag">
+                <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                aria-label="Status: activate to sort column ascending" style="width: 121.8px; font-size: 18px; font-weight: bold;"> Tag </th>
+                <td mat-cell *matCellDef="let element"> {{element.questionTag.tagName}} </td>
+              </ng-container>
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+            aria-label="Actions: activate to sort column ascending" style="width: 300px; font-size: 18px; font-weight: bold;"> Action </th>
             <td mat-cell *matCellDef="let element">
-              <a class="btn btn-primary" data-toggle="modal" style="margin-right: 5px;"><i class="glyphicon glyphicon-eye-open"
+              <a class="btn btn-primary" style="margin-right: 5px;"><i class="glyphicon glyphicon-eye-open"
                   title="View Detail"></i></a>
               <a class="btn btn-warning" data-toggle="modal" style="margin-right: 5px;"><i class="glyphicon glyphicon-pencil"
                   title="Edit"></i></a>
-              <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal" style="margin-right: 5px;"><i
+              <a class="btn btn-danger" data-toggle="modal" style="margin-right: 5px;"><i
                   class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></a>
             </td>
           </ng-container>
@@ -111,7 +188,7 @@
       </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div id="addEmployeeModal" class="modal fade">
+    <!-- <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form>
@@ -144,9 +221,9 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Edit Modal HTML -->
-    <div id="updateMultiQuestion" class="modal fade">
+    <!-- <div id="updateMultiQuestion" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form>
@@ -187,9 +264,9 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
+    <!-- <div id="deleteEmployeeModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form>
@@ -208,13 +285,10 @@
           </form>
         </div>
       </div>
-    </div>
-    <div class="box-footer">
-      Footer
-    </div>
+    </div> -->
   </div>
 </section>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).ready(function () {
     // Activate tooltip
     $('[data-toggle="tooltip"]').tooltip();
@@ -238,4 +312,4 @@
       }
     });
   });
-</script>
+</script> -->

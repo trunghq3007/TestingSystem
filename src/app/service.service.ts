@@ -9,13 +9,20 @@ import { Level } from 'src/entity/Level';
 })
 export class ServiceService {
 
-  private url = "http://localhost:3000/";
+  private url = "http://localhost:8080/";
   constructor(
     private http: HttpClient
   ) { }
 
   getListQuestion(): Observable<Question[]> {
-    return this.http.get<Question[]>(this.url+`question`).pipe(
+    return this.http.get<Question[]>(this.url+`question/all`).pipe(
+      tap(),
+      catchError(er => of([]))
+    );
+  }
+
+  getListQuestionByContent(content:String): Observable<Question[]> {
+    return this.http.get<Question[]>(this.url + `question/search-by-content/{content}`).pipe(
       tap(),
       catchError(er => of([]))
     );
