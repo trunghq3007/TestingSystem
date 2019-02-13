@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -23,6 +26,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
    declarations: [ListComponent, DetailComponent, EditComponent, CreateComponent, InfoComponent, ReportComponent, CandidateComponent, ExamComponent],
    imports: [
       CommonModule,
+      FormsModule,
       SemesterRoutingModule,
       CKEditorModule,
       MatDatepickerModule,
@@ -35,6 +39,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       TabsModule.forRoot(),
       TimepickerModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      ReactiveFormsModule
    ]
 })
 export class SemesterModule { }
