@@ -12,24 +12,26 @@ import { CategoryQuestionModule } from './category-question/category-question.mo
 import { QuestionModule } from './question/question.module';
 import { SemesterExamModule } from './semester-exam/semester-exam.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserTestingModule } from './user-testing/user-testing.module';
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatButtonModule, MatCheckboxModule,
-    NavModule,
-    HeaderModule,
-    FooterModule,
-    QuestionModule,
-    CategoryQuestionModule,
-    AppRoutingModule,
-    SemesterExamModule,
-    NgbModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent
+   ],
+   imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      MatButtonModule, MatCheckboxModule,
+      NavModule,
+      HeaderModule,
+      FooterModule,
+      QuestionModule,
+      CategoryQuestionModule,
+      AppRoutingModule,
+      SemesterExamModule,
+      NgbModule,
+      UserTestingModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }
