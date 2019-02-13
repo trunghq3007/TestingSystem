@@ -1,5 +1,5 @@
 export class Type {
-  id: string;
-  typeName: string;
+  type_id: number;
+  type_name: string;
   status: number;
 }
