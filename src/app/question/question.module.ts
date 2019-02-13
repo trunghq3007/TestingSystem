@@ -5,9 +5,9 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { ViewQuestionComponent } from './view-question/view-question.component';
 import { IplistQuestionComponent } from './iplist-question/iplist-question.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     ListQuestionComponent,
@@ -18,11 +18,10 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatButtonModule, MatCheckboxModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  exports: [
+  exports:[
     ListQuestionComponent,
     CreateQuestionComponent,
     EditQuestionComponent,
