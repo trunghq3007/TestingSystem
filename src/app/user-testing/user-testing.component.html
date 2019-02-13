@@ -339,7 +339,7 @@
       </div>
    </section>
    <div class="btn-exam-submit-group">
-      <button class="btn btn-success">Nộp bài</button>
+      <button class="btn btn-success" (click)="openModal(template)">Nộp bài</button>
    </div>
 </aside>
 <div class="exam-content">
@@ -571,3 +571,12 @@
       <div class="panel-footer">Panel footer</div>
    </div>
 </div>
+
+
+<ng-template #template>
+   <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <button type="button" class="btn btn-default">Yes</button>
+      <button type="button" class="btn btn-primary">No</button>
+   </div>
+</ng-template>

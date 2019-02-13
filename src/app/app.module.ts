@@ -13,9 +13,15 @@ import { QuestionModule } from './question/question.module';
 import { SemesterExamModule } from './semester-exam/semester-exam.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserTestingModule } from './user-testing/user-testing.module';
+import { UnregisterTestingComponent } from './unregister-testing/unregister-testing.component';
+import { UnregisterTestingSemesterComponent } from './unregister-testing-semester/unregister-testing-semester.component';
+import { UserTestingSemesterComponent } from './user-testing-semester/user-testing-semester.component';
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
+      UnregisterTestingComponent,
+      UnregisterTestingSemesterComponent,
+      UserTestingSemesterComponent,
    ],
    imports: [
       BrowserModule,
