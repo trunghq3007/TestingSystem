@@ -1,3 +1,15 @@
 .mat-column-select {
   overflow: initial;
 }
+.navbar-collapse{
+  padding-top: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.navbar-default {
+  background-color:#ffffff;
+  border-color: #ffffff;
+}
+.navbar-toggle{
+  margin-right: 18px;
+}
