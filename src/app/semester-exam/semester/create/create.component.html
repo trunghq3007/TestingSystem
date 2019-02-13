@@ -35,23 +35,39 @@
                </div>
 
                <div class="form-group">
-                  <label for="name" class="col-sm-2 control-label" style="padding-top: 20px;">Ngày bắt đầu</label>
+                  <label for="name" class="col-sm-2 control-label">Ngày bắt đầu</label>
                   <div class="col-sm-4">
                      <!-- <mat-form-field>
                         <input matInput [matDatepicker]="picker1">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                      </mat-form-field> -->
-                     <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker>
+
+                     <div class="input-group">
+                        <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker>
+                        <div class="input-group-btn">
+                           <button class="btn btn-default">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                           </button>
+                        </div>
+                     </div>
                   </div>
 
-                  <label for="name" class="col-sm-2 control-label" style="padding-top: 20px;">Ngày kết thúc</label>
+                  <label for="name" class="col-sm-2 control-label">Ngày kết thúc</label>
                   <div class="col-sm-4">
-                     <mat-form-field>
+                     <!-- <mat-form-field>
                         <input matInput [matDatepicker]="picker2">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
-                     </mat-form-field>
+                     </mat-form-field> -->
+                     <div class="input-group">
+                        <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker>
+                        <div class="input-group-btn">
+                           <button class="btn btn-default">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                           </button>
+                        </div>
+                     </div>
                   </div>
                </div>
 
