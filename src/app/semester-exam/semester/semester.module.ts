@@ -15,6 +15,8 @@ import { CandidateComponent } from './detail/candidate/candidate.component';
 import { ExamComponent } from './detail/exam/exam.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatNativeDateModule } from '@angular/material';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
       MatDatepickerModule,
       MatNativeDateModule,
       TabsModule.forRoot(),
+      TimepickerModule.forRoot(),
+      BsDatepickerModule.forRoot(),
    ]
 })
 export class SemesterModule { }
