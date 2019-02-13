@@ -1,41 +1,40 @@
 <section class="content-header">
-  <h1>
-    Dashboard
-    <small>Control panel</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
-  </ol>
-</section>
-<section class="content">
-  <div class="box">
-    <!-- <div class="box-header with-border">
-      <h3 class="box-title">Manage <b>Employees</b>
-      </h3>
-    </div> -->
-    <div class="box-body">
+   <h1>
+     Dashboard
+     <small>Control panel</small>
+   </h1>
+   <ol class="breadcrumb">
+     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+     <li class="active">Dashboard</li>
+   </ol>
+ </section>
+ <section class="content">
+   <div class="box">
+     <!-- <div class="box-header with-border">
+       <h3 class="box-title">Manage <b>Employees</b>
+       </h3>
+     </div> -->
+     <div class="box-body">
 
-      <div class="table-wrapper">
-        <div class="table-title">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Manage <b>Semester detail</b></h2>
-            </div>
+       <div class="table-wrapper">
+         <div class="table-title">
+           <div class="row">
+             <div class="col-sm-6">
+               <h2>Manage <b>Semester detail</b></h2>
+             </div>
 
-          </div>
+           </div>
+         </div>
+         <div>
+          <tabset>
+            <tab heading="Info" id="tab1"><app-info></app-info></tab>
+            <tab heading="Candidate"><app-candidate></app-candidate></tab>
+            <tab heading="Test"><app-exam></app-exam></tab>
+            <tab heading="Report"><app-report></app-report></tab>
+          </tabset>
         </div>
 
-        <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" routerLink="/manager/semester/1/info">Details</a></li>
-          <li><a data-toggle="tab" routerLink="/manager/semester/1/report">Report</a></li>
-          <li><a data-toggle="tab" routerLink="/manager/semester/1/candidate">Candidate</a></li>
-          <li><a data-toggle="tab" routerLink="/manager/semester/1/exam">Exam</a></li>
-        </ul>
-        <div class="tab-content">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+       </div>
+     </div>
+   </div>
+ </section>
