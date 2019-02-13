@@ -18,7 +18,7 @@
               <h2>Manage <b>Employees</b></h2>
             </div>
             <div class="col-sm-6">
-              <a class="btn btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
+              <a href="#formtag" class="btn btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add Tag</span></a>
               <a class="btn btn-success" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add New Employee</span></a>
@@ -55,13 +55,14 @@
               </div>
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form role="form">
+                <form>
                   <div class="col-md-4 col-xs-12">
                     <div class="form-group">
                       <input type="email" class="form-control" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control" placeholder="Password">
+
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
@@ -246,8 +247,111 @@
         </div>
       </div>
     </div>
+
+    <div id="formtag" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form (ngSubmit)="onSubmit()" [formGroup]="tagFrm">
+
+            <div class="modal-header">
+              <h4 class="modal-title">Add Tag</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+
+            <div class="modal-body">
+              <h3 style="color: blueviolet;" *ngIf="message">Success!</h3>
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">
+                  Name Tag:
+                </label>
+                <div class="col-10">
+                  <input class="form-control" type="text" formControlName="tag_name" id="example-text-input" [ngClass]="{
+                              'is-valid': tagFrm.get('tag_name').valid,
+                              'is-invalid': tagFrm.get('tag_name').invalid
+                              && tagFrm.get('tag_name').touched
+                            }">
+                </div>
+              </div>
+              <div *ngIf="tagFrm.get('tag_name').invalid && tagFrm.get('tag_name').touched" class="alert alert-danger">
+                <ng-container *ngIf="tagFrm.get('tag_name').hasError('required')">
+                  Name cannot be empty!
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('tag_name').hasError('minlength')">
+                  Enter at least {{tagFrm.get('tag_name').getError('minlength').requiredLength}} characters!
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('tag_name').hasError('maxlength')">
+                  Enter at most {{tagFrm.get('tag_name').getError('maxlength').requiredLength}} characters!
+                </ng-container>
+              </div>
+
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">
+                  Description:
+                </label>
+                <div class="col-10">
+                  <input class="form-control" type="text" formControlName="description" id="example-text-input"
+                    [ngClass]="{
+                          'is-valid': tagFrm.get('description').valid,
+                          'is-invalid': tagFrm.get('description').invalid
+                          && tagFrm.get('description').touched
+                        }">
+                </div>
+              </div>
+              <div *ngIf="tagFrm.get('description').invalid && tagFrm.get('description').touched" class="alert alert-danger">
+                <ng-container *ngIf="tagFrm.get('description').hasError('required')">
+                  Description cannot be empty!
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('description').hasError('minlength')">
+                  Enter at least {{tagFrm.get('description').getError('minlength').requiredLength}} characters!
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('description').hasError('maxlength')">
+                  Enter at most {{tagFrm.get('description').getError('maxlength').requiredLength}} characters!
+                </ng-container>
+              </div>
+
+
+
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Status:</label>
+                <div class="col-10">
+                  <input class="form-control" type="number" maxlength=11 required formControlName="status" id="example-text-input"
+                    [ngClass]="{
+                            'is-valid': tagFrm.get('status').valid,
+                            'is-invalid': tagFrm.get('status').invalid
+                            && tagFrm.get('status').touched
+                          }">
+                </div>
+              </div>
+
+              <div *ngIf="tagFrm.get('status').invalid && tagFrm.get('status').touched" class="alert alert-danger">
+                <ng-container *ngIf="tagFrm.get('status').hasError('required')">
+                  chưa có trạng thái
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('status').hasError('minlength')">
+                  nhập ít nhất {{tagFrm.get('status').getError('minlength').requiredLength}} số
+                </ng-container>
+                <ng-container *ngIf="tagFrm.get('status').hasError('maxlength')">
+                  nhập nhiều nhất {{tagFrm.get('status').getError('maxlength').requiredLength}} số
+                </ng-container>
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+              <button type="submit" class="btn btn-success" value="Add">Add</button>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="box-footer">
       Footer
     </div>
   </div>
+
 </section>

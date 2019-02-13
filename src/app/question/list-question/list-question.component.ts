@@ -6,8 +6,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Level } from 'src/entity/Level';
 import { Category } from 'src/entity/Category';
 import { Tag } from 'src/entity/Tag';
-import { element } from '@angular/core/src/render3';
 import { Router } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import {v4 as uuid} from 'uuid';
+
 @Component({
   selector: 'app-list-question',
   templateUrl: './list-question.component.html',
@@ -21,11 +24,15 @@ export class ListQuestionComponent implements OnInit {
   listTag: Tag[];
   quesiton: Question[];
 
+  //  tag mesage sucess
+  success = false;
 
   message: string;
   levelSelected: string = "1";
   categorySelected: string = "null";
   tagSelected: string = "null";
+
+  tagFrm: FormGroup;
 
   displayedColumns: string[] = ['select', 'id', 'name', 'action'];
   dataSource = new MatTableDataSource<Question>(this.listQuestion);
@@ -33,10 +40,18 @@ export class ListQuestionComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
+    //  tag class and validate
+    this.tagFrm = this.fb.group({
+      tag_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(225)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(225)]],
+      status: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(11)]]
+    });
     this.service.getListQuestion().subscribe(
       lquestion => {
         this.listQuestion = lquestion;
@@ -96,4 +111,19 @@ export class ListQuestionComponent implements OnInit {
       })
     }
   }
+
+  onSubmit() {
+    //  tag add + auto generate id
+    if (this.tagFrm.value) {
+      const value = this.tagFrm.value;
+      const tag: Tag = {
+        id: uuid(),
+        ...value
+      };
+      this.http.post('http://localhost:3000/tag', tag).subscribe(() => { this.router.navigateByUrl('/tag'); });
+      this.success = true;
+
+    }
+  }
+
 }
