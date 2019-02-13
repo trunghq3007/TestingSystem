@@ -39,7 +39,8 @@
               "src/scss/bower_components/fastclick/lib/fastclick.js",
               "src/scss/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
               "src/scss/dist/js/adminlte.min.js",
-              "src/scss/dist/js/demo.js"
+              "src/scss/dist/js/demo.js",
+              "src/scss/dist/tablet3.js"
             ]
           },
           "configurations": {

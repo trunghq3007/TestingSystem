@@ -1,6 +1,5 @@
-export interface Tag {
-  tag_id: number;
-  tag_name: string;
-  description: string;
+export class Tag {
+  id: string;
+  tagName: string;
   status: number;
 }
