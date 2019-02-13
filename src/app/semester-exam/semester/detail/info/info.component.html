@@ -50,9 +50,10 @@
                <div class="col-md-6">
                   <!-- <input type="text" class="form-control" value=""> -->
                   <div class="input-group">
-                     <input type="text" placeholder="" class="form-control" bsDatepicker>
+                     <input type="text" placeholder="" class="form-control" bsDatepicker #start="bsDatepicker"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
                      <div class="input-group-btn">
-                        <button class="btn btn-default">
+                        <button type="button" class="btn btn-default" (click)="start.toggle()">
                            <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                      </div>
@@ -66,9 +67,10 @@
                <div class="col-md-6">
                   <!-- <input type="text" class="form-control"> -->
                   <div class="input-group">
-                     <input type="text" placeholder="" class="form-control" bsDatepicker>
+                     <input type="text" placeholder="" class="form-control" bsDatepicker #time_end="bsDatepicker"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
                      <div class="input-group-btn">
-                        <button class="btn btn-default">
+                        <button type="button" class="btn btn-default" (click)="time_end.toggle()">
                            <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                      </div>
@@ -89,15 +91,15 @@
                   <button class="btn btn-default">Tạo mã thi</button>
                </div>
                <div class="col-md-3">
-                     <input type="text" class="form-control" value="009djj22aa">
+                  <input type="text" class="form-control" value="009djj22aa">
                </div>
             </div>
             <div class="form-group">
-                  <div class="col-md-12">
-                     <button class="btn btn-default pull-right">Apply</button>
-                  </div>
-
+               <div class="col-md-12">
+                  <button class="btn btn-default pull-right">Apply</button>
                </div>
+
+            </div>
          </form>
 
       </div>
