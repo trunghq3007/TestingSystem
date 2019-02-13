@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { Category } from 'src/entity/Category';
 import { Level } from 'src/entity/Level';
 import { Question } from 'src/entity/Question';
@@ -30,8 +30,9 @@ export class ServiceService {
       catchError(er => of([]))
     );
   }
+
   //update multi question
-  updateMutilQuestion(question: Question, id:string): Observable<Question> {
+  updateMutilQuestion(question: Question, id: string): Observable<Question> {
     return this.http.patch<Question>(this.url + `question/edit/${id}`, question, this.httpOption).pipe(
       tap()
     );
