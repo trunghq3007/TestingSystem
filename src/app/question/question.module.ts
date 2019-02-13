@@ -8,6 +8,7 @@ import { IplistQuestionComponent } from './iplist-question/iplist-question.compo
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     ListQuestionComponent,
@@ -18,9 +19,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule,
     MatTableModule,
     MatButtonModule, MatCheckboxModule
+    , FormsModule
   ],
   exports: [
     ListQuestionComponent,

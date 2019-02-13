@@ -76,11 +76,11 @@ export class ListQuestionComponent implements OnInit {
   }
 
   updateMuiltiQestion() {
-    const a:Level = new Level();
+    const a: Level = new Level();
     a.id = this.levelSelected;
-    const b:Category = new Category();
+    const b: Category = new Category();
     b.id = this.categorySelected;
-    const c:Tag = new Tag();
+    const c: Tag = new Tag();
     c.id = this.tagSelected;
     const newQ: Question = new Question();
     newQ.questionLevel = a;
