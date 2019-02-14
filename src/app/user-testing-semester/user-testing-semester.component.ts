@@ -10,6 +10,7 @@ export class UserTestingSemesterComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
+      console.log('vao day ki thi')
    }
 
 }

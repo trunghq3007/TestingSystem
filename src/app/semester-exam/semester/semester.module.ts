@@ -23,7 +23,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
    declarations: [ListComponent, DetailComponent, EditComponent, CreateComponent, InfoComponent, ReportComponent, CandidateComponent, ExamComponent],
    imports: [
       CommonModule,
-      SemesterRoutingModule,
       CKEditorModule,
       MatDatepickerModule,
       MatButtonModule,
@@ -32,6 +31,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       MatRippleModule,
       MatDatepickerModule,
       MatNativeDateModule,
+      SemesterRoutingModule,
       TabsModule.forRoot(),
       TimepickerModule.forRoot(),
       BsDatepickerModule.forRoot(),

@@ -17,6 +17,7 @@ import { UnregisterTestingComponent } from './unregister-testing/unregister-test
 import { UnregisterTestingSemesterComponent } from './unregister-testing-semester/unregister-testing-semester.component';
 import { UserTestingSemesterComponent } from './user-testing-semester/user-testing-semester.component';
 import { UserTestingSemesterModule } from './user-testing-semester/user-testing-semester.module';
+import { SemesterRoutingModule } from './semester-exam/semester/semester-routing.module';
 @NgModule({
    declarations: [
       AppComponent,
@@ -37,7 +38,8 @@ import { UserTestingSemesterModule } from './user-testing-semester/user-testing-
       SemesterExamModule,
       NgbModule,
       UserTestingModule,
-      UserTestingSemesterModule
+      UserTestingSemesterModule,
+      SemesterRoutingModule
    ],
    providers: [],
    bootstrap: [AppComponent]

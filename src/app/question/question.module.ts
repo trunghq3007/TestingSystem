@@ -7,22 +7,22 @@ import { ViewQuestionComponent } from './view-question/view-question.component';
 import { IplistQuestionComponent } from './iplist-question/iplist-question.component';
 
 @NgModule({
-  declarations: [
-    ListQuestionComponent,
-    CreateQuestionComponent,
-    EditQuestionComponent,
-    ViewQuestionComponent,
-    IplistQuestionComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports:[
-    ListQuestionComponent,
-    CreateQuestionComponent,
-    EditQuestionComponent,
-    ViewQuestionComponent,
-    IplistQuestionComponent
-  ]
+   declarations: [
+      ListQuestionComponent,
+      CreateQuestionComponent,
+      EditQuestionComponent,
+      ViewQuestionComponent,
+      IplistQuestionComponent
+   ],
+   imports: [
+      CommonModule
+   ],
+   exports: [
+      ListQuestionComponent,
+      CreateQuestionComponent,
+      EditQuestionComponent,
+      ViewQuestionComponent,
+      IplistQuestionComponent
+   ]
 })
 export class QuestionModule { }
