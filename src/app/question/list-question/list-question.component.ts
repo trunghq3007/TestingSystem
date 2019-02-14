@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
 import { Question } from 'src/entity/Question';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Level } from 'src/entity/Level';
 import { Category } from 'src/entity/Category';
@@ -9,7 +9,8 @@ import { Tag } from 'src/entity/Tag';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
+
 
 @Component({
   selector: 'app-list-question',
@@ -33,10 +34,26 @@ export class ListQuestionComponent implements OnInit {
   tagSelected: string = "null";
 
   tagFrm: FormGroup;
+  searchText: string;
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'action'];
+  displayedColumns: string[] = ['select', 'category', 'create_by', 'date', 'level', 'content', 'tag', 'action'];
   dataSource = new MatTableDataSource<Question>(this.listQuestion);
   selection = new SelectionModel<Question>(true, []);
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private service: ServiceService,
@@ -46,6 +63,18 @@ export class ListQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch(property) {
+        case 'category': return item.questionCategory.categoryName;
+        case 'create_by': return item.userQuestion.fullName;
+        case 'date': return item.dateCreated;
+        case 'level': return item.questionLevel.levelName;
+        case 'content': return item.content;
+        case 'tag': return item.questionTag.tagName;
+        default: return item[property];
+      }
+    };
+    this.dataSource.sort = this.sort;
     //  tag class and validate
     this.tagFrm = this.fb.group({
       tag_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(225)]],
@@ -69,18 +98,14 @@ export class ListQuestionComponent implements OnInit {
     );
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+  /** function search by content question*/
+  searchByContent(contentQuestion) {
+    this.service.getListQuestionByContent(contentQuestion).subscribe(
+      lquestionbyContent => {
+        this.listQuestion = lquestionbyContent;
+        this.dataSource.data = this.listQuestion;
+      }
+    );
   }
 
   loadPopupUpdate() {
@@ -111,19 +136,4 @@ export class ListQuestionComponent implements OnInit {
       })
     }
   }
-
-  onSubmit() {
-    //  tag add + auto generate id
-    if (this.tagFrm.value) {
-      const value = this.tagFrm.value;
-      const tag: Tag = {
-        id: uuid(),
-        ...value
-      };
-      this.http.post('http://localhost:3000/tag', tag).subscribe(() => { this.router.navigateByUrl('/tag'); });
-      this.success = true;
-
-    }
-  }
-
 }

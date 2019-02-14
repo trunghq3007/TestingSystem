@@ -32,6 +32,13 @@ export class ServiceService {
     );
   }
 
+  getListQuestionByContent(content: String): Observable<Question[]> {
+    return this.http.get<Question[]>(this.url + `question/search-by-content/${content}`).pipe(
+      tap(),
+      catchError(er => of([]))
+    );
+  }
+
   getTag(id: number): Observable<Object> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
@@ -39,7 +46,6 @@ export class ServiceService {
   createTag(tag: Object): Observable<Object> {
     return this.http.post(`${this.baseUrl}` + `/create`, tag);
   }
-  //abc
 
   //update multi question
   updateMutilQuestion(question: Question, id: string): Observable<Question> {
