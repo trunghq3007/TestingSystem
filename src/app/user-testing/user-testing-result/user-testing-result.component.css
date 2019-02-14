@@ -1,0 +1,21 @@
+
+/* -------------------------------- content */
+.exam-content {
+   padding: 20px 10%;
+}
+
+.panel-heading {
+   background-color: #435d7d;
+}
+
+.panel-title{
+   font-size: 35px;
+}
+
+.question-wrapper {
+   padding: 10px 5%;
+}
+
+.question-wrapper .form-check label {
+   font-weight: normal;
+}
