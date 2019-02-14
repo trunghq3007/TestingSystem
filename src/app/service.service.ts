@@ -22,7 +22,7 @@ export class ServiceService {
   }
 
   getListQuestionByContent(content:String): Observable<Question[]> {
-    return this.http.get<Question[]>(this.url + `question/search-by-content/{content}`).pipe(
+    return this.http.get<Question[]>(this.url + `question/search-by-content/${content}`).pipe(
       tap(),
       catchError(er => of([]))
     );
