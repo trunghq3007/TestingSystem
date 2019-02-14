@@ -17,10 +17,11 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, M
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TestResultComponent } from './detail/test-result/test-result.component';
 
 
 @NgModule({
-   declarations: [ListComponent, DetailComponent, EditComponent, CreateComponent, InfoComponent, ReportComponent, CandidateComponent, ExamComponent],
+   declarations: [ListComponent, DetailComponent, EditComponent, CreateComponent, InfoComponent, ReportComponent, CandidateComponent, ExamComponent, TestResultComponent],
    imports: [
       CommonModule,
       CKEditorModule,
