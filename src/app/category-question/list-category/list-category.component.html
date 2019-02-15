@@ -17,13 +17,13 @@
             <div class="col-sm-6">
               <h2>Manage <b>Category</b></h2>
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
               <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
                   class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add New Category</span></a>
-              <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i>
-                <span>Delete</span></a> -->
-            </div>
+              <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i>
+                <span>Delete</span></a>
+            </div> -->
           </div>
         </div>
         <table class="table table-striped table-hover">
@@ -49,6 +49,9 @@
               <td>{{category.dateCreated | date:'yyy/MM/dd'}}</td>
               <td>{{category.status}}</td>
               <td>
+                <a href="#addEmployeeModal" class="" data-toggle="modal" style="margin-right: 5px;"
+                  (click)="getCategoryForCreateAndDelete(category)"><i class="material-icons" data-toggle="tooltip"
+                    title="Add">&#xe145;</i></a>
                 <a href="#viewEmployeeModal" class="View" data-toggle="modal" style="margin-right: 5px;"
                   (click)="getCategoryForUpdateAndView(category)"><i class="material-icons" data-toggle="tooltip"
                     title="View">&#xe8f4;</i></a>
@@ -107,7 +110,7 @@
               </div>
 
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>userIdCreated:</label>
                 <input type="text" class="form-control" formControlName="userIdCreated" [ngClass]="{
                   'is-valid': categoryFrm.get('userIdCreated').valid,
@@ -125,13 +128,11 @@
 
               <div class="form-group">
                 <label>dateCreated:</label>
-                <input type="text" class="form-control" 
-                  formControlName="dateCreated" 
-                  [ngClass]="{
+                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
                   'is-valid': categoryFrm.get('dateCreated').valid,
                   'is-invalid': categoryFrm.get('dateCreated').invalid
                   && categoryFrm.get('dateCreated').touched
-                }" >
+                }">
               </div>
               <div *ngIf="categoryFrm.get('dateCreated').invalid && categoryFrm.get('dateCreated').touched"
                 class="alert alert-danger">
@@ -154,7 +155,7 @@
                 <ng-container *ngIf="categoryFrm.get('status').hasError('required')">
                   status is required
                 </ng-container>
-              </div>
+              </div> -->
 
             </div>
             <div class="modal-footer">
@@ -194,8 +195,7 @@
                   Min length {{categoryFrm2.get('categoryName').getError('minlength').requiredLength}}
                 </ng-container>
               </div>
-
-
+<!-- 
               <div class="form-group">
                 <label>userIdCreated:</label>
                 <input type="text" class="form-control" formControlName="userIdCreated" [ngClass]="{
@@ -214,8 +214,7 @@
 
               <div class="form-group">
                 <label>dateCreated:</label>
-                <input type="text" class="form-control"  formControlName="dateCreated" 
-                  [ngClass]="{
+                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
                   'is-valid': categoryFrm2.get('dateCreated').valid,
                   'is-invalid': categoryFrm2.get('dateCreated').invalid
                   && categoryFrm2.get('dateCreated').touched
@@ -242,7 +241,7 @@
                 <ng-container *ngIf="categoryFrm2.get('status').hasError('required')">
                   status is required
                 </ng-container>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">

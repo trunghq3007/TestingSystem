@@ -38,9 +38,9 @@ export class ListCategoryComponent implements OnInit {
   validate() {
     this.categoryFrm = this.fb.group({
       categoryName: ['', [Validators.required, Validators.minLength(2)]],
-      userIdCreated: ['', [Validators.required]],
-      dateCreated: ['', [Validators.required]],
-      status: ['', [Validators.required]]
+      userIdCreated: ['', []],
+      dateCreated: ['', []],
+      status: ['', []]
     });
 
     this.categoryFrm2 = this.fb.group({
@@ -52,25 +52,31 @@ export class ListCategoryComponent implements OnInit {
   }
 
   onCreate() {
-    console.log(this.categoryFrm.value);
+    // console.log(this.categoryFrm.value);
     if (this.categoryFrm.valid) {
       // const value = this.categoryFrm.value;
       // let category: Category = {
       //   // id: uuid(),
       //   ...value
       // };
-      let category = new Category();
-      category.id = Math.random();
-      category.categoryName = this.categoryFrm.get('categoryName').value;
-      category.userCategory["id"] = this.categoryFrm.get('userIdCreated').value;
-      category.dateCreated = this.categoryFrm.get('dateCreated').value;
-      category.status = this.categoryFrm.get('status').value;
+      // let category = new Category();
+      // category.id = 10;
+      // category.categoryName = this.categoryFrm.get('categoryName').value;
+      // category.userCategory["id"] = this.categoryFrm.get('userIdCreated').value;
+      // category.dateCreated = this.categoryFrm.get('dateCreated').value;
+      // category.status = this.categoryFrm.get('status').value;
+      // this.category1.id = uuid();
+      // this.category1.categoryName = "vvvvvv";
+      let test = this.categoryFrm.get('categoryName').value;
+      console.log(test);
+      this.category1.categoryName = test;
+      this.category1.id = Math.random();
+      console.log(this.category1);
 
-      this.categoryService.createCategory(category)
+      this.categoryService.createCategory(this.category1)
         .subscribe(() => {
           this.reloadData();
           this.categoryFrm.reset();
-          console.log(category);
         });
     }
   }
@@ -100,18 +106,20 @@ export class ListCategoryComponent implements OnInit {
    this.categoryFrm2.get('userIdCreated').setValue(category.userCategory["id"]);
    this.categoryFrm2.get('dateCreated').setValue(category.dateCreated);
    this.categoryFrm2.get('status').setValue(category.status);
-   console.log(this.category1);
   }
 
   // update category 
   updateCategory() {
-    if (this.categoryFrm2.valid) {
-      const category2 = this.categoryFrm2.value;
-      this.categoryService.updateCategory(this.category1.id, category2)
-        .subscribe(() => {
-          this.reloadData();
-          this.categoryFrm2.reset();
-        })
-    }
+    let test = this.categoryFrm2.get('categoryName').value;
+    console.log(test);
+    this.category1.categoryName = test;
+    // this.category1.id = Math.random();
+    console.log(this.category1);
+
+    this.categoryService.createCategory(this.category1)
+      .subscribe(() => {
+        this.reloadData();
+        this.categoryFrm2.reset();
+      });
   }
 }
