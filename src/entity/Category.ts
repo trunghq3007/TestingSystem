@@ -1,7 +1,9 @@
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
+
 export class Category {
-  category_id: number;
-  category_name: string;
-  user_id_created: number;
-  date_created: Date;
+  id: number;
+  categoryName: string;
+  userCategory: Object;
+  dateCreated: Date;
   status: number;
 }
