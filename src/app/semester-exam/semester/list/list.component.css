@@ -11,3 +11,8 @@
    border: 1px solid #ccc;
    border-radius: 4px;
 }
+
+.text-status{
+   padding: 4px 8px;
+   font-size: 12px;
+}

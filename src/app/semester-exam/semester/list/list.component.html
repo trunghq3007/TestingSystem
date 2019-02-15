@@ -105,12 +105,12 @@
                                  </span>
                               </th>
                               <th>Tên kỳ thi</th>
-                              <th>Mô tả kỳ thi</th>
+                              <!-- <th>Mô tả kỳ thi</th> -->
                               <th>Người tạo</th>
                               <th>Status</th>
                               <th>Ngày bắt đầu</th>
                               <th>Ngày kết thúc</th>
-                              <th style="width: 15% !important">Action</th>
+                              <th class="text-center" style="width: 10% !important">Action</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -122,25 +122,34 @@
                                     <label for="checkboxItem"></label>
                                  </span>
                               </td>
-                              <td><a routerLink="*">{{item.name}}</a></td>
-                              <td>{{item.description}}</td>
+                              <td><a routerLink="{{item.id}}">{{item.name}}</a></td>
+                              <!-- <td>{{item.description}}</td> -->
                               <td>{{item.creator}}</td>
                               <!-- <td>{{item.status}}</td> -->
 
                               <td>
-                                 <ng-container *ngIf="item.status==1">Hoat Dong</ng-container>
-                                 <ng-container *ngIf="item.status==0">khong hoat Dong</ng-container>
+                                 <ng-container *ngIf="item.status==0">
+                                    <span class="label label-default text-status">draft</span>
+                                 </ng-container>
+                                 <ng-container *ngIf="item.status==1">
+                                    <span class="label label-info text-status">public</span>
+                                 </ng-container>
+                                 <ng-container *ngIf="item.status==2">
+                                    <span class="label label-success text-status">done</span>
+                                 </ng-container>
                               </td>
 
                               <td>{{item.startTime | date: 'dd/MM/yyyy'}}</td>
                               <td>{{item.endTime | date: 'dd/MM/yyyy'}}</td>
-                              <td style="width: 15% !important">
-                                 <button class="btn btn-warning btn-sm" style="margin-right: 5px;"><span
-                                       class="glyphicon glyphicon-pencil"></span>
-                                    Edit</button>
-                                 <button class="btn btn-info btn-sm" style="margin-right: 5px;"><span
-                                       class="glyphicon glyphicon-copy"></span>
-                                    Clone</button>
+                              <td style="width: 10% !important" class="text-center">
+                                 <!-- <button class="btn btn-warning btn-sm" style="margin-right: 5px;">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    Edit
+                                 </button> -->
+                                 <button class="btn btn-primary btn-sm" style="margin-right: 5px;">
+                                    <span class="glyphicon glyphicon-copy"></span>
+                                    Clone
+                                 </button>
                               </td>
                            </tr>
                         </tbody>
