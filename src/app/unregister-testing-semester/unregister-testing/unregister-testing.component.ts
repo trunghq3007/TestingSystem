@@ -18,12 +18,12 @@ export class UnregisterTestingComponent implements OnInit {
    private counter: Observable<number>;
    private subscription: Subscription;
    private message: string;
-   total_time = 300;
+   total_time = 5400;
    config = {
       class: 'modal-dialog-centered'
    }
    constructor(private modalService: BsModalService, elm: ElementRef) {
-      this.startTimeString = "2/15/2019 16:30:00"
+      this.startTimeString = "2/15/2019 20:20:00"
    }
 
    openModal(template: TemplateRef<any>) {
@@ -44,7 +44,7 @@ export class UnregisterTestingComponent implements OnInit {
       this.start_time = new Date(this.startTimeString);
       this.counter = interval(1000).pipe(
          map((x) => {
-            this.diff = Math.floor((new Date().getTime() - this.start_time.getTime()) / 1000);
+            this.diff = this.total_time -  Math.floor((new Date().getTime() - this.start_time.getTime()) / 1000);
             return x;
          }
          ));
