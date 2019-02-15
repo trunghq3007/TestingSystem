@@ -64,8 +64,9 @@
                               </div>
                            </div>
                            <div class="col-md-4 text-center">
-                              <button type="button" class="btn btn-primary"><span class="
-                                       glyphicon glyphicon-filter"></span> Submit</button>
+                              <button type="button" class="btn btn-primary">
+                                 <span class="glyphicon glyphicon-filter"></span> Submit
+                              </button>
                            </div>
                         </div>
                      </form>
@@ -76,6 +77,9 @@
                   <div class="col-md-6">
                      <a routerLink="create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add
                         news</a>
+                     <button class="btn btn-danger" style="margin-left: 5px;" (click)="deleteItem()">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                     </button>
                   </div>
                   <div class="col-md-6">
                      <div class="input-group">
@@ -88,12 +92,18 @@
                      </div>
                   </div>
                </div>
+
                <div class="row" style="padding-top: 10px;">
                   <div class="col-md-12">
                      <table class="table table-bordered table-hover table-sm">
                         <thead>
                            <tr>
-                              <th>No</th>
+                              <th>
+                                 <span class="custom-checkbox">
+                                    <input type="checkbox" id="checkboxAll">
+                                    <label for="checkboxAll"></label>
+                                 </span>
+                              </th>
                               <th>Tên kỳ thi</th>
                               <th>Mô tả kỳ thi</th>
                               <th>Người tạo</th>
@@ -104,19 +114,34 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td scope="row">1</td>
-                              <td><a routerLink="*">Kỳ thi fresher</a></td>
-                              <td>Tuyển fresher</td>
-                              <td>Thuận</td>
-                              <td>fsfds</td>
-                              <td>12/7/2018</td>
-                              <td>12/9/2018</td>
-                              <td style="width: 15% !important"><button class="btn btn-warning btn-sm"
-                                    style="margin-right: 5px;"><span class="glyphicon glyphicon-pencil"></span>
-                                    Edit</button> <button class="btn btn-danger btn-sm"><span
-                                       class="glyphicon glyphicon-trash"></span>
-                                    Delete</button></td>
+                           <tr *ngFor="let item of semesterExamList">
+                              <td scope="row">
+                                 <span class="custom-checkbox">
+                                    <input type="checkbox" id="checkboxItem" value="{{item.id}}"
+                                       (change)="getId($event.target.value)">
+                                    <label for="checkboxItem"></label>
+                                 </span>
+                              </td>
+                              <td><a routerLink="*">{{item.name}}</a></td>
+                              <td>{{item.description}}</td>
+                              <td>{{item.creator}}</td>
+                              <!-- <td>{{item.status}}</td> -->
+
+                              <td>
+                                 <ng-container *ngIf="item.status==1">Hoat Dong</ng-container>
+                                 <ng-container *ngIf="item.status==0">khong hoat Dong</ng-container>
+                              </td>
+
+                              <td>{{item.startTime | date: 'dd/MM/yyyy'}}</td>
+                              <td>{{item.endTime | date: 'dd/MM/yyyy'}}</td>
+                              <td style="width: 15% !important">
+                                 <button class="btn btn-warning btn-sm" style="margin-right: 5px;"><span
+                                       class="glyphicon glyphicon-pencil"></span>
+                                    Edit</button>
+                                 <button class="btn btn-info btn-sm" style="margin-right: 5px;"><span
+                                       class="glyphicon glyphicon-copy"></span>
+                                    Clone</button>
+                              </td>
                            </tr>
                         </tbody>
                      </table>

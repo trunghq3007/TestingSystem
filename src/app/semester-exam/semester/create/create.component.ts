@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SemesterExam } from '../../models/SemesterExam';
+import { ApiService } from '../../service/api.service';
 
 @Component({
    selector: 'app-create',
@@ -16,7 +19,7 @@ export class CreateComponent implements OnInit {
 
    profileFrm: FormGroup;
 
-   constructor(private fb: FormBuilder) {
+   constructor(private fb: FormBuilder, private router: Router, private service: ApiService) {
    }
 
    ngOnInit() {
@@ -27,7 +30,10 @@ export class CreateComponent implements OnInit {
       };
 
       this.profileFrm = this.fb.group({
-         semesterName: ['', [Validators.required, Validators.minLength(5)]],
+         name: ['', [Validators.required, Validators.minLength(5)]],
+         startTime: [],
+         endTime: [],
+         description: [],
       });
 
    }
@@ -44,8 +50,20 @@ export class CreateComponent implements OnInit {
       console.log(event);
    }
 
-   onSubmit() {
 
+   onSubmit() {
+      try {
+         const value = this.profileFrm.value;
+         const semesterExam: SemesterExam = { ...value };
+         console.log(semesterExam);
+         this.service.saveOne('semesterexam/add', semesterExam).subscribe(data => {
+            console.log(data);
+            this.router.navigateByUrl('manager/semester');
+         });
+      } catch (error) {
+         console.log(error);
+
+      }
    }
 
 }
