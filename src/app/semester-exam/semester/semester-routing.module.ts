@@ -5,28 +5,27 @@ import { DetailComponent } from './detail/detail.component';
 import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
-  {
-    path: 'manager/semester',
-    component: ListComponent,
-    children: [
-      {
-        path: '',
-        component: ListComponent
-      },
-      {
-        path: ':id',
-        component: DetailComponent,
-      },
-      {
-        path: 'create',
-        component: CreateComponent
-      }
-    ]
-  }
+   {
+      path: 'manager/semester',
+      children: [
+         {
+            path: '',
+            component: ListComponent,
+         },
+         {
+            path: 'create',
+            component: CreateComponent
+         },
+         {
+            path: ':id',
+            component: DetailComponent,
+         }
+      ]
+   }
 ];
 
 @NgModule({
-  imports: [],
-  exports: [RouterModule]
+   imports: [RouterModule.forChild(routes)],
+   exports: [RouterModule]
 })
 export class SemesterRoutingModule { }

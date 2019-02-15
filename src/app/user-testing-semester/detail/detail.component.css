@@ -22,21 +22,5 @@
 .label {
    padding: 5px;
    font-size: 12px;
-}
-
-.joining-testing-btn {
-   cursor: pointer;
-}
-
-
-.modal .modal-dialog {
-   max-width: 100%;
-}
-
-.modal-content {
-   padding: 20px;
-}
-
-.label-primary {
-   cursor: pointer;
+   text-align: center;
 }

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { UnregisterTestingComponent } from './unregister-testing/unregister-test
 import { UnregisterTestingSemesterComponent } from './unregister-testing-semester/unregister-testing-semester.component';
 import { UserTestingSemesterComponent } from './user-testing-semester/user-testing-semester.component';
 import { UserTestingSemesterModule } from './user-testing-semester/user-testing-semester.module';
+import { SemesterRoutingModule } from './semester-exam/semester/semester-routing.module';
 @NgModule({
    declarations: [
       AppComponent,
@@ -40,7 +41,8 @@ import { UserTestingSemesterModule } from './user-testing-semester/user-testing-
       NgbModule,
       UserTestingModule,
       UserTestingSemesterModule,
-      HttpClientModule
+      HttpClientModule,
+      SemesterRoutingModule
    ],
    providers: [],
    bootstrap: [AppComponent]

@@ -4,14 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SemesterExamRoutingModule } from './semester-exam-routing.module';
 import { SemesterModule } from './semester/semester.module';
 @NgModule({
-  declarations: [],
+   declarations: [],
 
-  imports: [
-    CommonModule,
-    BrowserAnimationsModule, SemesterExamRoutingModule,
-    SemesterModule
-  ],
-  exports: []
+   imports: [
+      CommonModule,
+      BrowserAnimationsModule,
+      SemesterExamRoutingModule,
+      SemesterModule
+   ],
+   exports: []
 
 })
 export class SemesterExamModule { }
