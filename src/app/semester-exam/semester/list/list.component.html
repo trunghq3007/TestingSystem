@@ -83,9 +83,10 @@
                   </div>
                   <div class="col-md-6">
                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search by name">
+                        <input type="text" class="form-control" placeholder="Search by name" [(ngModel)]="keyword"
+                           (keypress)="enter($event)">
                         <div class="input-group-btn">
-                           <button class="btn btn-default" type="submit">
+                           <button class="btn btn-default" type="submit" (click)="searchByKeyword()">
                               <i class="glyphicon glyphicon-search"></i>
                            </button>
                         </div>
