@@ -55,14 +55,17 @@ export class ListComponent implements OnInit {
          if (temp) {
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                  // console.log(result.data);
-                  // this.semesterExamList = result.data;
+                  this.getListSemesterExam();
                });
             }
             this.arrDelete = [];
          }
       }
 
+   }
+
+   semesterExamTrackByFn(semesterExam: SemesterExam) {
+      return semesterExam.id;
    }
 
    searchByKeyword() {
@@ -81,9 +84,13 @@ export class ListComponent implements OnInit {
       this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
    }
 
-   ngOnInit() {
+   getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
       });
+   }
+
+   ngOnInit() {
+      this.getListSemesterExam();
    }
 }
