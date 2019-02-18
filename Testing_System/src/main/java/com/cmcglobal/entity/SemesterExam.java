@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -22,30 +24,17 @@ public class SemesterExam {
 	private String name;
 	@Column(name = "semester_description")
 	private String description;
-	@Column(name = "create_by")
-	private String creator;
+
+	@ManyToOne
+	@JoinColumn(name = "create_by", nullable = false)
+	private User user;
+
 	@Column(name = "status")
 	private int status;
 	@Column(name = "start_at")
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
-
-	public SemesterExam(String id, String name, String description, String creator, int status, Date startTime,
-			Date endTime) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.creator = creator;
-		this.status = status;
-		this.startTime = startTime;
-		this.endTime = endTime;
-	}
-
-	public SemesterExam() {
-		super();
-	}
 
 	public String getId() {
 		return id;
@@ -71,12 +60,12 @@ public class SemesterExam {
 		this.description = description;
 	}
 
-	public String getCreator() {
-		return creator;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getStatus() {
@@ -105,7 +94,7 @@ public class SemesterExam {
 
 	@Override
 	public String toString() {
-		return this.id + " - " + this.name + " - " + this.description + " - " + this.creator + " - " + this.startTime
+		return this.id + " - " + this.name + " - " + this.description + " - " + this.user + " - " + this.startTime
 				+ " - " + this.endTime;
 	}
 }
