@@ -18,8 +18,7 @@
               <h2>Manage <b>Category</b></h2>
             </div>
             <div class="col-sm-6">
-              <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
-                  class="glyphicon glyphicon-plus-sign"></i>
+              <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add New Category</span></a>
               <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i>
                 <span>Delete</span></a> -->
@@ -49,15 +48,12 @@
               <td>{{category.dateCreated | date:'yyy/MM/dd'}}</td>
               <td>{{category.status}}</td>
               <td>
-                <a href="#viewEmployeeModal" class="View" data-toggle="modal" style="margin-right: 5px;"
-                  (click)="getCategoryForUpdateAndView(category)"><i class="material-icons" data-toggle="tooltip"
-                    title="View">&#xe8f4;</i></a>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal" style="margin-right: 5px;"
-                  (click)="getCategoryForUpdateAndView(category)"><i class="material-icons" data-toggle="tooltip"
-                    title="Edit">&#xE254;</i></a>
-                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" style="margin-right: 5px;"
-                  (click)="getCategoryForCreateAndDelete(category)"><i class="material-icons" data-toggle="tooltip"
-                    title="Delete">&#xE872;</i></a>
+                <a href="#viewEmployeeModal" class="View" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForUpdateAndView(category)"><i
+                    class="material-icons" data-toggle="tooltip" title="View">&#xe8f4;</i></a>
+                <a href="#editEmployeeModal" class="edit" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForUpdateAndView(category)"><i
+                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForCreateAndDelete(category)"><i
+                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
               </td>
             </tr>
           </tbody>
@@ -96,8 +92,7 @@
                   && categoryFrm.get('categoryName').touched
                 }">
               </div>
-              <div *ngIf="categoryFrm.get('categoryName').invalid && categoryFrm.get('categoryName').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm.get('categoryName').invalid && categoryFrm.get('categoryName').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm.get('categoryName').hasError('required')">
                   categoryName is required
                 </ng-container>
@@ -115,8 +110,7 @@
                   && categoryFrm.get('userIdCreated').touched
                 }">
               </div>
-              <div *ngIf="categoryFrm.get('userIdCreated').invalid && categoryFrm.get('userIdCreated').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm.get('userIdCreated').invalid && categoryFrm.get('userIdCreated').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm.get('userIdCreated').hasError('required')">
                   userIdCreated is required
                 </ng-container>
@@ -125,16 +119,13 @@
 
               <div class="form-group">
                 <label>dateCreated:</label>
-                <input type="text" class="form-control" 
-                  formControlName="dateCreated" 
-                  [ngClass]="{
+                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
                   'is-valid': categoryFrm.get('dateCreated').valid,
                   'is-invalid': categoryFrm.get('dateCreated').invalid
                   && categoryFrm.get('dateCreated').touched
-                }" >
+                }">
               </div>
-              <div *ngIf="categoryFrm.get('dateCreated').invalid && categoryFrm.get('dateCreated').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm.get('dateCreated').invalid && categoryFrm.get('dateCreated').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm.get('dateCreated').hasError('required')">
                   dateCreated is required
                 </ng-container>
@@ -149,8 +140,7 @@
                   && categoryFrm.get('status').touched
                 }">
               </div>
-              <div *ngIf="categoryFrm.get('status').invalid && categoryFrm.get('status').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm.get('status').invalid && categoryFrm.get('status').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm.get('status').hasError('required')">
                   status is required
                 </ng-container>
@@ -185,8 +175,7 @@
                       && categoryFrm2.get('categoryName').touched
                     }">
               </div>
-              <div *ngIf="categoryFrm2.get('categoryName').invalid && categoryFrm2.get('categoryName').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm2.get('categoryName').invalid && categoryFrm2.get('categoryName').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm2.get('categoryName').hasError('required')">
                   categoryName is required
                 </ng-container>
@@ -204,8 +193,7 @@
                       && categoryFrm2.get('userIdCreated').touched
                     }">
               </div>
-              <div *ngIf="categoryFrm2.get('userIdCreated').invalid && categoryFrm2.get('userIdCreated').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm2.get('userIdCreated').invalid && categoryFrm2.get('userIdCreated').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm2.get('userIdCreated').hasError('required')">
                   userIdCreated is required
                 </ng-container>
@@ -214,15 +202,13 @@
 
               <div class="form-group">
                 <label>dateCreated:</label>
-                <input type="text" class="form-control"  formControlName="dateCreated" 
-                  [ngClass]="{
+                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
                   'is-valid': categoryFrm2.get('dateCreated').valid,
                   'is-invalid': categoryFrm2.get('dateCreated').invalid
                   && categoryFrm2.get('dateCreated').touched
                 }">
               </div>
-              <div *ngIf="categoryFrm2.get('dateCreated').invalid && categoryFrm2.get('dateCreated').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm2.get('dateCreated').invalid && categoryFrm2.get('dateCreated').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm2.get('dateCreated').hasError('required')">
                   dateCreated is required
                 </ng-container>
@@ -237,8 +223,7 @@
                       && categoryFrm2.get('status').touched
                     }">
               </div>
-              <div *ngIf="categoryFrm2.get('status').invalid && categoryFrm2.get('status').touched"
-                class="alert alert-danger">
+              <div *ngIf="categoryFrm2.get('status').invalid && categoryFrm2.get('status').touched" class="alert alert-danger">
                 <ng-container *ngIf="categoryFrm2.get('status').hasError('required')">
                   status is required
                 </ng-container>
@@ -305,8 +290,8 @@
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-              <input type="submit" class="btn btn-danger" value="Delete" *ngIf="category1"
-                (click)="deleteCategory(category1)" data-dismiss="modal">
+              <input type="submit" class="btn btn-danger" value="Delete" *ngIf="category1" (click)="deleteCategory(category1)"
+                data-dismiss="modal">
             </div>
           </form>
         </div>

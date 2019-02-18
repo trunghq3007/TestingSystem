@@ -78,7 +78,7 @@ export class CreateQuestionComponent implements OnInit {
     return formGroup;
   }
 
-  // onSubmit(){
+  onSubmit(){
   //   if (this.questionFrm.value) {
   //     const value = this.questionFrm.value;
   //     const question: Question = {
@@ -89,6 +89,6 @@ export class CreateQuestionComponent implements OnInit {
   //       this.router.navigateByUrl('/question');
   //     });
   // }
-  // }
+  }
 
 }

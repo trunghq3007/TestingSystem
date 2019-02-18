@@ -8,9 +8,8 @@ import { Category } from 'src/entity/Category';
 import { Tag } from 'src/entity/Tag';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { TypeQuestion } from 'src/entity/TypeQuestion';
-import { loadQueryList } from '@angular/core/src/render3';
 
 
 @Component({
