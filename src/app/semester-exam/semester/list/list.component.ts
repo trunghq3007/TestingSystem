@@ -55,8 +55,8 @@ export class ListComponent implements OnInit {
          if (temp) {
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                  console.log(result.data);
-                  this.semesterExamList = result.data;
+                  // console.log(result.data);
+                  // this.semesterExamList = result.data;
                });
             }
             this.arrDelete = [];
