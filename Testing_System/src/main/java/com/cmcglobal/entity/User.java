@@ -1,7 +1,9 @@
 package com.cmcglobal.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +12,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 @Entity
 public class User implements Serializable {
@@ -28,6 +35,12 @@ public class User implements Serializable {
 	private int status;
 	@OneToMany(mappedBy = "userCreated", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Exam> exams;
+	
+//	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinTable(name = "candidate", joinColumns = { @JoinColumn(name = "user_id") },inverseJoinColumns = { @JoinColumn(name = "semester_exam_id") })
+//	private List<Semester> semester= new ArrayList<Semester>();
+
+	
 
 	public int getUserId() {
 		return userId;
