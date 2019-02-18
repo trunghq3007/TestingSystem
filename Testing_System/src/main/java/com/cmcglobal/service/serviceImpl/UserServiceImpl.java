@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ServiceResult getSemseterListByUserId(int id) {
 		ServiceResult result = new ServiceResult();
+		
 		result.setData(userRepository.findById(id).get());
 		return result;
 	}
