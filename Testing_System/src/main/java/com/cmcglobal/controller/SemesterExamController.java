@@ -47,7 +47,7 @@ public class SemesterExamController {
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<ServiceResult> create(@RequestBody SemesterExam semesterExam) {
-		semesterExam.setCreator("1");
+//		semesterExam.setCreator("1");
 		return new ResponseEntity<ServiceResult>(examService.create(semesterExam), HttpStatus.OK);
 	}
 

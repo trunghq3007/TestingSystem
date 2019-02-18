@@ -51,4 +51,9 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		return result;
 	}
 
+	@Override
+	public ServiceResult getSemesterListByUserId(int userId) {
+		
+		return null;
+	}
 }

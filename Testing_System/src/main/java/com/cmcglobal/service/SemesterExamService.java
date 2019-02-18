@@ -11,4 +11,6 @@ public interface SemesterExamService {
 
 	public ServiceResult delete(String id);
 
+	public ServiceResult getSemesterListByUserId(int userId);
+
 }

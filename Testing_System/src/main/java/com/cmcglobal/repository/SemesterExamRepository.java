@@ -11,4 +11,5 @@ import com.cmcglobal.entity.SemesterExam;
 public interface SemesterExamRepository extends JpaRepository<SemesterExam, String> {
 
 	List<SemesterExam> findByNameContaining(String keyword);
+	
 }
