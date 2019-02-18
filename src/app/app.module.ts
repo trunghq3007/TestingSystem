@@ -20,12 +20,14 @@ import { UnregisterTestingSemesterComponent } from './unregister-testing-semeste
 import { UserTestingSemesterComponent } from './user-testing-semester/user-testing-semester.component';
 import { UserTestingSemesterModule } from './user-testing-semester/user-testing-semester.module';
 import { SemesterRoutingModule } from './semester-exam/semester/semester-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
    declarations: [
       AppComponent,
       UnregisterTestingComponent,
       UnregisterTestingSemesterComponent,
       UserTestingSemesterComponent,
+      PageNotFoundComponent,
    ],
    imports: [
       BrowserModule,
