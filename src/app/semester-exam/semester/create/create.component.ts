@@ -14,6 +14,15 @@ export class CreateComponent implements OnInit {
    ckeConfig: any;
    @ViewChild("myckeditor") ckeditor: any;
 
+   user = {
+      userId: 3,
+      fullName: "Pham Thi Phuong",
+      email: "phuong@gmail.com",
+      mobile: "0332132609",
+      password: "123",
+      status: 1,
+   }
+
    profileFrm: FormGroup;
    constructor(private fb: FormBuilder, private router: Router, private service: ApiService) {
    }
@@ -44,17 +53,18 @@ export class CreateComponent implements OnInit {
       console.log(event);
    }
 
-
    onSubmit() {
       try {
          const value = this.profileFrm.value;
-         const semesterExam: SemesterExam = { ...value };
+         const semesterExam: SemesterExam = {
+            user: this.user,
+            ...value
+         };
          this.service.saveOne('semesterexam/add', semesterExam).subscribe(data => {
             this.router.navigateByUrl('manager/semester');
          });
       } catch (error) {
          console.log(error);
-
       }
    }
 
