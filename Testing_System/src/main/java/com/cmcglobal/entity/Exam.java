@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Exam implements Serializable {
 
@@ -45,6 +47,7 @@ public class Exam implements Serializable {
   private User userCreated;
   @ManyToOne
   @JoinColumn(name = "modified_by")
+  @JsonIgnoreProperties("exams")
   private User modifiedBy;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "exam_id")
