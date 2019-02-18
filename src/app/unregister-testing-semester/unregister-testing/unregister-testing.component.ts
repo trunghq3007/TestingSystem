@@ -23,11 +23,9 @@ export class UnregisterTestingComponent implements OnInit {
       class: 'modal-dialog-centered'
    }
    constructor(private modalService: BsModalService, elm: ElementRef) {
-<<<<<<< HEAD
-      this.startTimeString = "2/15/2019 16:30:00" ;
-=======
+
       this.startTimeString = "2/15/2019 20:20:00"
->>>>>>> a8a77ed1fafeea44833d8187216aea9880840e5f
+
    }
 
    openModal(template: TemplateRef<any>) {

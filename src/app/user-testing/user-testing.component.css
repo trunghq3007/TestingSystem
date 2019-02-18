@@ -64,3 +64,8 @@
 .question-wrapper .form-check label {
    font-weight: normal;
 }
+
+/* --------------------confirm testing complete */
+.modal-body>button {
+   margin: 0 10px;
+}
