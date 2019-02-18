@@ -17,8 +17,11 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2d4bae7d8f7061ad3d4c9d9681a81780e80fc97f
 @Entity
 public class User implements Serializable {
 
@@ -41,6 +44,25 @@ public class User implements Serializable {
 //	private List<Semester> semester= new ArrayList<Semester>();
 
 	
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnoreProperties("user")
+	private List<Candidate> candidates;
+	/*
+	 * @ManyToMany(fetch = FetchType.EAGER)
+	 * 
+	 * @JoinTable(name = "candidate", joinColumns = @JoinColumn(name = "user_id"),
+	 * inverseJoinColumns = @JoinColumn(name = "semester_exam_id")) private
+	 * List<SemesterExam> semesters = new ArrayList<SemesterExam>();
+	 */
+//
+//	public List<SemesterExam> getSemesters() {
+//		return semesters;
+//	}
+//
+//	public void setSemesters(List<SemesterExam> semesters) {
+//		this.semesters = semesters;
+//	}
 
 	public int getUserId() {
 		return userId;
@@ -89,4 +111,13 @@ public class User implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+	public List<Candidate> getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(List<Candidate> candidates) {
+		this.candidates = candidates;
+	}
+
 }
