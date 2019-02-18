@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -24,6 +27,8 @@ import { TestResultComponent } from './detail/test-result/test-result.component'
    declarations: [ListComponent, DetailComponent, EditComponent, CreateComponent, InfoComponent, ReportComponent, CandidateComponent, ExamComponent, TestResultComponent],
    imports: [
       CommonModule,
+      FormsModule,
+      SemesterRoutingModule,
       CKEditorModule,
       MatDatepickerModule,
       MatButtonModule,
@@ -36,6 +41,7 @@ import { TestResultComponent } from './detail/test-result/test-result.component'
       TabsModule.forRoot(),
       TimepickerModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      ReactiveFormsModule
    ]
 })
 export class SemesterModule { }

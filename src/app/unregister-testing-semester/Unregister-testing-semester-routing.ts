@@ -9,7 +9,7 @@ import { UnregisterTestingComponent } from './unregister-testing/unregister-test
 const routes: Routes = [
 
    {
-      path : "",
+      path : "user",
       component : SemesterCodeComponent
    },
    {
