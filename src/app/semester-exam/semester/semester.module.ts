@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { SemesterRoutingModule } from './semester-routing.module';
 import { ListComponent } from './list/list.component';
@@ -41,6 +41,7 @@ import { TestResultComponent } from './detail/test-result/test-result.component'
       TabsModule.forRoot(),
       TimepickerModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      ModalModule.forRoot(),
       ReactiveFormsModule
    ]
 })
