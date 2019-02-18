@@ -12,13 +12,9 @@ import { ApiService } from '../../service/api.service';
 export class CreateComponent implements OnInit {
 
    ckeConfig: any;
-   log: string = '';
    @ViewChild("myckeditor") ckeditor: any;
 
-   obj = {};
-
    profileFrm: FormGroup;
-
    constructor(private fb: FormBuilder, private router: Router, private service: ApiService) {
    }
 
@@ -31,21 +27,19 @@ export class CreateComponent implements OnInit {
 
       this.profileFrm = this.fb.group({
          name: ['', [Validators.required, Validators.minLength(5)]],
-         startTime: [],
-         endTime: [],
-         description: [],
+         startTime: [new Date(), [Validators.required]],
+         endTime: ['', [Validators.required]],
+         description: ' ',
+         creator: 1
       });
-
+   }
+   startTime: any;
+   getStartTime(event: any) {
+      if (event == 'Invalid Date') {
+         this.startTime = new Date();
+      }
    }
 
-   getTime(event) {
-      console.log(event);
-      var d = new Date(event);
-      console.log(d);
-      console.log(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
-      var h = new Date(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
-      console.log(h);
-   }
    onChange(event: any): void {
       console.log(event);
    }
@@ -55,9 +49,7 @@ export class CreateComponent implements OnInit {
       try {
          const value = this.profileFrm.value;
          const semesterExam: SemesterExam = { ...value };
-         console.log(semesterExam);
          this.service.saveOne('semesterexam/add', semesterExam).subscribe(data => {
-            console.log(data);
             this.router.navigateByUrl('manager/semester');
          });
       } catch (error) {
