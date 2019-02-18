@@ -26,9 +26,19 @@ public class User implements Serializable {
 	private String mobile;
 	private String password;
 	private int status;
-	@OneToMany(mappedBy="userCreated",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    private List<Exam> exams;
-	
+	@OneToMany(mappedBy = "userCreated", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Exam> exams;
+	@OneToMany(mappedBy = "userOfSemester", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<SemesterExam> semesters;
+
+//	public List<SemesterExam> getSemesters() {
+//		return semesters;
+//	}
+//
+//	public void setSemesters(List<SemesterExam> semesters) {
+//		this.semesters = semesters;
+//	}
+
 	public int getUserId() {
 		return userId;
 	}
