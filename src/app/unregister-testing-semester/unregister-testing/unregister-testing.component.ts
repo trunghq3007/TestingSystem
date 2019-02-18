@@ -24,7 +24,7 @@ export class UnregisterTestingComponent implements OnInit {
    }
    constructor(private modalService: BsModalService, elm: ElementRef) {
 
-      this.startTimeString = "2/15/2019 20:20:00"
+      this.startTimeString = "2/18/2019 9:20:00"
 
    }
 
