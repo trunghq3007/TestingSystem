@@ -1,11 +1,15 @@
 package com.cmcglobal.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -30,6 +34,9 @@ public class SemesterExam {
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
+	
+	@OneToMany(mappedBy="semesterExam",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	  private List<Test> tests;
 
 	public SemesterExam(String id, String name, String description, String creator, int status, Date startTime,
 			Date endTime) {
