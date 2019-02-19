@@ -6,10 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { map, switchMap } from 'rxjs/operators';
 
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/switchMap';
 
 declare const modal: SemesterExam;
 
@@ -27,23 +24,20 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
-   public obj = {};
+   public objFilter = {
+      status: ''
+   };
    public semesterExamList = [];
    configPagination: any;
-   constructor(private service: ApiService, private modalService: BsModalService, private route: ActivatedRoute, private router: Router) {
+   itempages: any = [2, 4, 6, 8];
+   constructor(private service: ApiService, private modalService: BsModalService) {
       this.configPagination = {
          currentPage: 1,
-         itemsPerPage: 1
-      };
-
-      // this.route.queryParamMap.pipe(params => params.get('page')).subscribe(page => this.configPagination.currentPage = page);
+         itemsPerPage: 2
+      }
    }
 
-   pageChange(newPage: number) {
-      this.router.navigate(['manager/semester/'], { queryParams: { page: newPage } });
-   }
-
-   changeItemsPerPage(event) {
+   changeItemsPerPage(event: number) {
       console.log(event);
       this.configPagination.itemsPerPage = event;
    }
@@ -55,7 +49,6 @@ export class ListComponent implements OnInit {
    }
 
    getId(event: any) {
-
       if (event.target.checked) {
          this.arrDelete.push(event.target.value);
       } else {
@@ -123,9 +116,12 @@ export class ListComponent implements OnInit {
    getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
+<<<<<<< HEAD
 
          console.log(this.semesterExamList);
 
+=======
+>>>>>>> a289d51b3a3be1de314686bf851a89e230125573
       });
    }
 
