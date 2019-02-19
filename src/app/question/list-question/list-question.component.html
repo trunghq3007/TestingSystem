@@ -185,9 +185,9 @@
         <div class="clearfix">
           <div class=hint-text>Showing
             <select name="choisepage" (change)="choisePage($event.target)">
-              <option value="2">2</option>
-              <option value="3">3</option>
               <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
             </select>
             entries
           </div>
@@ -203,12 +203,6 @@
             </li>
             <li class="page-item" [ngClass]="{disabled:tabAllQuestion.currentPage=== maxPage}">
               <a (click)="setPage(maxPage)"><i class="glyphicon glyphicon-step-forward"></i></a>
-            </li>
-          </ul>
-          <ul class="pagination">
-
-            <li class="paginate_button active">
-              <a href="#">{{ tabAllQuestion?.currentPage + 1 }}</a>
             </li>
           </ul>
         </div>
