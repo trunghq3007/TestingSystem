@@ -11,7 +11,6 @@ import { FooterModule } from './footer/footer.module';
 import { CategoryQuestionModule } from './category-question/category-question.module';
 import { QuestionModule } from './question/question.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent
@@ -26,8 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     QuestionModule,
     CategoryQuestionModule,
     HttpClientModule,
-    AppRoutingModule,
-    NgbModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

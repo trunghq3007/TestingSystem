@@ -1,30 +1,154 @@
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Question } from 'src/entity/Question';
+import { tap, catchError } from 'rxjs/operators';
+import { Category } from 'src/entity/Category';
 import { Level } from 'src/entity/Level';
+import { Question } from 'src/entity/Question';
+import { Tag } from 'src/entity/Tag';
+import { TypeQuestion } from 'src/entity/TypeQuestion';
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
 
-  private url = "http://localhost:3000/";
+  private url = "http://localhost:8081/";
+  private fakedata = "http://localhost:3000/"
+  private baseUrl = 'http://localhost:8081/api/tag';
+  private url1 = "http://localhost:8081/";
+  httpOption = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      observe: 'response'
+    })
+  }
+
+  // "Access-Control-Allow-Methods ": "PATCH",
   constructor(
     private http: HttpClient
   ) { }
 
-  getListQuestion(): Observable<Question[]> {
-    return this.http.get<Question[]>(this.url+`question`).pipe(
+  //==========QUESTION=============
+  //get question ang pagination
+  getQuestions(p: string, s: string): Observable<Question[]> {
+    return this.http.get<Question[]>(this.url + `question/pagination?page=${p}&size=${s}`).pipe(
+      tap()
+    )
+  }
+
+    //get category ang pagination
+    getCategorys(p: string, s: string): Observable<Category[]> {
+      return this.http.get<Category[]>(this.url + `category/pagination?page=${p}&size=${s}`).pipe(
+        tap()
+      )
+    }
+  //get question sum
+  getQuestionSum(): Observable<HttpResponse<Object>> {
+    return this.http.get<HttpResponse<Object>>(this.url + `question/sum`, { observe: 'response' }).pipe(
+      tap(resp => resp.headers.get('SumQuestion'))
+    );
+  }
+
+    //get category sum
+    getCategorySum(): Observable<HttpResponse<Object>> {
+      return this.http.get<HttpResponse<Object>>(this.url + `category/sum`, { observe: 'response' }).pipe(
+        tap(resp => resp.headers.get('SumCategory'))
+      );
+    }
+
+  //====== get list question by contents=====
+  getListQuestionByContent(content: String): Observable<Question[]> {
+    return this.http.get<Question[]>(this.url + `question/search-by-content/${content}`).pipe(
       tap(),
       catchError(er => of([]))
     );
   }
 
-  getListLvl(): Observable<Level[]> {
-    return this.http.get<Level[]>(this.url+`level`).pipe(
+    //====== get list question by contents=====
+    getListCategoryByContent(content: String): Observable<Category[]> {
+      return this.http.get<Category[]>(this.url + `category/search-by-content/${content}`).pipe(
+        tap(),
+        catchError(er => of([]))
+      );
+    }
+
+  //update multi question
+  updateMutilQuestion(question: Question, id: string): Observable<Question> {
+    return this.http.put<Question>(this.url + `question/edit/${id}`, question, this.httpOption).pipe(
+      tap(),
+      catchError(e => of(new Question())),
+    );
+  }
+
+  updateMutilQuestion1(question: Question): Observable<Question> {
+    return this.http.put<Question>(this.url + `question/edit`, question).pipe(
+      tap(),
+      catchError(e => {
+        console.log(e);
+        return of(new Question());
+      }),
+    );
+  }
+
+  //==========LEVEL=============
+  //get all level
+  getAllLvl(): Observable<Level[]> {
+    return this.http.get<Level[]>(this.url + `level`).pipe(
       tap(),
       catchError(er => of([]))
+    );
+  }
+  //==========CATEGORY=============
+  getAllCategory(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.url + `category`).pipe(
+      tap(),
+      catchError(er => of([]))
+    );
+  }
+  //==========Category
+  // lay danh sach Category
+  getCategoryList() {
+    return this.http.get<Category[]>(this.url1 + `category`);
+  }
+
+  // lay tung Category theo id
+  getCategory(id: number) {
+    return this.http.get<Category>(`${this.url1 + `category`}/${id}`);
+  }
+
+  // them moi category
+  createCategory(category: Category) {
+    return this.http.post(this.url1 + `category`, category);
+  }
+
+  // edit category theo id
+  updateCategory(id: number, category: Category) {
+    return this.http.patch(this.url1 + `category/${id}`, category);
+  }
+
+  // delete category theo id
+  deleteCategory(id: number) {
+    return this.http.delete(this.url1 + `category/${id}`);
+  }
+  //==========TAG=============
+  getAllTag(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(this.url + `tag`).pipe(
+      tap(),
+      catchError(er => of([]))
+    );
+  }
+  getTag(id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  createTag(tag: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}` + `/create`, tag);
+  }
+  //===========TYPE=============
+  getType(): Observable<TypeQuestion[]> {
+    return this.http.get<TypeQuestion[]>(this.url + `type`).pipe(
+      tap(),
+      catchError(e => of([]))
     );
   }
 }
