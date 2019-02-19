@@ -30,7 +30,7 @@ public interface TestService {
       Version 1.0
       @param test
      */
-    void inserTest(Test test);
+    public ServiceResult insertTest(Test test);
 
     /**
      * Create by: VuThuy - CMC
@@ -41,5 +41,31 @@ public interface TestService {
       Version 1.0
       @param id
      */
-    void deleteTestID(Integer id);
+    public ServiceResult deleteTest(Integer id);
+    
+    /**
+     * Create by: VuThuy - CMC
+      Create date: Feb 19, 2019
+      Modifier: VuThuy
+      Modified date: Feb 19, 2019
+      Description: ....
+      Version 1.0
+      @param id
+      @return
+     */
+    Test findOne(Integer id);
+    
+    /**
+     * Create by: VuThuy - CMC
+      Create date: Feb 19, 2019
+      Modifier: VuThuy
+      Modified date: Feb 19, 2019
+      Description: findBySemesterID in table test.
+      Version 1.0
+      @param id
+      @return
+     */
+    List<Test> findBySemesterID(String id);
+    
+    
 }

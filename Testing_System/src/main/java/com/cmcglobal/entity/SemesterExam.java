@@ -25,6 +25,7 @@ public class SemesterExam {
 	@Column(name = "semester_exam_id")
 	@GeneratedValue(generator = "auto_increase")
 	@GenericGenerator(name = "auto_increase", strategy = "com.cmcglobal.utils.AutoIncreaseId")
+
 	private String id;
 	@Column(name = "semester_exam_name")
 	private String name;
@@ -42,6 +43,25 @@ public class SemesterExam {
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
+	
+	@OneToMany(mappedBy="semesterExam",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	  private List<Test> tests;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "semester_exam_id")
+	private List<SemesterExamCode> semesterExamCode;
+
+	public List<SemesterExamCode> getSemesterExamCode() {
+		return semesterExamCode;
+	}
+
+	public void setSemesterExamCode(List<SemesterExamCode> semesterExamCode) {
+		this.semesterExamCode = semesterExamCode;
+	}
+
+	public SemesterExam() {
+		super();
+	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "semesterExam")
 	@JsonIgnoreProperties("semesterExam")
@@ -103,9 +123,4 @@ public class SemesterExam {
 		this.endTime = endTime;
 	}
 
-	@Override
-	public String toString() {
-		return this.id + " - " + this.name + " - " + this.description + " - " + this.user + " - " + this.startTime
-				+ " - " + this.endTime;
-	}
 }
