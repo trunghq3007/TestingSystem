@@ -27,9 +27,9 @@ public class User implements Serializable {
 	private String mobile;
 	private String password;
 	private int status;
-	@OneToMany(mappedBy = "userCreated", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("user")
-	private List<Exam> exams;
+//	@OneToMany(mappedBy = "userCreated", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@JsonIgnoreProperties("user")
+//	private List<Exam> exams;
 
 //	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 //    @JoinTable(name = "candidate", joinColumns = { @JoinColumn(name = "user_id") },inverseJoinColumns = { @JoinColumn(name = "semester_exam_id") })

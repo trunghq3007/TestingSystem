@@ -1,16 +1,22 @@
 package com.cmcglobal.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "semester_exam")
@@ -27,6 +33,7 @@ public class SemesterExam {
 
 	@ManyToOne
 	@JoinColumn(name = "create_by", nullable = false)
+	@JsonIgnoreProperties("candidates")
 	private User user;
 
 	@Column(name = "status")
@@ -35,6 +42,10 @@ public class SemesterExam {
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "semesterExam")
+	@JsonIgnoreProperties("semesterExam")
+	private List<Candidate> candidates;
 
 	public String getId() {
 		return id;
