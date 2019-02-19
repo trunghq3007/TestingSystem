@@ -10,85 +10,171 @@
 </section>
 <section class="content">
   <div class="box">
-    <div class="box-header with-border">
-      <h3 class="box-title">Title</h3>
-    </div>
     <div class="box-body">
       <div class="table-wrapper">
         <div class="table-title">
           <div class="row">
             <div class="col-sm-6">
-              <h2>Manage <b>Employees</b></h2>
+              <h2>Manage <b>Question</b></h2>
             </div>
             <div class="col-sm-6">
-              <a class="btn btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
+
+              <a href="#formtag" class="btn btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add Tag</span></a>
-              <a class="btn btn-success" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
-                <span>Add New Employee</span></a>
-              <a href="#updateMultiQuestion" (click)="loadPopupUpdate()" class="btn btn-warning" data-toggle="modal"><i class="glyphicon glyphicon-list-alt"></i>
+
+
+              <a class="btn btn-success" [routerLink]="['/question','create']"><i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Add New Question</span></a>
+              <a href="#updateMultiQuestion" (click)="loadPopupUpdate()" class="btn btn-warning" data-toggle="modal"><i
+                  class="glyphicon glyphicon-list-alt"></i>
                 <span>Update Many Question</span></a>
             </div>
           </div>
         </div>
+        <!--------------- search---------------->
         <div class="table-title-2">
           <div class="row">
-            <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Filter by...">
+            <div class="col-md-4 col-md-offset-8">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Question content...">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Go</button>
+                  <button type="button" class="btn btn-info btn-flat">Search</button>
                 </span>
               </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by content">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Search</button>
-                </span>
-              </div>
-
             </div>
           </div>
+          <!--------------- filter ---------------->
+          <div class="row">
+            <nav class="navbar navbar-default">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                  aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form>
+                  <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <select class="form-control" [(ngModel)]="levelSelected" name="categorySelected">
+                          <option value="">--Category--</option>
+                          <option *ngFor="let lvl of listCategory" [value]="lvl.id">{{lvl.categoryName | titlecase}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Create by...">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <select class="form-control" [(ngModel)]="levelSelected" name="levelSelected">
+                          <option value="">--Level--</option>
+                          <option *ngFor="let lvl of listLvl" [value]="lvl.id">{{lvl.levelName | titlecase}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="datepicker">
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                      <div class="form-group">
+                        <select class="form-control" [(ngModel)]="levelSelected" name="levelSelected">
+                          <option value="">--Type--</option>
+                          <option *ngFor="let lvl of listType" [value]="lvl.id">{{lvl.typeName}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Tag...">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="row">
+                    <div class="box-footer col-md-12">
+                      <button type="submit" class="btn btn-info">Filter</button>
+                    </div>
+                  </div>
+                </form>
+              </div><!-- /.navbar-collapse -->
+            </nav>
+          </div>
         </div>
-        <table mat-table [dataSource]="dataSource" class="table table-striped table-hover">
-
+        <!-- table -->
+        <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-hover">
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
+              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
               </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null" color="primary"
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" color="primary"
                 [checked]="selection.isSelected(row)" [value]="row.id">
               </mat-checkbox>
             </td>
           </ng-container>
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          <!-- Category Column -->
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px; font-size: 18px; font-weight: bold;">
+              Category </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionCategory.categoryName}} </td>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Content </th>
+          <!-- Creat_by Column -->
+          <ng-container matColumnDef="create_by">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 130px; font-size: 18px; font-weight: bold;">
+              Create By </th>
+            <td mat-cell *matCellDef="let element"> {{element.userQuestion.fullName}} </td>
+          </ng-container>
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 230px; font-size: 18px; font-weight: bold;">
+              Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateCreated | date:'d/M/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Level Column -->
+          <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 121.8px; font-size: 18px; font-weight: bold;">
+              Level </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionLevel.levelName}} </td>
+          </ng-container>
+          <!-- Content Column -->
+          <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 240.2px; font-size: 18px; font-weight: bold;">
+              Content </th>
             <td mat-cell *matCellDef="let element"> {{element.content}} </td>
           </ng-container>
-
+          <!-- Tag Column -->
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 121.8px; font-size: 18px; font-weight: bold;">
+              Tag </th>
+            <td mat-cell *matCellDef="let element"> {{element.questionTag.tagName}} </td>
+          </ng-container>
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+              rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 300px; font-size: 18px; font-weight: bold;">
+              Action </th>
             <td mat-cell *matCellDef="let element">
-              <a class="btn btn-primary" data-toggle="modal" style="margin-right: 5px;"><i class="glyphicon glyphicon-eye-open"
-                  title="View Detail"></i></a>
+              <a class="btn btn-primary" style="margin-right: 5px;"><i class="glyphicon glyphicon-eye-open" title="View Detail"></i></a>
               <a class="btn btn-warning" data-toggle="modal" style="margin-right: 5px;"><i class="glyphicon glyphicon-pencil"
                   title="Edit"></i></a>
-              <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal" style="margin-right: 5px;"><i
+              <a class="btn btn-danger" href="#deleteEmployeeModal" data-toggle="modal" style="margin-right: 5px;"><i
                   class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></a>
             </td>
           </ng-container>
@@ -97,58 +183,37 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div class="clearfix">
-          <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+          <!-- <div class="hint-text">Showing <b *ngIf='sum < 3'>{{sum}}</b><b *ngIf='sum > 2'>2</b> out of <b>{{sum}}</b>
+            entries</div> -->
+          <div class=hint-text>Showing
+            <select name="choisepage" (change)="choisePage()" [(ngModel)]="size">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+            entries
+          </div>
           <ul class="pagination">
-            <li class="page-item disabled"><a href="#">Previous</a></li>
-            <li class="page-item"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">4</a></li>
-            <li class="page-item"><a href="#" class="page-link">5</a></li>
-            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            <li class="page-item" [ngClass]="{disabled:currentPage===0}">
+              <a (click)="setPage(0)"><i class="glyphicon glyphicon-step-backward"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{hide:currentPage===0}">
+              <a (click)="setPage(this.currentPage - 1)"><i class="glyphicon glyphicon-menu-left"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{hide:currentPage===pages-1}">
+              <a (click)="setPage(this.currentPage + 1)"><i class="glyphicon glyphicon-menu-right"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:currentPage===pages-1}">
+              <a (click)="setPage(pages - 1)"><i class="glyphicon glyphicon-step-forward"></i></a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <!-- Edit Modal HTML -->
-    <div id="addEmployeeModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form>
-            <div class="modal-header">
-              <h4 class="modal-title">Add Employee</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label>Address</label>
-                <textarea class="form-control" required></textarea>
-              </div>
-              <div class="form-group">
-                <label>Phone</label>
-                <input type="text" class="form-control" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-              <input type="submit" class="btn btn-success" value="Add">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Edit Modal HTML -->
+    <!-- popup update multi question -->
     <div id="updateMultiQuestion" class="modal fade">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content box-body">
           <form>
             <div class="modal-header">
               <h4 class="modal-title">Update selected questions</h4>
@@ -157,85 +222,35 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>Level</label>
-                <select class="custom-select">
-                  <option *ngFor="let lvl of listLvl">{{lvl.level_name}}</option>
+                <select class="form-control" [(ngModel)]="levelSelected" name="levelSelected">
+                  <option *ngFor="let lvl of listLvl" [value]="lvl.id">{{lvl.levelName | titlecase}}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Category</label>
-                <select class="custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-control" [(ngModel)]="categorySelected" name="categorySelected">
+                  <option disabled="true" value="2">--Select--</option>
+                  <option *ngFor="let cate of listCategory" [value]="cate.id">{{cate.categoryName | titlecase}}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Tag</label>
-                <select class="custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="form-control" [(ngModel)]="tagSelected" name="tagSelected">
+                  <option disabled="true" value="1">--Select--</option>
+                  <option *ngFor="let tag of listTag" [value]="tag.id">{{tag.tagName}}</option>
                 </select>
               </div>
+              <p>{{ message }}</p>
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-              <input type="submit" class="btn btn-info" value="Save">
+              <input type="button" (click)="updateMuiltiQestion()" class="btn btn-warning" value="Update">
             </div>
           </form>
         </div>
       </div>
     </div>
-    <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form>
-            <div class="modal-header">
-              <h4 class="modal-title">Delete Employee</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-              <p>Are you sure you want to delete these Records?</p>
-              <p class="text-warning"><small>This action cannot be undone.</small></p>
-            </div>
-            <div class="modal-footer">
-              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-              <input type="submit" class="btn btn-danger" value="Delete">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="box-footer">
-      Footer
-    </div>
+    <app-popup-list-question></app-popup-list-question>
   </div>
-</section>
-<script type="text/javascript">
-  $(document).ready(function () {
-    // Activate tooltip
-    $('[data-toggle="tooltip"]').tooltip();
 
-    // Select/Deselect checkboxes
-    var checkbox = $('table tbody input[type="checkbox"]');
-    $("#selectAll").click(function () {
-      if (this.checked) {
-        checkbox.each(function () {
-          this.checked = true;
-        });
-      } else {
-        checkbox.each(function () {
-          this.checked = false;
-        });
-      }
-    });
-    checkbox.click(function () {
-      if (!this.checked) {
-        $("#selectAll").prop("checked", false);
-      }
-    });
-  });
-</script>
+</section>
