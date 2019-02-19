@@ -21,8 +21,8 @@ export class ApiService {
       return this.http.post(newUrl, keyword);
    }
 
-   saveOne(nameapi: string, semesterExam: SemesterExam) {
-      return this.http.post(this.baseUrl + nameapi, semesterExam);
+   saveOne(nameapi: string, data: any) {
+      return this.http.post(this.baseUrl + nameapi, data);
    }
    delete(nameapi: string, id: string) {
       return this.http.post(this.baseUrl + nameapi, id);
