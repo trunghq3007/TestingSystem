@@ -36,9 +36,9 @@
           <div class="row">
             <div class="col-md-4 col-md-offset-8">
               <div class="input-group input-group-sm">
-                <input type="text" class="form-control" placeholder="Enter Question content ..." [(ngModel)]="contentQuestion">
+                <input type="text" class="form-control" placeholder="Enter Question content ..." [(ngModel)]="searchStr" (keypress)="keyPressSearch($event)">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-info btn-flat" (click)="searchByContent(contentQuestion)">Search</button>
+                  <button type="button" class="btn btn-info btn-flat" (click)="searchByContent()">Search</button>
                 </span>
               </div>
             </div>
@@ -184,24 +184,31 @@
         </table>
         <div class="clearfix">
           <div class=hint-text>Showing
-            <select name="choisepage" (change)="choisePage()" [(ngModel)]="size">
+            <select name="choisepage" (change)="choisePage($event.target)">
               <option value="2">2</option>
               <option value="3">3</option>
+              <option value="5">5</option>
             </select>
             entries
           </div>
           <ul class="pagination">
-            <li class="page-item" [ngClass]="{disabled:currentPage===0}">
+            <li class="page-item" [ngClass]="{disabled:tabAllQuestion.currentPage===0}">
               <a (click)="setPage(0)"><i class="glyphicon glyphicon-step-backward"></i></a>
             </li>
-            <li class="page-item" [ngClass]="{disabled:currentPage===0}">
-              <a (click)="setPage(this.currentPage - 1)"><i class="glyphicon glyphicon-menu-left"></i></a>
+            <li class="page-item" [ngClass]="{disabled:tabAllQuestion.currentPage===0}">
+              <a (click)="previousPage()"><i class="glyphicon glyphicon-menu-left"></i></a>
             </li>
-            <li class="page-item" [ngClass]="{disabled:currentPage===pages}">
-              <a (click)="setPage(this.currentPage + 1)"><i class="glyphicon glyphicon-menu-right"></i></a>
+            <li class="page-item" [ngClass]="{disabled:tabAllQuestion.currentPage=== maxPage}">
+              <a (click)="nextPage()"><i class="glyphicon glyphicon-menu-right"></i></a>
             </li>
-            <li class="page-item" [ngClass]="{disabled:currentPage===pages}">
-              <a (click)="setPage(currentPage)"><i class="glyphicon glyphicon-step-forward"></i></a>
+            <li class="page-item" [ngClass]="{disabled:tabAllQuestion.currentPage=== maxPage}">
+              <a (click)="setPage(maxPage)"><i class="glyphicon glyphicon-step-forward"></i></a>
+            </li>
+          </ul>
+          <ul class="pagination">
+
+            <li class="paginate_button active">
+              <a href="#">{{ tabAllQuestion?.currentPage + 1 }}</a>
             </li>
           </ul>
         </div>

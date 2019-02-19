@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
 import { Question } from 'src/entity/Question';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -45,11 +45,15 @@ export class ListQuestionComponent implements OnInit {
   dataSource = new MatTableDataSource<Question>(this.listQuestion);
   selection = new SelectionModel<Question>(true, []);
 
-  size:number = 2;
-  sumQuestion: number;
-  currentPage: number = 0;
-  numberofpages: number = 0;
-  numberofpagesSearch: number = 0;
+  tabAllQuestion: TabInfo;
+  searchStr = '';
+  isSearching = false;
+  isCheckAll = false;
+  maxPage: number;
+  @Input()
+  numberOfQuestion: number;
+  @Input()
+  entities: number;
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -90,13 +94,11 @@ export class ListQuestionComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(225)]],
       status: ['', [Validators.required]]
     });
-    this.loadListQuestion(this.numberofpages.toString(), this.size.toString());
-    this.service.getQuestionSum().subscribe(
-      sum => {
-        this.sumQuestion = Number(sum.headers.get('SumQuestion')),
-          this.numberofpages = Math.trunc((this.sumQuestion) / (this.size))
-      }
-    );
+
+    this.tabAllQuestion = { currentPage: 0, entities: 0, sizeOfPage: 2 };
+
+    this.loadListQuestion();
+
     this.service.getType().subscribe(
       type => this.listType = type
     );
@@ -110,46 +112,54 @@ export class ListQuestionComponent implements OnInit {
       tag => this.listTag = tag
     );
   }
-  loadListQuestion(p: string, s: string) {
-    this.service.getQuestions(p, s).subscribe(
-      lquestion => {
-        this.listQuestion = lquestion;
-        this.dataSource.data = this.listQuestion;
-        console.log("pages:"+this.numberofpages+ "---size: "+this.size+ "--- curentPage:"+this.currentPage);
-      }
-    );
+  loadListQuestion() {
+    if (this.isSearching) {
+      this.service.searchQuestionByContent(this.searchStr, this.tabAllQuestion.currentPage + '', this.tabAllQuestion.sizeOfPage + '').subscribe(
+        lquestionbyContent => {
+          this.listQuestion = lquestionbyContent;
+          this.dataSource.data = this.listQuestion;
+        }
+      );
+      this.selection = new SelectionModel<Question>(true, []);
+      this.service.countSearchQuestion(this.searchStr).subscribe(
+        count => {
+          this.tabAllQuestion.entities = +count.headers.get('CountSearchQuestion'),
+          this.maxPage = Math.trunc(+count.headers.get('CountSearchQuestion') / this.tabAllQuestion.sizeOfPage),
+          console.log("a", this.maxPage)
+        }
+      );
+    } else {
+      this.service.getQuestions(
+        this.tabAllQuestion.currentPage + '',
+        this.tabAllQuestion.sizeOfPage + ''
+      ).subscribe(
+        lquestion => {
+          this.listQuestion = lquestion;
+          this.dataSource.data = this.listQuestion
+        }
+      );
+      this.selection = new SelectionModel<Question>(true, []);
+      this.service.getQuestionSum().subscribe(
+        sum => {this.tabAllQuestion.entities = +sum.headers.get('SumQuestion'),
+        this.maxPage = Math.trunc(+sum.headers.get('SumQuestion') / this.tabAllQuestion.sizeOfPage),
+          console.log("b", this.maxPage)}
+      );
+    }
+
   }
   /** function search by content question*/
-  contentQuestion: string;
-  countSearch: number;
-  searchByContent(contentQuestion) {
-    if (contentQuestion == undefined) {
-      contentQuestion = "";
+  searchByContent() {
+    this.tabAllQuestion.currentPage = 0;
+    if (this.searchStr !== '') {
+      this.isSearching = true;
+    } else {
+      this.isSearching = false;
     }
-    console.log(this.contentQuestion);
-    this.service.countSearchQuestion(contentQuestion).subscribe(
-      count => {
-        this.countSearch = Number(count.headers.get('CountSearchQuestion')),
-        console.log(this.currentPage+"   "+this.numberofpagesSearch);
-      }
-    );
-    console.log("pages:"+this.numberofpages+ "---size: "+this.size+ "--- curentPage:"+this.currentPage);
-
-    this.contentQuestion = contentQuestion;
-    this.service.searchQuestionByContent(contentQuestion, this.numberofpages.toString(), this.size.toString()).subscribe(
-      lquestionbyContent => {
-        this.listQuestion = lquestionbyContent;
-        this.dataSource.data = this.listQuestion;
-        console.table(this.listQuestion);
-      }
-    );
+    this.loadListQuestion();
   }
 
   loadPopupUpdate() {
     this.message = "";
-    this.selection.selected.forEach(element => {
-      console.log(element.id)
-    });
   }
 
   updateMuiltiQestion() {
@@ -158,50 +168,64 @@ export class ListQuestionComponent implements OnInit {
     } else {
       this.selection.selected.forEach(element => {
         element.questionLevel.id = this.levelSelected;
-        element.questionCategory.id = Number(this.categorySelected);
+        element.questionCategory.id = +this.categorySelected;
         element.questionTag.id = this.tagSelected;
-        // this.service.updateMutilQuestion(element).subscribe(
-        //   update => this.quesiton.push(update)
-        // );
-
         this.service.updateMutilQuestion1(element).subscribe(success => {
-          console.log(success);
+          update => this.quesiton.push(update)
         }, error => {
           console.log(error);
         });
-        console.log(element);
       });
       location.reload();
     }
   }
 
-  choisePage() {
-    this.currentPage = 0;
-    if (this.contentQuestion != undefined) {
-      this.searchByContent(this.contentQuestion);
-    } else {
-      this.loadListQuestion(this.currentPage.toString(), this.size.toString());
-    }
-    this.selection = new SelectionModel<Question>(true, []);
-    this.numberOfPage();
+  choisePage(e) {
+    this.tabAllQuestion.sizeOfPage = e.value;
+    this.tabAllQuestion.currentPage = 0;
+    this.loadListQuestion();
   }
 
-  setPage(page: number) {
-    this.numberOfPage();
-    this.currentPage = page;
-    if (this.contentQuestion != undefined) {
-      this.searchByContent(this.contentQuestion);
+  previousPage() {
+    if (this.tabAllQuestion.currentPage !== 0) {
+      this.tabAllQuestion.currentPage--;
     } else {
-      this.loadListQuestion(page.toString(), this.size.toString());
+      this.tabAllQuestion.currentPage = 0;
     }
-    this.selection = new SelectionModel<Question>(true, []);
+    this.loadListQuestion();
+    this.isCheckAll = false;
   }
-  numberOfPage(): number {
-    this.numberofpages = Math.trunc((this.sumQuestion) / (this.size));
-    return this.numberofpages;
+  nextPage() {
+    if (this.tabAllQuestion.currentPage === this.maxPage) {
+      this.tabAllQuestion.currentPage = this.maxPage;
+    } else if(this.maxPage === 1){
+      this.tabAllQuestion.currentPage = this.maxPage - 1;
+    } else {
+      this.tabAllQuestion.currentPage++;
+    }
+    this.loadListQuestion();
+    this.isCheckAll = false;
   }
-  // numberPageSearch():number{
-  //   // this.numberPageSearch = Math.trunc((this.countSearch) / (this.size));
-  //   return this.numberPageSearch;
-  // }
+  setPage(page: number) {
+    if(this.tabAllQuestion.currentPage === 1){
+      this.tabAllQuestion.currentPage = page - 1;
+    }else if(this.maxPage === 1){
+      this.tabAllQuestion.currentPage = this.maxPage - 1;
+    } else{
+      this.tabAllQuestion.currentPage = page;
+    }
+    console.log(this.tabAllQuestion.currentPage);
+
+    this.loadListQuestion();
+  }
+  keyPressSearch(e) {
+    if (e.charCode === 13) {
+      this.searchByContent();
+    }
+  }
+}
+export interface TabInfo {
+  currentPage: number;
+  entities: number;
+  sizeOfPage: number;
 }
