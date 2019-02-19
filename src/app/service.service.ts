@@ -40,10 +40,15 @@ export class ServiceService {
       tap(resp => resp.headers.get('SumQuestion'))
     );
   }
+  countSearchQuestion(content:string): Observable<HttpResponse<Object>> {
+    return this.http.get<HttpResponse<Object>>(this.url + `question/count-search-question?content=${content}`, { observe: 'response' }).pipe(
+      tap(resp => resp.headers.get('CountSearchQuestion'))
+    );
+  }
 
   //====== get list question by contents=====
-  getListQuestionByContent(content: String): Observable<Question[]> {
-    return this.http.get<Question[]>(this.url + `question/search-by-content/${content}`).pipe(
+  searchQuestionByContent(content: string, p:string, s:string): Observable<Question[]> {
+    return this.http.get<Question[]>(this.url + `question/search-by-content?contentSearch=${content}&page=${p}&size=${s}`).pipe(
       tap(),
       catchError(er => of([]))
     );
