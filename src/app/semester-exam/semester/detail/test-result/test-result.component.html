@@ -76,66 +76,52 @@
    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Bài Thi</h3>
+            <h3 class="modal-title" id="exampleModalLabel">Thêm đề vào kỳ thi</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form novalidate  novalidate [formGroup]="testFrm"
-               class="row justify-content-md-center">
+            <form novalidate novalidate [formGroup]="testFrm" class="row justify-content-md-center">
                <fieldset formGroupName="exam">
-                  <div class="form-group">
-                     <select style="width: 100%;" formControlName="examId">
-                        <option *ngFor="let item of exam" value="{{item.examId}}">{{item.title}}</option>
-                     </select>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label" for="exams">Loại đề thi</label>
+                     <div class="col-sm-9">
+                        <select style="width: 100%;" class="input-xs form-control" formControlName="examId" id="exams"
+                           style="font-size: 14px;">
+                           <option value="null" selected="true">Vui long chon</option>
+                           <option *ngFor="let item of exam" value="{{item.examId}}">{{item.title}}</option>
+                        </select>
+                     </div>
                   </div>
                </fieldset>
-               <div class="form-group">
-                  <div class="form-group">
-                     <label for="example-text-input" class="col-2 col-form-label">
-                        Tên Bài Thi:
-                     </label>
-                     <div class="col-10">
-                        <input class="form-control" type="text" id="example-text-input" placeholder="testName"
-                           formControlName="testName" autocomplete="off">
-                        <div *ngIf="testFrm.get('testName').invalid
+               <div class="form-group row">
+                  <label class="col-sm-3 control-label" for="test">Tên Bài Thi:</label>
+                  <div class="col-sm-9">
+                     <input class="form-control" type="text" id="test" placeholder="testName" formControlName="testName"
+                        autocomplete="off">
+                     <div *ngIf="testFrm.get('testName').invalid
                                    && testFrm.get('testName').touched" style="color: red" role="alert">
-                           <ng-container *ngIf="testFrm.get('testName').hasError('required')">
-                              TestName is required
-                           </ng-container>
-                           <ng-container *ngIf="testFrm.get('testName').hasError('minlength')">
-                              Min length
-                              {{ testFrm.get('testName').getError('minlength').requiredLength }}
-                           </ng-container>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label for="example-text-input" class="col-2 col-form-label">
-                        status:
-                     </label>
-                     <div class="col-10">
-                        <input class="form-control" type="text" id="example-text-input" placeholder="status"
-                           formControlName="status" autocomplete="off">
-                        <div *ngIf="testFrm.get('status').invalid
-                                   && testFrm.get('status').touched" style="color: red" role="alert">
-                           <ng-container *ngIf="testFrm.get('status').hasError('required')">
-                              status is required
-                           </ng-container>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal-footer">
-                     <div class="form-group">
-                        <div style="float: right;" class="col-10 offset-2">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                           <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()">Add</button>
-                        </div>
+                        <ng-container *ngIf="testFrm.get('testName').hasError('required')">
+                           TestName is required
+                        </ng-container>
+                        <ng-container *ngIf="testFrm.get('testName').hasError('minlength')">
+                           Min length
+                           {{ testFrm.get('testName').getError('minlength').requiredLength }}
+                        </ng-container>
                      </div>
                   </div>
                </div>
+
             </form>
+         </div>
+         <div class="modal-footer">
+            <div class="form-group">
+               <div style="float: right;" class="col-10 offset-2">
+                  <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               </div>
+            </div>
          </div>
 
       </div>
