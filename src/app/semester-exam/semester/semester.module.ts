@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { SemesterRoutingModule } from './semester-routing.module';
 import { ListComponent } from './list/list.component';
@@ -42,7 +43,8 @@ import { TestResultComponent } from './detail/test-result/test-result.component'
       TimepickerModule.forRoot(),
       BsDatepickerModule.forRoot(),
       ModalModule.forRoot(),
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      NgxPaginationModule
    ]
 })
 export class SemesterModule { }

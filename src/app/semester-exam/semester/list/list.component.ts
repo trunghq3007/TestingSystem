@@ -3,6 +3,12 @@ import { ApiService } from '../../service/api.service';
 import { SemesterExam } from '../../models/SemesterExam';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { map, switchMap } from 'rxjs/operators';
+
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/switchMap';
 
 declare const modal: SemesterExam;
 
@@ -20,8 +26,24 @@ export class ListComponent implements OnInit {
    isCheck: boolean = false;
    public obj = {};
    public semesterExamList = [];
+   configPagination: any;
+   constructor(private service: ApiService, private modalService: BsModalService, private route: ActivatedRoute, private router: Router) {
+      this.configPagination = {
+         currentPage: 1,
+         itemsPerPage: 1
+      };
 
-   constructor(private service: ApiService, private modalService: BsModalService) { }
+      // this.route.queryParamMap.pipe(params => params.get('page')).subscribe(page => this.configPagination.currentPage = page);
+   }
+
+   pageChange(newPage: number) {
+      this.router.navigate(['manager/semester/'], { queryParams: { page: newPage } });
+   }
+
+   items:any;
+   changeItemsPerPage(items) {
+
+   }
 
    enterSearch(event) {
       if (event.key == "Enter") {
