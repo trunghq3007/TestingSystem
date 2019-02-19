@@ -24,7 +24,7 @@ public class SemesterExam {
 	private String name;
 	@Column(name = "semester_description")
 	private String description;
-    
+
 	@ManyToOne
 	@JoinColumn(name = "create_by", nullable = false)
 	private User user;
