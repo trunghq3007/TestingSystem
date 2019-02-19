@@ -1,8 +1,10 @@
+import { User } from './User';
+
 export interface SemesterExam {
    id: string;
    name: string;
    description: string;
-   creator: string;
+   user: User;
    status: number;
    startTime: Date;
    endTime: Date;

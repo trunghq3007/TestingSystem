@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SemesterExam } from '../models/SemesterExam';
 
 @Injectable({
    providedIn: 'root'
@@ -16,21 +15,21 @@ export class ApiService {
       return this.http.get(newUrl);
    }
 
-
-   saveOne(nameapi: string, semesterExam: SemesterExam) {
-      return this.http.post(this.baseUrl + nameapi, semesterExam);
-   }
-
    search(nameapi: string, keyword: string): Observable<any> {
       var newUrl = this.baseUrl + nameapi;
       return this.http.post(newUrl, keyword);
    }
 
-   // saveOne(nameapi: string, semesterExam: SemesterExam) {
-   //    return this.http.post(this.baseUrl + nameapi, semesterExam);
-   // }
-   delete(nameapi: string, id: string) {
+
+   saveOne(nameapi: string, data: any) {
+      return this.http.post(this.baseUrl + nameapi, data);
+   }
+   delete(nameapi: string, id: string): Observable<any> {
       return this.http.post(this.baseUrl + nameapi, id);
+   }
+
+   getOne(nameapi: string, id: any):Observable<any> {
+      return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
 

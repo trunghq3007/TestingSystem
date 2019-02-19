@@ -23,11 +23,7 @@
                   <div *ngIf="profileFrm.get('name').invalid
                                    && profileFrm.get('name').touched" style="color: red" role="alert">
                      <ng-container *ngIf="profileFrm.get('name').hasError('required')">
-                        semester name is required
-                     </ng-container>
-                     <ng-container *ngIf="profileFrm.get('name').hasError('minlength')">
-                        Min length
-                        {{ profileFrm.get('name').getError('minlength').requiredLength }}
+                        Tên kì thi không được để trống
                      </ng-container>
                   </div>
                </div>

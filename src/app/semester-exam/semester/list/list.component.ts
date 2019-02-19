@@ -1,8 +1,17 @@
 
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { SemesterExam } from '../../models/SemesterExam';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TabsetComponent } from 'ngx-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { map, switchMap } from 'rxjs/operators';
+
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/switchMap';
+
+declare const modal: SemesterExam;
 
 @Component({
    selector: 'app-list',
@@ -11,14 +20,33 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ListComponent implements OnInit {
 
+   @ViewChild('staticTabs') staticTabs: TabsetComponent;
+
    keyword: string = "";
    selectedAll: any;
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
+   public obj = {};
    public semesterExamList = [];
+   configPagination: any;
+   constructor(private service: ApiService, private modalService: BsModalService, private route: ActivatedRoute, private router: Router) {
+      this.configPagination = {
+         currentPage: 1,
+         itemsPerPage: 1
+      };
 
-   constructor(private service: ApiService, private modalService: BsModalService) { }
+      // this.route.queryParamMap.pipe(params => params.get('page')).subscribe(page => this.configPagination.currentPage = page);
+   }
+
+   pageChange(newPage: number) {
+      this.router.navigate(['manager/semester/'], { queryParams: { page: newPage } });
+   }
+
+   changeItemsPerPage(event) {
+      console.log(event);
+      this.configPagination.itemsPerPage = event;
+   }
 
    enterSearch(event) {
       if (event.key == "Enter") {
@@ -57,14 +85,17 @@ export class ListComponent implements OnInit {
          if (temp) {
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                  // console.log(result.data);
-                  // this.semesterExamList = result.data;
+                  this.semesterExamList = result.data;
                });
             }
             this.arrDelete = [];
          }
       }
 
+   }
+
+   semesterExamTrackByFn(semesterExam: SemesterExam) {
+      return semesterExam.id;
    }
 
    searchByKeyword() {
@@ -79,15 +110,30 @@ export class ListComponent implements OnInit {
       }
    }
 
-   openModal(template: TemplateRef<any>) {
-      this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+
+   openModal(id: string, template: TemplateRef<any>) {
+      this.service.getOne('semesterexam/getone', id).subscribe(result => {
+         this.obj = result.data;
+         console.log(this.obj);
+         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+      })
 
    }
 
-   ngOnInit() {
+   getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
 
+         console.log(this.semesterExamList);
+
       });
+   }
+
+   selectTab(tabId: number) {
+      this.staticTabs.tabs[tabId].active = true;
+   }
+
+   ngOnInit() {
+      this.getListSemesterExam();
    }
 }
