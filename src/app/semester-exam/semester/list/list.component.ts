@@ -96,12 +96,13 @@ export class ListComponent implements OnInit {
    getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
+         console.log(this.semesterExamList);
       });
    }
 
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
-    }
+   }
 
    ngOnInit() {
       this.getListSemesterExam();
