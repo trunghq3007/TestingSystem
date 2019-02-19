@@ -89,8 +89,8 @@
                      <div class="col-sm-9">
                         <select style="width: 100%;" class="input-xs form-control" formControlName="examId" id="exams"
                            style="font-size: 14px;">
-                           <option value="null" selected="true">Vui long chon</option>
-                           <option *ngFor="let item of exam" value="{{item.examId}}">{{item.title}}</option>
+                           <option value="null" >Vui long chon</option>
+                           <option *ngFor="let item of exam" value="{{item.examId}}" [selected]="item.examId=='Exam001'">{{item.title}}</option>
                         </select>
                      </div>
                   </div>
