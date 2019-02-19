@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.css']
+   selector: 'app-detail',
+   templateUrl: './detail.component.html',
+   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
 
-  constructor() { }
+   constructor(private activateRoute: ActivatedRoute) { }
 
-  ngOnInit() {
-  }
+   semesterID: string;
+   ngOnInit() {
+      this.semesterID = this.activateRoute.snapshot.paramMap.get('id');
+   }
 
 }
