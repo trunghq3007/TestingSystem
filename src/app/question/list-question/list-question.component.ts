@@ -95,7 +95,7 @@ export class ListQuestionComponent implements OnInit {
       status: ['', [Validators.required]]
     });
 
-    this.tabAllQuestion = { currentPage: 0, entities: 0, sizeOfPage: 2 };
+    this.tabAllQuestion = { currentPage: 0, entities: 0, sizeOfPage: 5 };
 
     this.loadListQuestion();
 
@@ -145,7 +145,6 @@ export class ListQuestionComponent implements OnInit {
           console.log("b", this.maxPage)}
       );
     }
-
   }
   /** function search by content question*/
   searchByContent() {

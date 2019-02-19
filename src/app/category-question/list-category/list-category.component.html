@@ -20,56 +20,110 @@
             <div class="col-sm-6">
               <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add New Category</span></a>
-              <!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i>
-                <span>Delete</span></a> -->
             </div>
           </div>
         </div>
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <!-- <th>
-                <span class="custom-checkbox">
-                  <input type="checkbox" id="selectAll">
-                  <label for="selectAll"></label>
+
+        <!--------------- search---------------->
+        <div class="table-title-2">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-8">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Question content...">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-info btn-flat">Search</button>
                 </span>
-              </th> -->
-              <th style="width: 30%;">CategoryName</th>
-              <th style="width: 10%;">UserIdCreated</th>
-              <th style="width: 30%;">DateCreated</th>
-              <th style="width: 10%;">Status</th>
-              <th style="width: 17.5%;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor='let category of categorys; let i = index; trackBy: categoryTrackByFn'>
-              <td>{{category.categoryName}}</td>
-              <td>{{category.userCategory["id"]}}</td>
-              <td>{{category.dateCreated | date:'yyy/MM/dd'}}</td>
-              <td>{{category.status}}</td>
-              <td>
-                <a href="#viewEmployeeModal" class="View" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForUpdateAndView(category)"><i
-                    class="material-icons" data-toggle="tooltip" title="View">&#xe8f4;</i></a>
-                <a href="#editEmployeeModal" class="edit" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForUpdateAndView(category)"><i
-                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" style="margin-right: 5px;" (click)="getCategoryForCreateAndDelete(category)"><i
-                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-              </td>
-            </tr>
-          </tbody>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- table -->
+        <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-hover">
+
+          <!-- Category Column -->
+          <ng-container matColumnDef="CategoryName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              style="width: 100px; font-size: 18px; font-weight: bold;">
+              CategoryName </th>
+            <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+          </ng-container>
+
+          <!-- Creat_by Column -->
+          <ng-container matColumnDef="UserCreated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              style="width: 130px; font-size: 18px; font-weight: bold;">
+              UserCreated </th>
+            <td mat-cell *matCellDef="let element"> {{element.userCategory.fullName}} </td>
+          </ng-container>
+
+          <!-- Date Column -->
+          <ng-container matColumnDef="DateCreated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              style="width: 230px; font-size: 18px; font-weight: bold;">
+              DateCreated </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateCreated | date:'d/M/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              style="width: 121.8px; font-size: 18px; font-weight: bold;">
+              Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+              rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending"
+              style="width: 300px; font-size: 18px; font-weight: bold;">
+              Action </th>
+            <td mat-cell *matCellDef="let element">
+
+              <a href="#addEmployeeModal" class="" data-toggle="modal" style="margin-right: 5px;"
+                (click)="getCategoryForCreateAndDelete(element)"><i class="material-icons" data-toggle="tooltip"
+                  title="Add">&#xe145;</i></a>
+              <a href="#viewEmployeeModal" class="View" data-toggle="modal" style="margin-right: 5px;"
+                (click)="getCategoryForUpdateAndView(element)"><i class="material-icons" data-toggle="tooltip"
+                  title="View">&#xe8f4;</i></a>
+              <a href="#editEmployeeModal" class="edit" data-toggle="modal" style="margin-right: 5px;"
+                (click)="getCategoryForUpdateAndView(element)"><i class="material-icons" data-toggle="tooltip"
+                  title="Edit">&#xE254;</i></a>
+              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" style="margin-right: 5px;"
+                (click)="getCategoryForCreateAndDelete(element)"><i class="material-icons" data-toggle="tooltip"
+                  title="Delete">&#xE872;</i></a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
         <div class="clearfix">
-          <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+          <div class=hint-text>Showing
+            <select name="choisepage" (change)="choisePage()" [(ngModel)]="size">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+            entries
+          </div>
           <ul class="pagination">
-            <li class="page-item disabled"><a href="#">Previous</a></li>
-            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item "><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">4</a></li>
-            <li class="page-item"><a href="#" class="page-link">5</a></li>
-            <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            <li class="page-item" [ngClass]="{disabled:currentPage===0}">
+              <a (click)="setPage(0)"><i class="glyphicon glyphicon-step-backward"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{hide:currentPage===0}">
+              <a (click)="setPage(this.currentPage - 1)"><i class="glyphicon glyphicon-menu-left"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{hide:currentPage===pages-1}">
+              <a (click)="setPage(this.currentPage + 1)"><i class="glyphicon glyphicon-menu-right"></i></a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:currentPage===pages-1}">
+              <a (click)="setPage(pages - 1)"><i class="glyphicon glyphicon-step-forward"></i></a>
+            </li>
           </ul>
         </div>
+
       </div>
     </div>
 
@@ -100,52 +154,6 @@
                   Min length {{categoryFrm.get('categoryName').getError('minlength').requiredLength}}
                 </ng-container>
               </div>
-
-
-              <div class="form-group">
-                <label>userIdCreated:</label>
-                <input type="text" class="form-control" formControlName="userIdCreated" [ngClass]="{
-                  'is-valid': categoryFrm.get('userIdCreated').valid,
-                  'is-invalid': categoryFrm.get('userIdCreated').invalid
-                  && categoryFrm.get('userIdCreated').touched
-                }">
-              </div>
-              <div *ngIf="categoryFrm.get('userIdCreated').invalid && categoryFrm.get('userIdCreated').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm.get('userIdCreated').hasError('required')">
-                  userIdCreated is required
-                </ng-container>
-              </div>
-
-
-              <div class="form-group">
-                <label>dateCreated:</label>
-                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
-                  'is-valid': categoryFrm.get('dateCreated').valid,
-                  'is-invalid': categoryFrm.get('dateCreated').invalid
-                  && categoryFrm.get('dateCreated').touched
-                }">
-              </div>
-              <div *ngIf="categoryFrm.get('dateCreated').invalid && categoryFrm.get('dateCreated').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm.get('dateCreated').hasError('required')">
-                  dateCreated is required
-                </ng-container>
-              </div>
-
-
-              <div class="form-group">
-                <label>status:</label>
-                <input type="text" class="form-control" formControlName="status" [ngClass]="{
-                  'is-valid': categoryFrm.get('status').valid,
-                  'is-invalid': categoryFrm.get('status').invalid
-                  && categoryFrm.get('status').touched
-                }">
-              </div>
-              <div *ngIf="categoryFrm.get('status').invalid && categoryFrm.get('status').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm.get('status').hasError('required')">
-                  status is required
-                </ng-container>
-              </div>
-
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -181,47 +189,6 @@
                   Min length {{categoryFrm2.get('categoryName').getError('minlength').requiredLength}}
                 </ng-container>
               </div>
-              <div class="form-group">
-                <label>userIdCreated:</label>
-                <input type="text" class="form-control" formControlName="userIdCreated" [ngClass]="{
-                      'is-valid': categoryFrm2.get('userIdCreated').valid,
-                      'is-invalid': categoryFrm2.get('userIdCreated').invalid
-                      && categoryFrm2.get('userIdCreated').touched
-                    }">
-              </div>
-              <div *ngIf="categoryFrm2.get('userIdCreated').invalid && categoryFrm2.get('userIdCreated').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm2.get('userIdCreated').hasError('required')">
-                  userIdCreated is required
-                </ng-container>
-              </div>
-              <div class="form-group">
-                <label>dateCreated:</label>
-                <input type="text" class="form-control" formControlName="dateCreated" [ngClass]="{
-                  'is-valid': categoryFrm2.get('dateCreated').valid,
-                  'is-invalid': categoryFrm2.get('dateCreated').invalid
-                  && categoryFrm2.get('dateCreated').touched
-                }">
-              </div>
-              <div *ngIf="categoryFrm2.get('dateCreated').invalid && categoryFrm2.get('dateCreated').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm2.get('dateCreated').hasError('required')">
-                  dateCreated is required
-                </ng-container>
-              </div>
-
-
-              <div class="form-group">
-                <label>status:</label>
-                <input type="text" class="form-control" formControlName="status" [ngClass]="{
-                      'is-valid': categoryFrm2.get('status').valid,
-                      'is-invalid': categoryFrm2.get('status').invalid
-                      && categoryFrm2.get('status').touched
-                    }">
-              </div>
-              <div *ngIf="categoryFrm2.get('status').invalid && categoryFrm2.get('status').touched" class="alert alert-danger">
-                <ng-container *ngIf="categoryFrm2.get('status').hasError('required')">
-                  status is required
-                </ng-container>
-              </div>
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -245,20 +212,20 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>categoryName:</label>
-                <input type="text" class="form-control" formControlName="categoryName" disabled="true">
+                <input type="text" class="form-control" formControlName="categoryName" [disabled]="true">
               </div>
               <div class="form-group">
                 <label>userIdCreated:</label>
-                <input type="text" class="form-control" formControlName="userIdCreated" disabled="true">
+                <input type="text" class="form-control" formControlName="userIdCreated" [disabled]="true">
               </div>
               <div class="form-group">
                 <label>dateCreated:</label>
                 <!-- <textarea class="form-control" formControlName="dateCreated" disabled="true"></textarea> -->
-                <input type="text" class="form-control" formControlName="dateCreated" disabled="true">
+                <input type="text" class="form-control" formControlName="dateCreated" [disabled]="true">
               </div>
               <div class="form-group">
                 <label>status:</label>
-                <input type="text" class="form-control" formControlName="status" disabled="true">
+                <input type="text" class="form-control" formControlName="status" [disabled]="true">
               </div>
             </div>
             <div class="modal-footer">
