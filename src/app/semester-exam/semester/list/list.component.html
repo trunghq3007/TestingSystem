@@ -29,15 +29,17 @@
                               <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi">
                            </div>
                            <div class="col-md-4">
-                              <select type="text" class="input-sm form-control">
+                              <select type="text" class="input-sm form-control" [(ngModel)]="objFilter.status"
+                                 name="status">
                                  <option value="">Trạng thái</option>
-                                 <option value="0">draft</option>
-                                 <option value="1">public</option>
-                                 <option value="2">done</option>
+                                 <option [ngValue]="0">draft</option>
+                                 <option [ngValue]="1">public</option>
+                                 <option [ngValue]="2">done</option>
                               </select>
                            </div>
                            <div class="col-md-4">
-                              <input type="text" class="input-sm form-control" placeholder="Người tạo">
+                              <input type="text" class="input-sm form-control" placeholder="Người tạo"
+                                 [(ngModel)]="objFilter.user" name="user">
                            </div>
                         </div>
 
@@ -45,9 +47,10 @@
                            <div class="col-sm-4">
 
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.startTime" name="startTime" #startTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="startTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
@@ -55,17 +58,18 @@
                            </div>
                            <div class="col-md-4">
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.endTime" name="endTime" #endTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="endTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
                               </div>
                            </div>
                            <div class="col-md-4 text-center">
-                              <button type="button" class="btn btn-primary">
-                                 <span class="glyphicon glyphicon-filter"></span> Submit
+                              <button type="button" class="btn btn-primary" (click)="getDataFilter()">
+                                 <span class="glyphicon glyphicon-filter"></span> filter
                               </button>
                            </div>
                         </div>

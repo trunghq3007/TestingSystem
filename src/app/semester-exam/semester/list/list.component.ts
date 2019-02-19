@@ -21,8 +21,13 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
+   public obj={};
    public objFilter = {
-      status: ''
+      name: '',
+      status: '',
+      user:'',
+      startTime: '',
+      endTime: ''
    };
    public semesterExamList = [];
    configPagination: any;
@@ -116,6 +121,10 @@ export class ListComponent implements OnInit {
 
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
+   }
+
+   getDataFilter() {
+      console.log(this.objFilter);
    }
 
    ngOnInit() {
