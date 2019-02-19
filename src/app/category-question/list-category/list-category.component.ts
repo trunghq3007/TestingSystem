@@ -69,10 +69,7 @@ export class ListCategoryComponent implements OnInit {
       sum => {
         this.sumCategory = sum.headers.get('SumCategory'),
           this.sumC = Number(this.sumCategory),
-          console.log('question sum', this.sumC),
-          console.log('size', this.size),
-          this.pages = Math.trunc((this.sumC) / (this.size)),
-          console.log('pages', this.pages)
+          this.pages = Math.trunc((this.sumC) / (this.size))
       }
     );
   }
