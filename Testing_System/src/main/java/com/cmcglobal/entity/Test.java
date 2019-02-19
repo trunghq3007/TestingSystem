@@ -8,77 +8,79 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Test {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "test_id")
-    private int testID;
-    @Column(name = "test_name")
-    private String testName;
-    @Column(name = "status")
-    private int status;
-    @ManyToOne
-    @JoinColumn(name = "exam_Id")
-    private Exam exam;
-    @ManyToOne
-    @JoinColumn(name = "semester_exam_id")
-    private SemesterExam semesterExam;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "test_id")
+	private int testID;
+	@Column(name = "test_name")
+	private String testName;
+	@Column(name = "status")
+	private int status;
 
-    public Test() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	@ManyToOne
+	@JoinColumn(name = "exam_Id")
+	private Exam exam;
 
-    public Test(int testID, int candidateTestID, String semesterExamID, String testName, int status, Exam exam) {
-        super();
-        this.testID = testID;
-        this.testName = testName;
-        this.status = status;
-        this.exam = exam;
-    }
+	@ManyToOne
+	@JoinColumn(name = "semester_exam_id")
+	private SemesterExam semesterExam;
 
-    public int getTestID() {
-        return testID;
-    }
+	public Test() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setTestID(int testID) {
-        this.testID = testID;
-    }
+	public Test(int testID, int candidateTestID, String semesterExamID, String testName, int status, Exam exam) {
+		super();
+		this.testID = testID;
+		this.testName = testName;
+		this.status = status;
+		this.exam = exam;
+	}
 
-    public String getTestName() {
-        return testName;
-    }
+	public int getTestID() {
+		return testID;
+	}
 
-    public void setTestName(String testName) {
-        this.testName = testName;
-    }
+	public void setTestID(int testID) {
+		this.testID = testID;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public String getTestName() {
+		return testName;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
 
-    public Exam getExam() {
-        return exam;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public SemesterExam getSemesterExam() {
-        return semesterExam;
-    }
+	public Exam getExam() {
+		return exam;
+	}
 
-    public void setSemesterExam(SemesterExam semesterExam) {
-        this.semesterExam = semesterExam;
-    }
-    
-    
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+
+	public SemesterExam getSemesterExam() {
+		return semesterExam;
+	}
+
+	public void setSemesterExam(SemesterExam semesterExam) {
+		this.semesterExam = semesterExam;
+	}
 
 }

@@ -13,12 +13,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Candidate {
 	@Id
 	@GeneratedValue
-	@Column(name="candidate_id")
+	@Column(name = "candidate_id")
 	private int id;
+
 	@ManyToOne
 	@JoinColumn(name = "semester_exam_id")
 	@JsonIgnoreProperties("candidates")
 	private SemesterExam semesterExam;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	@JsonIgnoreProperties("candidates")
@@ -48,5 +50,4 @@ public class Candidate {
 		this.user = user;
 	}
 
-	
 }
