@@ -2,7 +2,6 @@ package com.cmcglobal.entity;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,26 +28,16 @@ public class User implements Serializable {
 	private String password;
 	private int status;
 	@OneToMany(mappedBy = "userCreated", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("user")
 	private List<Exam> exams;
+
+//	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinTable(name = "candidate", joinColumns = { @JoinColumn(name = "user_id") },inverseJoinColumns = { @JoinColumn(name = "semester_exam_id") })
+//	private List<Semester> semester= new ArrayList<Semester>();
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonIgnoreProperties("user")
 	private List<Candidate> candidates;
-	/*
-	 * @ManyToMany(fetch = FetchType.EAGER)
-	 * 
-	 * @JoinTable(name = "candidate", joinColumns = @JoinColumn(name = "user_id"),
-	 * inverseJoinColumns = @JoinColumn(name = "semester_exam_id")) private
-	 * List<SemesterExam> semesters = new ArrayList<SemesterExam>();
-	 */
-//
-//	public List<SemesterExam> getSemesters() {
-//		return semesters;
-//	}
-//
-//	public void setSemesters(List<SemesterExam> semesters) {
-//		this.semesters = semesters;
-//	}
 
 	public int getUserId() {
 		return userId;

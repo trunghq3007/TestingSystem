@@ -19,7 +19,6 @@ public class Candidate {
 	@JoinColumn(name = "semester_exam_id")
 	@JsonIgnoreProperties("candidates")
 	private SemesterExam semesterExam;
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	@JsonIgnoreProperties("candidates")
