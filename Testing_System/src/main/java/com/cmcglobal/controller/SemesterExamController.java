@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,7 @@ public class SemesterExamController {
 	@PostMapping("/add")
 	public ResponseEntity<ServiceResult> create(@RequestBody SemesterExam semesterExam) {
 //		semesterExam.setCreator("1");
+		
 		return new ResponseEntity<ServiceResult>(examService.create(semesterExam), HttpStatus.OK);
 	}
 
@@ -79,5 +81,20 @@ public class SemesterExamController {
 	@PostMapping("/delete")
 	public ResponseEntity<ServiceResult> delete(@RequestBody String id) {
 		return new ResponseEntity<ServiceResult>(examService.delete(id), HttpStatus.OK);
+	}
+
+	/**
+	 * Create by: dvthuan - CMC
+	 * Create date: Feb 18, 2019
+	 * Modifier: dvthuan
+	 * Modified date: Feb 18, 2019
+	 * Description: get one by id
+	 * Version 1.0
+	 * @param id 
+	 * @return
+	 */
+	@GetMapping("/getone/{id}")
+	public ResponseEntity<ServiceResult> findById(@PathVariable String id) {
+		return new ResponseEntity<ServiceResult>(examService.findById(id), HttpStatus.OK);
 	}
 }

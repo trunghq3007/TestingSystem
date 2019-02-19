@@ -52,8 +52,10 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	}
 
 	@Override
-	public ServiceResult getSemesterListByUserId(int userId) {
-		
-		return null;
+	public ServiceResult findById(String id) {
+		ServiceResult result = new ServiceResult();
+		result.setData(examRepository.findById(id));
+		return result;
 	}
+
 }
