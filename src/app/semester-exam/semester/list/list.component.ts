@@ -116,12 +116,6 @@ export class ListComponent implements OnInit {
    getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
-<<<<<<< HEAD
-
-         console.log(this.semesterExamList);
-
-=======
->>>>>>> a289d51b3a3be1de314686bf851a89e230125573
       });
    }
 
