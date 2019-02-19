@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SemesterExam } from '../models/SemesterExam';
 
 @Injectable({
    providedIn: 'root'
@@ -24,12 +23,12 @@ export class ApiService {
    saveOne(nameapi: string, data: any) {
       return this.http.post(this.baseUrl + nameapi, data);
    }
-   delete(nameapi: string, id: string) {
+   delete(nameapi: string, id: string): Observable<any> {
       return this.http.post(this.baseUrl + nameapi, id);
    }
 
-   getOne(nameapi: string, id: any) {
-      return this.http.post(this.baseUrl + nameapi, id);
+   getOne(nameapi: string, id: any):Observable<any> {
+      return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
 }

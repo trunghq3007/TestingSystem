@@ -1,7 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { SemesterExam } from '../../models/SemesterExam';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TabsetComponent } from 'ngx-bootstrap';
+
+declare const modal: SemesterExam;
 
 @Component({
    selector: 'app-list',
@@ -9,11 +12,13 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
    styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+   @ViewChild('staticTabs') staticTabs: TabsetComponent;
    keyword: string = "";
    selectedAll: any;
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
+   public obj = {};
    public semesterExamList = [];
 
    constructor(private service: ApiService, private modalService: BsModalService) { }
@@ -55,7 +60,7 @@ export class ListComponent implements OnInit {
          if (temp) {
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                  this.getListSemesterExam();
+                  this.semesterExamList = result.data;
                });
             }
             this.arrDelete = [];
@@ -80,8 +85,12 @@ export class ListComponent implements OnInit {
       }
    }
 
-   openModal(template: TemplateRef<any>) {
-      this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+   openModal(id: string, template: TemplateRef<any>) {
+      this.service.getOne('semesterexam/getone', id).subscribe(result => {
+         this.obj = result.data;
+         console.log(this.obj);
+         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+      })
    }
 
    getListSemesterExam() {
@@ -89,6 +98,10 @@ export class ListComponent implements OnInit {
          this.semesterExamList = result.data;
       });
    }
+
+   selectTab(tabId: number) {
+      this.staticTabs.tabs[tabId].active = true;
+    }
 
    ngOnInit() {
       this.getListSemesterExam();

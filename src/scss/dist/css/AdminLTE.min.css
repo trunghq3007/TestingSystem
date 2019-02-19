@@ -188,10 +188,11 @@
 	}
 	/* Modal styles */
 	.modal .modal-dialog {
-		max-width: 400px;
+		/* max-width: 400px; */
+		max-width: 100%;
 	}
 	.modal .modal-header, .modal .modal-body, .modal .modal-footer {
-		padding: 20px 30px;
+      padding: 20px 30px;
 	}
 	.modal .modal-content {
 		border-radius: 3px;
@@ -213,7 +214,7 @@
 	}
 	.modal .btn {
 		border-radius: 2px;
-		min-width: 100px;
+		/* min-width: 100px; */
 	}
 	.modal form label {
 		font-weight: normal;

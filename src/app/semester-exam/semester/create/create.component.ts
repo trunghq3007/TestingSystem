@@ -35,7 +35,7 @@ export class CreateComponent implements OnInit {
       };
 
       this.profileFrm = this.fb.group({
-         name: ['', [Validators.required, Validators.minLength(5)]],
+         name: ['', [Validators.required]],
          startTime: [new Date(), [Validators.required]],
          endTime: ['', [Validators.required]],
          description: ' ',
