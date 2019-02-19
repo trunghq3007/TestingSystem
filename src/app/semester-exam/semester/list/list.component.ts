@@ -106,8 +106,8 @@ export class ListComponent implements OnInit {
 
    openModal(id: string, template: TemplateRef<any>) {
       this.service.getOne('semesterexam/getone', id).subscribe(result => {
-         this.obj = result.data;
-         console.log(this.obj);
+         // this.obj = result.data;
+         // console.log(this.obj);
          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       })
 
