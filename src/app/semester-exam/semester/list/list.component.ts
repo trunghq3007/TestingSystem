@@ -40,9 +40,9 @@ export class ListComponent implements OnInit {
       this.router.navigate(['manager/semester/'], { queryParams: { page: newPage } });
    }
 
-   items:any;
-   changeItemsPerPage(items) {
-
+   changeItemsPerPage(event) {
+      console.log(event);
+      this.configPagination.itemsPerPage = event;
    }
 
    enterSearch(event) {
