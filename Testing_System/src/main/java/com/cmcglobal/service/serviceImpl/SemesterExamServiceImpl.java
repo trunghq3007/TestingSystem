@@ -80,13 +80,13 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		return result;
 	}
 
-<<<<<<< HEAD
 	@Override
 	public ServiceResult filter(String name) {
 		ServiceResult result = new ServiceResult();
 		result.setData(examRepository.filterByAll(name));
 		return result;
-=======
+	}
+
 	public void getInformationOfSemester(String id) {
 		SemesterExam semesterExam = examRepository.findById(id).get();
 		List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
@@ -95,7 +95,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		List<Exam> exams = new ArrayList<Exam>();
 		int total_number_question = 0;
 		for (Candidate candidate : list_candidate) {
-			
+
 			User user = userRepository.findById(candidate.getUser().getUserId()).get();
 			user_join.add(user);
 
@@ -105,7 +105,6 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 			exams.add(exam);
 			total_number_question += exam.getNumberOfQuestion();
 		}
->>>>>>> 405c92c257a8ad9260db2da1c5cc8f44420301f2
 	}
 
 }
