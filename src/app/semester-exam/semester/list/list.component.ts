@@ -1,3 +1,4 @@
+
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { SemesterExam } from '../model/SemesterExam';
@@ -11,7 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
    styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+
    @ViewChild('staticTabs') staticTabs: TabsetComponent;
+
    keyword: string = "";
    selectedAll: any;
    modalRef: BsModalRef;
@@ -100,12 +103,14 @@ export class ListComponent implements OnInit {
       }
    }
 
+
    openModal(id: string, template: TemplateRef<any>) {
       this.service.getOne('semesterexam/getone', id).subscribe(result => {
          this.obj = result.data;
-         console.log(this.obj);
+         // console.log(this.obj);
          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       })
+
    }
 
    getListSemesterExam() {

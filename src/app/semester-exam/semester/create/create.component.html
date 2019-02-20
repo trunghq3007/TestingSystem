@@ -34,6 +34,7 @@
                <div class="col-sm-4">
                   <div class="input-group">
                      <input type="text" placeholder="Chọn ngày bắt đầu" class="form-control" bsDatepicker
+
                         #start="bsDatepicker" formControlName="startTime" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                         (ngModelChange)="getStartTime($event)" [bsValue]="startTime">
                      <div class="input-group-btn">
@@ -53,6 +54,7 @@
                <label class="col-sm-2 control-label">Ngày kết thúc</label>
                <div class="col-sm-4">
                   <div class="input-group">
+
                      <input type="text" placeholder="Chọn ngày kết thúc" class="form-control" bsDatepicker
                         [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #end="bsDatepicker" formControlName="endTime">
                      <div class="input-group-btn">
@@ -91,6 +93,10 @@
                   <button type="submit" class="btn btn-primary"
                      [disabled]="profileFrm.pristine || profileFrm.invalid">Save</button>
                </div>
+               <!-- <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary"
+                     [disabled]="profileFrm.pristine || profileFrm.invalid">Save</button>
+               </div> -->
             </div>
          </form>
       </div>

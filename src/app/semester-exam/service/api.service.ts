@@ -20,6 +20,7 @@ export class ApiService {
       return this.http.post(newUrl, keyword);
    }
 
+
    saveOne(nameapi: string, data: any) {
       return this.http.post(this.baseUrl + nameapi, data);
    }
@@ -31,9 +32,15 @@ export class ApiService {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
+   getData(nameapi: string): Observable<any> {
+      var newUrl = this.baseUrl + nameapi;
+      return this.http.get(newUrl);
+
+   }
    filter(nameapi: string, name: string): Observable<any> {
       var newUrl = this.baseUrl + nameapi;
       return this.http.post(newUrl,name);
+
    }
 
 }

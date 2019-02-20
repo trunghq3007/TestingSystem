@@ -15,17 +15,17 @@ import { QuestionModule } from './question/question.module';
 import { SemesterExamModule } from './semester-exam/semester-exam.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserTestingModule } from './user-testing/user-testing.module';
-import { UnregisterTestingComponent } from './unregister-testing/unregister-testing.component';
-import { UnregisterTestingSemesterComponent } from './unregister-testing-semester/unregister-testing-semester.component';
+
+
 import { UserTestingSemesterComponent } from './user-testing-semester/user-testing-semester.component';
 import { UserTestingSemesterModule } from './user-testing-semester/user-testing-semester.module';
 import { SemesterRoutingModule } from './semester-exam/semester/semester-routing.module';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UnregisterTestingSemesterModule } from './unregister-testing-semester/unregister-testing-semester.module';
 @NgModule({
    declarations: [
       AppComponent,
-      UnregisterTestingComponent,
-      UnregisterTestingSemesterComponent,
       UserTestingSemesterComponent,
       PageNotFoundComponent,
    ],
@@ -44,7 +44,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       UserTestingModule,
       UserTestingSemesterModule,
       HttpClientModule,
-      SemesterRoutingModule
+      SemesterRoutingModule,
+      UnregisterTestingSemesterModule,
+
    ],
    providers: [],
    bootstrap: [AppComponent]

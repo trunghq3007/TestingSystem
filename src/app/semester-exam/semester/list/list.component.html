@@ -82,17 +82,26 @@
                   <div class="col-md-6">
                      <a routerLink="create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add
                         news</a>
+
                      <button class="btn btn-danger" style="margin-left: 5px;" (click)="deleteItem()"
                         [disabled]="arrDelete.length==0">
+
                         <span class="glyphicon glyphicon-trash"></span> Delete
                      </button>
                   </div>
                   <div class="col-md-6">
                      <div class="input-group">
+<<<<<<< HEAD
+
+                        <input type="text" class="form-control" placeholder="search by name" [(ngModel)]="keyword"
+                           (keypress)="enterSearch($event)">
+=======
                         <input type="text" class="form-control" placeholder="search by name or code"
                            [(ngModel)]="keyword" (keypress)="enterSearch($event)">
+>>>>>>> d3c258cae859a5904febace3f5f7d0a8d4181b7c
                         <span class="input-group-btn">
                            <button class="btn btn-default btn-flat" type="submit" (click)="searchByKeyword()">
+
                               <i class="glyphicon glyphicon-search"></i>
                            </button>
                         </span>
@@ -107,7 +116,9 @@
                            <tr>
                               <th>
                                  <span class="custom-checkbox">
+
                                     <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)">
+
                                     <label for="checkboxAll"></label>
                                  </span>
                               </th>
@@ -126,9 +137,11 @@
                               *ngFor="let item of semesterExamList | paginate: configPagination; trackBy:semesterExamTrackByFn">
                               <td scope="row">
                                  <span class="custom-checkbox">
+
                                     <input type="checkbox" id="{{item.id}}" value="{{item.id}}" (change)="getId($event)"
                                        [checked]="isCheck">
                                     <label for="{{item.id}}"></label>
+
                                  </span>
                               </td>
                               <td><a routerLink="{{item.id}}">{{item.name}}</a></td>
@@ -152,8 +165,10 @@
                               <td>{{item.endTime | date: 'dd/MM/yyyy'}}</td>
                               <td></td>
                               <td style="width: 10% !important" class="text-center">
+
                                  <button class="btn btn-primary btn-sm" style="margin-right: 5px;"
                                     (click)="openModal(item.id,template)">
+
                                     <span class="glyphicon glyphicon-copy"></span>
                                     Clone
                                  </button>

@@ -37,7 +37,7 @@
                      <app-exam></app-exam>
                   </tab>
                   <tab heading="Report">
-                     <app-report></app-report>
+                     <app-report [semesterExamCode]="semesterID"></app-report>
                   </tab>
                   <tab heading="Testing Result">
                      <app-test-result [semester_id]="semesterID"></app-test-result>

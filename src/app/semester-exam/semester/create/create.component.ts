@@ -49,6 +49,14 @@ export class CreateComponent implements OnInit {
       }
    }
 
+   getTime(event) {
+      console.log(event);
+      var d = new Date(event);
+      console.log(d);
+      console.log(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
+      var h = new Date(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
+      console.log(h);
+   }
    onChange(event: any): void {
       console.log(event);
    }
@@ -56,6 +64,7 @@ export class CreateComponent implements OnInit {
    onSubmit() {
       try {
          const value = this.profileFrm.value;
+
          const semesterExam: SemesterExam = {
             user: this.user,
             ...value

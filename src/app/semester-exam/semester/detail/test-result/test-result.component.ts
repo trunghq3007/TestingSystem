@@ -22,7 +22,6 @@ export class TestResultComponent implements OnInit {
       private service: ApiService) { }
 
    ngOnInit() {
-      console.log(this.semester_id);
 
       this.getAll();
       this.getAllExam();
@@ -40,13 +39,13 @@ export class TestResultComponent implements OnInit {
    }
    getAll() {
       this.service.getAll(`test/listBySemester/${this.semester_id}`).subscribe(result => {
-         console.log(result);
+
          this.data = result;
       });
    }
    getAllExam() {
       this.service.getAll("exam/listExams").subscribe(result => {
-         console.log(result);
+
          this.exam = result;
       });
    }
