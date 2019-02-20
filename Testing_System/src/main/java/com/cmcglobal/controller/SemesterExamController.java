@@ -33,7 +33,7 @@ public class SemesterExamController {
 	 * @return
 	 */
 	@GetMapping("/all")
-	public ResponseEntity<ServiceResult> findAllCustomer() {
+	public ResponseEntity<ServiceResult> findAllSemesterExam() {
 		return new ResponseEntity<ServiceResult>(examService.getAllSemesterExam(), HttpStatus.OK);
 	}
 
