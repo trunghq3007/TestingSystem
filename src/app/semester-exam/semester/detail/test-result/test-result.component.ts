@@ -131,6 +131,7 @@ export class TestResultComponent implements OnInit {
          this.service.saveOne('test/add', test).subscribe(data => {
             console.log("them thanh cong");
             this.getAll();
+            this.testFrm.patchValue(null);
          });
       } catch (error) {
          console.log(error);
