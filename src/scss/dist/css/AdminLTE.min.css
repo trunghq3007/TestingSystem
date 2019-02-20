@@ -135,10 +135,16 @@
         margin-top: 10px;
         font-size: 13px;
     }
+
 	/* Custom checkbox */
 	.custom-checkbox {
 		position: relative;
-	}
+   }
+   .hint-text {
+      float: left;
+      margin-top: 0px;
+      font-size: 14px;
+  }
 	.custom-checkbox input[type="checkbox"] {
 		opacity: 0;
 		position: absolute;

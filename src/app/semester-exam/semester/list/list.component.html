@@ -26,18 +26,21 @@
                      <form class="form-horizontal">
                         <div class="form-group">
                            <div class="col-sm-4">
-                              <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi">
+                              <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi"
+                                 [(ngModel)]="objFilter.name" name="name">
                            </div>
                            <div class="col-md-4">
-                              <select type="text" class="input-sm form-control">
+                              <select type="text" class="input-sm form-control" [(ngModel)]="objFilter.status"
+                                 name="status">
                                  <option value="">Trạng thái</option>
-                                 <option value="0">draft</option>
-                                 <option value="1">public</option>
-                                 <option value="2">done</option>
+                                 <option [ngValue]="0">draft</option>
+                                 <option [ngValue]="1">public</option>
+                                 <option [ngValue]="2">done</option>
                               </select>
                            </div>
                            <div class="col-md-4">
-                              <input type="text" class="input-sm form-control" placeholder="Người tạo">
+                              <input type="text" class="input-sm form-control" placeholder="Người tạo"
+                                 [(ngModel)]="objFilter.user" name="user">
                            </div>
                         </div>
 
@@ -45,9 +48,10 @@
                            <div class="col-sm-4">
 
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.startTime" name="startTime" #startTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="startTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
@@ -55,17 +59,18 @@
                            </div>
                            <div class="col-md-4">
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.endTime" name="endTime" #endTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="endTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
                               </div>
                            </div>
                            <div class="col-md-4 text-center">
-                              <button type="button" class="btn btn-primary">
-                                 <span class="glyphicon glyphicon-filter"></span> Submit
+                              <button type="button" class="btn btn-primary" (click)="getDataFilter()">
+                                 <span class="glyphicon glyphicon-filter"></span> filter
                               </button>
                            </div>
                         </div>
@@ -86,9 +91,14 @@
                   </div>
                   <div class="col-md-6">
                      <div class="input-group">
+<<<<<<< HEAD
 
                         <input type="text" class="form-control" placeholder="search by name" [(ngModel)]="keyword"
                            (keypress)="enterSearch($event)">
+=======
+                        <input type="text" class="form-control" placeholder="search by name or code"
+                           [(ngModel)]="keyword" (keypress)="enterSearch($event)">
+>>>>>>> d3c258cae859a5904febace3f5f7d0a8d4181b7c
                         <span class="input-group-btn">
                            <button class="btn btn-default btn-flat" type="submit" (click)="searchByKeyword()">
 
@@ -176,7 +186,7 @@
                         <option [value]="item" *ngFor="let item of itempages">{{item}}</option>
                      </select>
                   </div>
-                  <div class="hint-text">&nbsp;out of <b>25</b> entries</div>
+                  <div class="hint-text">&nbsp;out of <b>{{totalRecord}}</b> entries</div>
 
                   <!-- <ul class="pagination">
                         <li class="page-item disabled"><a href="#">Previous</a></li>
@@ -274,7 +284,7 @@
       </div>
 
       <div class="modal-footer">
-         <button type="submit" class="btn btn-primary" [disabled]="true">Save</button>
+         <button type="submit" class="btn btn-primary" (click)="cloneSemesterExam()">Save</button>
          <button type="button" class="btn btn-default" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i> close</span>
          </button>
