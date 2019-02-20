@@ -28,7 +28,11 @@ export class ApiService {
       return this.http.post(this.baseUrl + nameapi, id);
    }
 
-   getOne(nameapi: string, id: any): Observable<any> {
+   deleteTest(nameapi: string): Observable<any> {
+      return this.http.delete(this.baseUrl + nameapi);
+   }
+
+   getOne(nameapi: string, id: any):Observable<any> {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
