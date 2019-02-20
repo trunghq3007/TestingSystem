@@ -12,31 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="candidate_test")
+@Table(name = "candidate_test")
 public class CandidateTest {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int candidate_test_id ;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int candidate_test_id;
+
 	@ManyToOne
-	@JoinColumn(name="candidate_id")
-	private Candidate candidates ;
-	
+	@JoinColumn(name = "candidate_id")
+	private Candidate candidates;
+
 	@ManyToOne
-	@JoinColumn(name="test_id")
+	@JoinColumn(name = "test_id")
 	private Test tests;
-	
-	@Column(name="start_time")
+
+	@Column(name = "start_time")
 	private Date start_time;
-	@Column(name="end_time")
+	@Column(name = "end_time")
 	private Date end_time;
-	
-	@Column(name="correct_number")
-	private int correct_number ;
-	
-	@Column(name="mark")
-	private float mark ;
+
+	@Column(name = "correct_number")
+	private int correct_number;
+
+	@Column(name = "mark")
+	private float mark;
 
 	public int getCandidate_test_id() {
 		return candidate_test_id;
@@ -93,7 +93,5 @@ public class CandidateTest {
 	public void setMark(float mark) {
 		this.mark = mark;
 	}
-	
-	
-	
+
 }
