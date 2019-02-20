@@ -63,10 +63,6 @@ public class SemesterExam {
 		super();
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "semesterExam")
-	@JsonIgnoreProperties("semesterExam")
-	private List<Candidate> candidates;
-
 	public String getId() {
 		return id;
 	}
