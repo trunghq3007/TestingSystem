@@ -6,9 +6,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Level } from 'src/entity/Level';
 import { Category } from 'src/entity/Category';
 import { Tag } from 'src/entity/Tag';
-import { Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { TypeQuestion } from 'src/entity/TypeQuestion';
 
 
@@ -141,7 +139,7 @@ export class ListQuestionComponent implements OnInit {
       this.selection = new SelectionModel<Question>(true, []);
       this.service.getQuestionSum().subscribe(
         sum => {this.tabAllQuestion.entities = +sum.headers.get('SumQuestion'),
-        this.maxPage = Math.trunc(+sum.headers.get('SumQuestion') / this.tabAllQuestion.sizeOfPage),
+        this.maxPage = Math.ceil(+sum.headers.get('SumQuestion') / this.tabAllQuestion.sizeOfPage),
           console.log("b", this.maxPage)}
       );
     }
@@ -195,10 +193,8 @@ export class ListQuestionComponent implements OnInit {
     this.isCheckAll = false;
   }
   nextPage() {
-    if (this.tabAllQuestion.currentPage === this.maxPage) {
-      this.tabAllQuestion.currentPage = this.maxPage;
-    } else if(this.maxPage === 1){
-      this.tabAllQuestion.currentPage = this.maxPage - 1;
+    if (this.tabAllQuestion.currentPage === this.maxPage-1) {
+      this.tabAllQuestion.currentPage = this.maxPage -1;
     } else {
       this.tabAllQuestion.currentPage++;
     }
@@ -206,13 +202,7 @@ export class ListQuestionComponent implements OnInit {
     this.isCheckAll = false;
   }
   setPage(page: number) {
-    if(this.tabAllQuestion.currentPage === 1){
-      this.tabAllQuestion.currentPage = page - 1;
-    }else if(this.maxPage === 1){
-      this.tabAllQuestion.currentPage = this.maxPage - 1;
-    } else{
-      this.tabAllQuestion.currentPage = page;
-    }
+    this.tabAllQuestion.currentPage = page;
     console.log(this.tabAllQuestion.currentPage);
 
     this.loadListQuestion();
