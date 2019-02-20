@@ -23,66 +23,61 @@ import com.cmcglobal.service.TestService;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class TestController {
 
-    @Autowired
-    TestService testService;
+	@Autowired
+	TestService testService;
 
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: List table test.
-      Version 1.0
-      @return
-     */
-    @GetMapping(value = "/listTest")
-    public List<Test> listTest() {
-        return testService.findAll();
-    }
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: List table test. Version 1.0
+	 * 
+	 * @return
+	 */
+	@GetMapping(value = "/listTest")
+	public List<Test> listTest() {
+		return testService.findAll();
+	}
 
-    
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: listBySemester in table test
-      Version 1.0
-      @param id
-      @return
-     */
-    @GetMapping(value = "/listBySemester/{id}")
-    public List<Test> listBySemester(@PathVariable("id") String id) {
-        return testService.findBySemesterID(id);
-    }
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: listBySemester in table test Version 1.0
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value = "/listBySemester/{id}")
+	public List<Test> listBySemester(@PathVariable("id") String id) {
+		return testService.findBySemesterID(id);
+	}
 
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: ....
-      Version 1.0
-      @param test
-      @return
-     */
-    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ServiceResult> insertTest(@RequestBody Test test) {
-        return new ResponseEntity<ServiceResult>(testService.insertTest(test), HttpStatus.OK);
-    }
-    
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: ....
-      Version 1.0
-      @param id
-      @return
-     */
-    @PostMapping("/delete")
-    public ResponseEntity<ServiceResult> deleteTest(@RequestBody Integer id) {
-        return new ResponseEntity<ServiceResult>(testService.deleteTest(id), HttpStatus.OK);
-    }
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: .... Version 1.0
+	 * 
+	 * @param test
+	 * @return
+	 */
+	@PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ServiceResult> insertTest(@RequestBody Test test) {
+		return new ResponseEntity<ServiceResult>(testService.insertTest(test), HttpStatus.OK);
+	}
+
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: .... Version 1.0
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/delete")
+	public ResponseEntity<ServiceResult> deleteTest(@RequestBody Integer id) {
+		return new ResponseEntity<ServiceResult>(testService.deleteTest(id), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/semesters/{semesterId}/tests/{testId}")
+	public ResponseEntity<ServiceResult> getTestById(@PathVariable("semesterId") String semesterId,
+			@PathVariable("semesterId") String testId) {
+		ServiceResult result = new ServiceResult();
+		result.setData(testService.getTestById(semesterId, testId));
+		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
+	}
 }
