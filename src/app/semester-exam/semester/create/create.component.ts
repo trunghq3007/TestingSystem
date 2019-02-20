@@ -11,7 +11,7 @@ import { ApiService } from '../../service/api.service';
 })
 export class CreateComponent implements OnInit {
 
-   ckeConfig: any;
+   ckeConfig = {};
    @ViewChild("myckeditor") ckeditor: any;
 
    user = {
@@ -25,20 +25,15 @@ export class CreateComponent implements OnInit {
 
    profileFrm: FormGroup;
    constructor(private fb: FormBuilder, private router: Router, private service: ApiService) {
+      this.ckeConfig = { extraPlugins: 'divarea', height: 110, allowedContent: false, forcePasteAsPlainText: true, fontSize_defaultLabel: 22 }
    }
 
    ngOnInit() {
-      this.ckeConfig = {
-         allowedContent: false,
-         extraPlugins: 'divarea',
-         forcePasteAsPlainText: true
-      };
-
       this.profileFrm = this.fb.group({
          name: ['', [Validators.required]],
          startTime: [new Date(), [Validators.required]],
          endTime: ['', [Validators.required]],
-         description: ' ',
+         description: '',
          creator: 1
       });
    }

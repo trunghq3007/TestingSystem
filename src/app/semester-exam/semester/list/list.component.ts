@@ -29,11 +29,13 @@ export class ListComponent implements OnInit {
    configPagination: any;
    itempages: any = [2, 4, 6, 8];
    totalRecord: number;
+   ckeConfig = {};
    constructor(private service: ApiService, private modalService: BsModalService) {
       this.configPagination = {
          currentPage: 1,
          itemsPerPage: 2
       }
+      this.ckeConfig = { extraPlugins: 'divarea', height: 110, allowedContent: false, forcePasteAsPlainText: true, fontSize_defaultLabel: 22 }
    }
 
    changeItemsPerPage(event: number) {
@@ -115,6 +117,7 @@ export class ListComponent implements OnInit {
       });
    }
 
+
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
    }
@@ -124,6 +127,10 @@ export class ListComponent implements OnInit {
       this.service.filter('semesterexam/filter', this.objFilter.name).subscribe(res => {
          console.log(res);
       })
+   }
+
+   object = {
+      detail: {}
    }
 
    cloneSemesterExam() {
