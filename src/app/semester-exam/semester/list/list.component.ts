@@ -1,13 +1,9 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { SemesterExam } from '../../models/SemesterExam';
+import { SemesterExam } from '../model/SemesterExam';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
-
-declare const modal: SemesterExam;
 
 @Component({
    selector: 'app-list',
@@ -21,17 +17,18 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
-   public obj={};
+   public obj = {};
    public objFilter = {
       name: '',
-      status: '',
-      user:'',
+      status: 0,
+      user: '',
       startTime: '',
       endTime: ''
    };
    public semesterExamList = [];
    configPagination: any;
    itempages: any = [2, 4, 6, 8];
+   totalRecord: number;
    constructor(private service: ApiService, private modalService: BsModalService) {
       this.configPagination = {
          currentPage: 1,
@@ -40,7 +37,6 @@ export class ListComponent implements OnInit {
    }
 
    changeItemsPerPage(event: number) {
-      console.log(event);
       this.configPagination.itemsPerPage = event;
    }
 
@@ -86,7 +82,6 @@ export class ListComponent implements OnInit {
             this.arrDelete = [];
          }
       }
-
    }
 
    semesterExamTrackByFn(semesterExam: SemesterExam) {
@@ -116,6 +111,7 @@ export class ListComponent implements OnInit {
    getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
+         this.totalRecord = result.totalRecord;
       });
    }
 
@@ -125,6 +121,9 @@ export class ListComponent implements OnInit {
 
    getDataFilter() {
       console.log(this.objFilter);
+      this.service.filter('semesterexam/filter', this.objFilter.name).subscribe(res => {
+         console.log(res);
+      })
    }
 
    ngOnInit() {

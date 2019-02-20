@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SemesterExam } from '../../models/SemesterExam';
+import { SemesterExam } from '../model/SemesterExam';
 import { ApiService } from '../../service/api.service';
 
 @Component({

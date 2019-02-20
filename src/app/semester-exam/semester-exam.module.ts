@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SemesterExamRoutingModule } from './semester-exam-routing.module';
+
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 import { SemesterModule } from './semester/semester.module';
 @NgModule({
    declarations: [],
@@ -10,7 +13,8 @@ import { SemesterModule } from './semester/semester.module';
       CommonModule,
       BrowserAnimationsModule,
       SemesterExamRoutingModule,
-      SemesterModule
+      SemesterModule,
+      BsDatepickerModule.forRoot()
    ],
    exports: []
 

@@ -27,8 +27,13 @@ export class ApiService {
       return this.http.post(this.baseUrl + nameapi, id);
    }
 
-   getOne(nameapi: string, id: any):Observable<any> {
+   getOne(nameapi: string, id: any): Observable<any> {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
+   }
+
+   filter(nameapi: string, name: string): Observable<any> {
+      var newUrl = this.baseUrl + nameapi;
+      return this.http.post(newUrl,name);
    }
 
 }
