@@ -42,6 +42,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	@Override
 	public ServiceResult getAllSemesterExam() {
 		ServiceResult result = new ServiceResult();
+		result.setTotalRecord(examRepository.findAll().size());
 		result.setData(examRepository.findAll());
 		return result;
 	}
@@ -82,7 +83,16 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		return result;
 	}
 
+
+	@Override
+	public ServiceResult filter(String name) {
+		ServiceResult result = new ServiceResult();
+		result.setData(examRepository.filterByAll(name));
+		return result;
+	}
+
 	public SemesterInformation getInformationOfSemester(String id) {
+
 		SemesterExam semesterExam = examRepository.findById(id).get();
 		List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
 		List<Test> list_test = testRepository.findBySemesterExam(semesterExam);
@@ -91,7 +101,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		JSONObject jsonInfo = new JSONObject();
 		int total_number_question = 0;
 		for (Candidate candidate : list_candidate) {
-			
+
 			User user = userRepository.findById(candidate.getUser().getUserId()).get();
 			user_join.add(user);
 

@@ -35,10 +35,6 @@ public class User implements Serializable {
 //    @JoinTable(name = "candidate", joinColumns = { @JoinColumn(name = "user_id") },inverseJoinColumns = { @JoinColumn(name = "semester_exam_id") })
 //	private List<Semester> semester= new ArrayList<Semester>();
 
-//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-//	@JsonIgnoreProperties("user")
-//	private List<Candidate> candidates;
-
 	public int getUserId() {
 		return userId;
 	}
@@ -86,13 +82,4 @@ public class User implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-//	public List<Candidate> getCandidates() {
-//		return candidates;
-//	}
-//
-//	public void setCandidates(List<Candidate> candidates) {
-//		this.candidates = candidates;
-//	}
-
 }

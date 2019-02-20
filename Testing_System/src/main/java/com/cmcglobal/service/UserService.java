@@ -1,5 +1,8 @@
 package com.cmcglobal.service;
 
+
 public interface UserService {
-	ServiceResult getSemseterListByUserId(int id);
+	ServiceResult getSemseterListByUserId(String id);
+
+	ServiceResult getExamBySemesterExamId(String id);
 }

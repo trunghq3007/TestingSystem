@@ -17,7 +17,12 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/users/{id}/semesters", method = RequestMethod.GET)
-	public ResponseEntity<ServiceResult> getSemesterListByUserId(@PathVariable("id") int id) {
+	public ResponseEntity<ServiceResult> getSemesterListByUserId(@PathVariable("id") String id) {
 		return new ResponseEntity<ServiceResult>(userService.getSemseterListByUserId(id), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/semesters/{semesterId}/tests/", method = RequestMethod.GET)
+	public ResponseEntity<ServiceResult> getTestListOfUser(@PathVariable("semesterId") String semesterId) {
+		return new ResponseEntity<ServiceResult>(userService.getExamBySemesterExamId(semesterId), HttpStatus.OK);
 	}
 }
