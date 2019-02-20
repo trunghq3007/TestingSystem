@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.SemesterExam;
+import com.cmcglobal.repository.CandidateRepository;
 import com.cmcglobal.service.SemesterExamService;
 import com.cmcglobal.service.ServiceResult;
 
@@ -22,6 +23,8 @@ public class SemesterExamController {
 	@Autowired
 	private SemesterExamService examService;
 
+	@Autowired
+	private CandidateRepository candidateRepository;
 	/**
 	 * Create by: dvthuan - CMC
 	 * Create date: Feb 16, 2019
@@ -97,4 +100,13 @@ public class SemesterExamController {
 	public ResponseEntity<ServiceResult> findById(@PathVariable String id) {
 		return new ResponseEntity<ServiceResult>(examService.findById(id), HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/info")
+	public ResponseEntity<?> getInformationOfSemester() {
+		SemesterExam semesterExam = new SemesterExam();
+		semesterExam.setId("semesterexam000001");
+		return new ResponseEntity<>(candidateRepository.findBySemesterExam(semesterExam),HttpStatus.OK);
+	}
+	
 }

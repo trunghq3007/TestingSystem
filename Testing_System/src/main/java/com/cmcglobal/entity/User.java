@@ -27,17 +27,17 @@ public class User implements Serializable {
 	private String mobile;
 	private String password;
 	private int status;
-//	@OneToMany(mappedBy = "userCreated", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//	@JsonIgnoreProperties("user")
-//	private List<Exam> exams;
+	@OneToMany(mappedBy = "userCreated", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("user")
+	private List<Exam> exams;
 
 //	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 //    @JoinTable(name = "candidate", joinColumns = { @JoinColumn(name = "user_id") },inverseJoinColumns = { @JoinColumn(name = "semester_exam_id") })
 //	private List<Semester> semester= new ArrayList<Semester>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonIgnoreProperties("user")
-	private List<Candidate> candidates;
+//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+//	@JsonIgnoreProperties("user")
+//	private List<Candidate> candidates;
 
 	public int getUserId() {
 		return userId;
@@ -87,12 +87,12 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
-	public List<Candidate> getCandidates() {
-		return candidates;
-	}
-
-	public void setCandidates(List<Candidate> candidates) {
-		this.candidates = candidates;
-	}
+//	public List<Candidate> getCandidates() {
+//		return candidates;
+//	}
+//
+//	public void setCandidates(List<Candidate> candidates) {
+//		this.candidates = candidates;
+//	}
 
 }

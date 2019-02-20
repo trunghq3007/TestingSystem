@@ -50,6 +50,11 @@ public class SemesterExam {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "semester_exam_id")
 	private List<SemesterExamCode> semesterExamCode;
+	
+//	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL,mappedBy="semesterExam")
+//	@JsonIgnoreProperties("semesterExam")
+//    private List<Candidate> candidates;
+	
 
 	public List<SemesterExamCode> getSemesterExamCode() {
 		return semesterExamCode;
@@ -62,10 +67,6 @@ public class SemesterExam {
 	public SemesterExam() {
 		super();
 	}
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "semesterExam")
-	@JsonIgnoreProperties("semesterExam")
-	private List<Candidate> candidates;
 
 	public String getId() {
 		return id;
