@@ -9,6 +9,7 @@ public class SemesterInformation {
 	private int total_number_exam;
 	private int total_number_question;
 	private int total_user_join;
+	private int total_user_test;
 	public SemesterInformation() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -37,6 +38,12 @@ public class SemesterInformation {
 	public void setTotal_user_join(int total_user_join) {
 		this.total_user_join = total_user_join;
 	}
+	public int getTotal_user_test() {
+		return total_user_test;
+	}
+	public void setTotal_user_test(int total_user_test) {
+		this.total_user_test = total_user_test;
+	}
 	
-
+	
 }

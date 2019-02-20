@@ -101,7 +101,7 @@ public class SemesterExamController {
 	public ResponseEntity<?> getInformationOfSemester() {
 		SemesterExam semesterExam = new SemesterExam();
 		String id = "semesterexam000001";
-		semesterExam.setId("semesterexam000001");
+		semesterExam.setId(id);
 
 		return new ResponseEntity<>(semesterexamService.getInformationOfSemester(id), HttpStatus.OK);
 		

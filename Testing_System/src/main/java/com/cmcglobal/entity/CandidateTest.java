@@ -37,6 +37,63 @@ public class CandidateTest {
 	
 	@Column(name="mark")
 	private float mark ;
+
+	public int getCandidate_test_id() {
+		return candidate_test_id;
+	}
+
+	public void setCandidate_test_id(int candidate_test_id) {
+		this.candidate_test_id = candidate_test_id;
+	}
+
+	public Candidate getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(Candidate candidates) {
+		this.candidates = candidates;
+	}
+
+	public Test getTests() {
+		return tests;
+	}
+
+	public void setTests(Test tests) {
+		this.tests = tests;
+	}
+
+	public Date getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(Date start_time) {
+		this.start_time = start_time;
+	}
+
+	public Date getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(Date end_time) {
+		this.end_time = end_time;
+	}
+
+	public int getCorrect_number() {
+		return correct_number;
+	}
+
+	public void setCorrect_number(int correct_number) {
+		this.correct_number = correct_number;
+	}
+
+	public float getMark() {
+		return mark;
+	}
+
+	public void setMark(float mark) {
+		this.mark = mark;
+	}
+	
 	
 	
 }
