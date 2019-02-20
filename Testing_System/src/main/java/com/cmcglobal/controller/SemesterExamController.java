@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.repository.CandidateRepository;
 import com.cmcglobal.service.SemesterExamService;
 import com.cmcglobal.service.ServiceResult;
+import com.cmcglobal.service.serviceImpl.SemesterExamServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -22,6 +24,8 @@ import com.cmcglobal.service.ServiceResult;
 public class SemesterExamController {
 	@Autowired
 	private SemesterExamService examService;
+	@Autowired
+	private SemesterExamServiceImpl semesterexamService;
 
 	@Autowired
 	private CandidateRepository candidateRepository;
@@ -102,11 +106,16 @@ public class SemesterExamController {
 	}
 	
 	
-	@GetMapping("/info")
+	@GetMapping(value="/info")
+	@ResponseBody
 	public ResponseEntity<?> getInformationOfSemester() {
 		SemesterExam semesterExam = new SemesterExam();
+		String id = "semesterexam000001";
 		semesterExam.setId("semesterexam000001");
-		return new ResponseEntity<>(candidateRepository.findBySemesterExam(semesterExam),HttpStatus.OK);
+//		return new ResponseEntity<>(candidateRepository.findBySemesterExam(semesterExam),HttpStatus.OK);
+		//return semesterexamService.getInformationOfSemester(id);
+		return new ResponseEntity<>(semesterexamService.getInformationOfSemester(id),HttpStatus.OK);
+		
 	}
 	
 }
