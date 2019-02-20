@@ -20,11 +20,7 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
-<<<<<<< HEAD
-   obj = [];
-=======
    public obj = {};
->>>>>>> d3c258cae859a5904febace3f5f7d0a8d4181b7c
    public objFilter = {
       name: '',
       status: 0,
