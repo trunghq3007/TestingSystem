@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmcglobal.entity.Candidate;
+import com.cmcglobal.entity.CandidateTest;
 import com.cmcglobal.entity.Exam;
 import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.entity.SemesterInformation;
 import com.cmcglobal.entity.Test;
 import com.cmcglobal.entity.User;
 import com.cmcglobal.repository.CandidateRepository;
+import com.cmcglobal.repository.CandidateTestRepository;
 import com.cmcglobal.repository.ExamRepository;
 import com.cmcglobal.repository.SemesterExamRepository;
 import com.cmcglobal.repository.TestRepository;
@@ -20,8 +22,7 @@ import com.cmcglobal.repository.UserRepository;
 import com.cmcglobal.service.SemesterExamService;
 import com.cmcglobal.service.ServiceResult;
 import com.cmcglobal.service.ServiceResult.Status;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.cmcglobal.utils.ConstantSemesterExam;
 
 @Service
 public class SemesterExamServiceImpl implements SemesterExamService {
@@ -38,6 +39,8 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	TestRepository testRepository;
 	@Autowired
 	ExamRepository exam_repository;
+	@Autowired
+	CandidateTestRepository candidateTestRepository;
 
 	@Override
 	public ServiceResult getAllSemesterExam() {
@@ -97,13 +100,22 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
 		List<Test> list_test = testRepository.findBySemesterExam(semesterExam);
 		List<User> user_join = new ArrayList<User>();
+		List<User> user_test = new ArrayList<User>();
 		List<Exam> exams = new ArrayList<Exam>();
-		JSONObject jsonInfo = new JSONObject();
+		
 		int total_number_question = 0;
+		int total_user_test = 0;
 		for (Candidate candidate : list_candidate) {
 
 			User user = userRepository.findById(candidate.getUser().getUserId()).get();
 			user_join.add(user);
+			List<CandidateTest> listCandidateTest = candidateTestRepository.findByCandidates(candidate);
+			if(!listCandidateTest.isEmpty()) {
+				total_user_test ++;
+			}
+			for(CandidateTest candidateTest:listCandidateTest) {
+				user_test.add(candidateTest.getCandidates().getUser());
+			}
 
 		}
 		for (Test test : list_test) {
@@ -111,19 +123,15 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 			exams.add(exam);
 			total_number_question += exam.getNumberOfQuestion();
 		}
-		
-		jsonInfo.put("semesterexam", examRepository.findById(id).get().getUser());
-		jsonInfo.put("total_number_exam", exams.size());
-		jsonInfo.put("total_number_question", total_number_question);
-		jsonInfo.put("total_user_join", user_join.size());
-		
+		//semesterExam.setStatus(status);
 		SemesterInformation semesterInformation = new SemesterInformation();
 		semesterInformation.setSemesterExam(semesterExam);
+		semesterInformation.setStatus(String.valueOf(ConstantSemesterExam.statusSemesterExam().get(semesterExam.getStatus())));
 		semesterInformation.setTotal_number_exam(exams.size());
 		semesterInformation.setTotal_number_question(total_number_question);
 		semesterInformation.setTotal_user_join(user_join.size());
+		semesterInformation.setTotal_user_test(total_user_test);
 		
-		//return jsonInfo.toString();
 		return semesterInformation;
 	}
 
