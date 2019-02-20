@@ -12,5 +12,7 @@ public interface SemesterExamService {
 	public ServiceResult delete(String id);
 
 	public ServiceResult findById(String id);
+	
+	public ServiceResult filter(String name);
 
 }

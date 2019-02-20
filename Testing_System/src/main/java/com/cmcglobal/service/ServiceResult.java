@@ -5,6 +5,8 @@ public class ServiceResult {
 	private String message;
 	private Object data;
 
+	private int totalRecord;
+
 	public enum Status {
 		SUCCESS, FAILED;
 	}
@@ -31,6 +33,14 @@ public class ServiceResult {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public int getTotalRecord() {
+		return totalRecord;
+	}
+
+	public void setTotalRecord(int totalRecord) {
+		this.totalRecord = totalRecord;
 	}
 
 	public ServiceResult() {

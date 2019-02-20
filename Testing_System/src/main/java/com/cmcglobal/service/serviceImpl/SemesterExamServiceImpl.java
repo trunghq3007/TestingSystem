@@ -18,6 +18,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	@Override
 	public ServiceResult getAllSemesterExam() {
 		ServiceResult result = new ServiceResult();
+		result.setTotalRecord(examRepository.findAll().size());
 		result.setData(examRepository.findAll());
 		return result;
 	}
@@ -55,6 +56,13 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	public ServiceResult findById(String id) {
 		ServiceResult result = new ServiceResult();
 		result.setData(examRepository.findById(id));
+		return result;
+	}
+
+	@Override
+	public ServiceResult filter(String name) {
+		ServiceResult result = new ServiceResult();
+		result.setData(examRepository.filterByAll(name));
 		return result;
 	}
 
