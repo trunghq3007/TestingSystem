@@ -49,7 +49,7 @@ public class SemesterExamController {
 	@PostMapping("/add")
 	public ResponseEntity<ServiceResult> create(@RequestBody SemesterExam semesterExam) {
 //		semesterExam.setCreator("1");
-		
+
 		return new ResponseEntity<ServiceResult>(examService.create(semesterExam), HttpStatus.OK);
 	}
 
@@ -96,5 +96,10 @@ public class SemesterExamController {
 	@GetMapping("/getone/{id}")
 	public ResponseEntity<ServiceResult> findById(@PathVariable String id) {
 		return new ResponseEntity<ServiceResult>(examService.findById(id), HttpStatus.OK);
+	}
+
+	@PostMapping("/filter")
+	public ResponseEntity<ServiceResult> filterByKeyword(@RequestBody String name) {
+		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
 	}
 }

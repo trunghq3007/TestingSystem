@@ -43,9 +43,9 @@ public class SemesterExam {
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
-	
-	@OneToMany(mappedBy="semesterExam",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	  private List<Test> tests;
+
+	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Test> tests;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "semester_exam_id")
