@@ -32,5 +32,9 @@ export class ApiService {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
+   getData(nameapi: string): Observable<any> {
+      var newUrl = this.baseUrl + nameapi;
+      return this.http.get(newUrl);
+   }
 
 }

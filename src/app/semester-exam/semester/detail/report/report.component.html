@@ -11,10 +11,10 @@
          <div class="col-md-10 col-md-offset-2">
                <div class="row form-group">
                      <div class="col-md-6">
-                        Tên kỳ thi: <label>Thi tuyển fresher java</label>
+                        Tên kỳ thi: <label>{{data?.semesterExam?.name}}</label>
                      </div>
                      <div class="col-md-6">
-                        Trạng thái: <label>Done</label>
+                        Trạng thái: <label>{{data?.status}}</label>
                      </div>
                   </div>
                   <div class="row form-group">
@@ -22,7 +22,7 @@
                         Người tạo kỳ thi:
                      </div>
                      <div class="col-md-6">
-                        <label>nvdiem</label>
+                        <label>{{data?.semesterExam?.user?.fullName}}</label>
                      </div>
                   </div>
                   <div class="row form-group">
@@ -30,7 +30,7 @@
                         Thời gian thi:
                      </div>
                      <div class="col-md-6">
-                        <label>2/1/2019 - 3/2/2019</label>
+                        <label>{{ data?.semesterExam?.startTime| date: 'dd/MM/yyyy'}} - {{ data?.semesterExam?.endTime| date: 'dd/MM/yyyy'}}</label>
                      </div>
                   </div>
                   <div class="row form-group">
@@ -40,12 +40,12 @@
                   </div>
                   <div class="row form-group">
                      <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số đề thi : 5
+                        +,Tổng số đề thi : {{ data?.total_number_exam}}
                      </div>
                   </div>
                   <div class="row form-group">
                      <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số câu hỏi : 100
+                        +,Tổng số câu hỏi : {{ data?.total_number_question}}
                      </div>
                   </div>
                   <div class="row form-group">
@@ -55,12 +55,12 @@
                   </div>
                   <div class="row form-group">
                      <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số thí sinh : 50
+                        +,Tổng số thí sinh : {{ data?.total_user_join}}
                      </div>
                   </div>
                   <div class="row form-group">
                      <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số người tham gia : 40
+                        +,Tổng số người tham gia : {{ data?.total_user_test}}
                      </div>
                   </div>
                   <div class="row form-group">
