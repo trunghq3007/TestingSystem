@@ -96,13 +96,10 @@ public class SemesterExamController {
 		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
 	}
 
-	@GetMapping("/info")
+	@GetMapping("/info/{id}")
 
-	public ResponseEntity<?> getInformationOfSemester() {
-		SemesterExam semesterExam = new SemesterExam();
-		String id = "semesterexam000001";
-		semesterExam.setId(id);
-
+	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
+		
 		return new ResponseEntity<>(semesterexamService.getInformationOfSemester(id), HttpStatus.OK);
 		
 	}

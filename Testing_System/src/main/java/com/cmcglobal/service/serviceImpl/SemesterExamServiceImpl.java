@@ -22,6 +22,7 @@ import com.cmcglobal.repository.UserRepository;
 import com.cmcglobal.service.SemesterExamService;
 import com.cmcglobal.service.ServiceResult;
 import com.cmcglobal.service.ServiceResult.Status;
+import com.cmcglobal.utils.ConstantSemesterExam;
 
 @Service
 public class SemesterExamServiceImpl implements SemesterExamService {
@@ -98,7 +99,6 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		SemesterExam semesterExam = examRepository.findById(id).get();
 		List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
 		List<Test> list_test = testRepository.findBySemesterExam(semesterExam);
-		List<CandidateTest> list_candidate_test = new ArrayList<CandidateTest>() ;
 		List<User> user_join = new ArrayList<User>();
 		List<User> user_test = new ArrayList<User>();
 		List<Exam> exams = new ArrayList<Exam>();
@@ -109,8 +109,13 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 
 			User user = userRepository.findById(candidate.getUser().getUserId()).get();
 			user_join.add(user);
-			List<CandidateTest> candidateTest = candidateTestRepository.findByCandidates(candidate);
-			if(!candidateTest.isEmpty()) total_user_test ++;
+			List<CandidateTest> listCandidateTest = candidateTestRepository.findByCandidates(candidate);
+			if(!listCandidateTest.isEmpty()) {
+				total_user_test ++;
+			}
+			for(CandidateTest candidateTest:listCandidateTest) {
+				user_test.add(candidateTest.getCandidates().getUser());
+			}
 
 		}
 		for (Test test : list_test) {
@@ -118,14 +123,15 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 			exams.add(exam);
 			total_number_question += exam.getNumberOfQuestion();
 		}
-		
+		//semesterExam.setStatus(status);
 		SemesterInformation semesterInformation = new SemesterInformation();
 		semesterInformation.setSemesterExam(semesterExam);
+		semesterInformation.setStatus(String.valueOf(ConstantSemesterExam.statusSemesterExam().get(semesterExam.getStatus())));
 		semesterInformation.setTotal_number_exam(exams.size());
 		semesterInformation.setTotal_number_question(total_number_question);
 		semesterInformation.setTotal_user_join(user_join.size());
 		semesterInformation.setTotal_user_test(total_user_test);
-		//return jsonInfo.toString();
+		
 		return semesterInformation;
 	}
 

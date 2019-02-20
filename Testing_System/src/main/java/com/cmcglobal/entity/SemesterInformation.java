@@ -10,6 +10,14 @@ public class SemesterInformation {
 	private int total_number_question;
 	private int total_user_join;
 	private int total_user_test;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public SemesterInformation() {
 		super();
 		// TODO Auto-generated constructor stub
