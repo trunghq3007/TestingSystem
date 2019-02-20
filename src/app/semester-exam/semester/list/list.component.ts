@@ -126,6 +126,20 @@ export class ListComponent implements OnInit {
       })
    }
 
+   cloneSemesterExam() {
+      console.log(this.obj);
+      this.obj.id = null;
+      try {
+         this.service.saveOne('semesterexam/add', this.obj).subscribe(data => {
+            console.log(data);
+            this.modalRef.hide();
+            this.getListSemesterExam();
+         });
+      } catch (error) {
+         console.log(error.message)
+      }
+   }
+
    ngOnInit() {
       this.getListSemesterExam();
    }
