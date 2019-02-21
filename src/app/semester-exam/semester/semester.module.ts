@@ -23,7 +23,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TestResultComponent } from './detail/test-result/test-result.component';
 import { DatepickerComponent } from './share-use/datepicker/datepicker.component';
-
+// import { GridModule, PDFModule } from '@progress/kendo-angular-grid';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 @NgModule({
    declarations: [
@@ -56,7 +57,10 @@ import { DatepickerComponent } from './share-use/datepicker/datepicker.component
       BsDatepickerModule.forRoot(),
       ModalModule.forRoot(),
       ReactiveFormsModule,
-      NgxPaginationModule
+      NgxPaginationModule,
+     // GridModule,
+     // PDFModule ,
+      PDFExportModule
    ]
 })
 export class SemesterModule { }
