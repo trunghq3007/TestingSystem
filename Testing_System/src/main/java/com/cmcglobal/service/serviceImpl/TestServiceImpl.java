@@ -7,9 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cmcglobal.entity.Candidate;
+import com.cmcglobal.entity.CandidateTest;
+import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.entity.Test;
+import com.cmcglobal.entity.TestDetail;
+import com.cmcglobal.entity.User;
+import com.cmcglobal.repository.CandidateRepository;
+import com.cmcglobal.repository.CandidateTestRepository;
 import com.cmcglobal.repository.SemesterExamRepository;
 import com.cmcglobal.repository.TestRepository;
+import com.cmcglobal.repository.UserRepository;
 import com.cmcglobal.service.ServiceResult;
 import com.cmcglobal.service.TestService;
 import com.cmcglobal.service.ServiceResult.Status;
@@ -20,6 +28,14 @@ public class TestServiceImpl implements TestService {
 
 	@Autowired
 	private TestRepository testRepository;
+	@Autowired
+	private CandidateRepository candidateRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private SemesterExamRepository semesterExamRepository;
+	@Autowired
+	private CandidateTestRepository candidateTestRepository;
 
 	@Autowired
 
@@ -105,4 +121,33 @@ public class TestServiceImpl implements TestService {
 		return null;
 	}
 
+	@Override
+	public List<TestDetail> getTestDetail(String userId, String semesterId) {
+		List<TestDetail> testDetailList = new ArrayList<TestDetail>();
+		SemesterExam exam = semesterExamRepository.findById(semesterId).get();
+		List<Test> testList = testRepository.findBySemesterExam(exam);
+		for (Test test : testList) {
+			testDetailList.add(new TestDetail(test, 0));
+		}
+		User user = userRepository.getOne(Integer.parseInt(userId));
+		List<Candidate> candidateList = candidateRepository.findByUser(user);
+		List<CandidateTest> candidateTestList = candidateTestRepository.findAll();
+		testList = new ArrayList<Test>();
+		for (Candidate candidate : candidateList) {
+			for (CandidateTest candidateTest : candidateTestList) {
+				if (candidateTest.getCandidates().getId() == candidate.getId()) {
+					testList.add(candidateTest.getTests());
+				}
+			}
+		}
+
+		for (TestDetail testDetail : testDetailList) {
+			for (Test tests : testList) {
+				if (testDetail.getIsTest() == tests.getTestID()) {
+					testDetail.setIsTest(1);
+				}
+			}
+		}
+		return testDetailList;
+	}
 }

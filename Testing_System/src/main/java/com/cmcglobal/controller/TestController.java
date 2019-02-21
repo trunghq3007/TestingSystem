@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.Test;
@@ -80,4 +81,21 @@ public class TestController {
 		result.setData(testService.getTestById(semesterId, testId));
 		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
 	}
+
+//	@RequestMapping(value = "/userId/semesters/{semesterId}/tests/")
+//	public ResponseEntity<ServiceResult> getTestsDetail(@PathVariable("userId") String semesterId,
+//			@PathVariable("semesterId") String testId) {
+//		ServiceResult result = new ServiceResult();
+//		result.setData(testService.getTestById(semesterId, testId));
+//		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
+//	}
+
+	@RequestMapping(value = "/users/{userId}/semesters/{semesterId}/tests/", method=RequestMethod.GET)
+	public ResponseEntity<ServiceResult> getTestsDetail(@PathVariable("userId") String userId,
+			@PathVariable("semesterId") String semesterId) {
+		ServiceResult result = new ServiceResult();
+		result.setData(testService.getTestDetail(userId, semesterId));
+		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
+	}
+
 }
