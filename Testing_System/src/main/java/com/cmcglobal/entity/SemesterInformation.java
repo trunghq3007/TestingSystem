@@ -1,17 +1,30 @@
 package com.cmcglobal.entity;
 
+import java.util.HashMap;
+import java.util.TreeMap;
+
 public class SemesterInformation {
 	private SemesterExam semesterExam;
-	
-//	jsonInfo.put("total_number_exam", exams.size());
-//	jsonInfo.put("total_number_question", total_number_question);
-//	jsonInfo.put("total_user_join", user_join.size());
 	private int total_number_exam;
 	private int total_number_question;
 	private int total_user_join;
 	private int total_user_test;
 	private String status;
-
+	private float mean_mark;
+	private String[] rate_title;
+	private int[] rate_mark ;
+	public int[] getRate_mark() {
+		return rate_mark;
+	}
+	public void setRate_mark(int[] rate_mark) {
+		this.rate_mark = rate_mark;
+	}
+	public String[] getRate_title() {
+		return rate_title;
+	}
+	public void setRate_title(String[] rate_title) {
+		this.rate_title = rate_title;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -45,6 +58,12 @@ public class SemesterInformation {
 	}
 	public void setTotal_user_join(int total_user_join) {
 		this.total_user_join = total_user_join;
+	}
+	public float getMean_mark() {
+		return mean_mark;
+	}
+	public void setMean_mark(float mean_mark) {
+		this.mean_mark = mean_mark;
 	}
 	public int getTotal_user_test() {
 		return total_user_test;
