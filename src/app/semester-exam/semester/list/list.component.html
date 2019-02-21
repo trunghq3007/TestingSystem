@@ -26,18 +26,21 @@
                      <form class="form-horizontal">
                         <div class="form-group">
                            <div class="col-sm-4">
-                              <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi">
+                              <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi"
+                                 [(ngModel)]="objFilter.name" name="name">
                            </div>
                            <div class="col-md-4">
-                              <select type="text" class="input-sm form-control">
-                                 <option value="">Trạng thái</option>
+                              <select type="text" class="input-sm form-control" [(ngModel)]="objFilter.status"
+                                 name="status" (change)="filterByStatus($event.target.value)">
+                                 <option value="null">Trạng thái</option>
                                  <option value="0">draft</option>
                                  <option value="1">public</option>
                                  <option value="2">done</option>
                               </select>
                            </div>
                            <div class="col-md-4">
-                              <input type="text" class="input-sm form-control" placeholder="Người tạo">
+                              <input type="text" class="input-sm form-control" placeholder="Người tạo"
+                                 [(ngModel)]="objFilter.user" name="user">
                            </div>
                         </div>
 
@@ -45,9 +48,10 @@
                            <div class="col-sm-4">
 
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.startTime" name="startTime" #startTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="startTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
@@ -55,17 +59,18 @@
                            </div>
                            <div class="col-md-4">
                               <div class="input-group">
-                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker>
+                                 <input type="text" placeholder="Ngày kết thúc" class="form-control" bsDatepicker
+                                    [(ngModel)]="objFilter.endTime" name="endTime" #endTime="bsDatepicker">
                                  <div class="input-group-btn">
-                                    <button class="btn btn-default">
+                                    <button class="btn btn-default" (click)="endTime.toggle()">
                                        <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                  </div>
                               </div>
                            </div>
                            <div class="col-md-4 text-center">
-                              <button type="button" class="btn btn-primary">
-                                 <span class="glyphicon glyphicon-filter"></span> Submit
+                              <button type="button" class="btn btn-primary" (click)="getDataFilter()">
+                                 <span class="glyphicon glyphicon-filter"></span> filter
                               </button>
                            </div>
                         </div>
@@ -86,12 +91,10 @@
                   </div>
                   <div class="col-md-6">
                      <div class="input-group">
-
-                        <input type="text" class="form-control" placeholder="search by name" [(ngModel)]="keyword"
-                           (keypress)="enterSearch($event)">
+                        <input type="text" class="form-control" placeholder="search by name or code"
+                           [(ngModel)]="keyword" (keypress)="enterSearch($event)">
                         <span class="input-group-btn">
                            <button class="btn btn-default btn-flat" type="submit" (click)="searchByKeyword()">
-
                               <i class="glyphicon glyphicon-search"></i>
                            </button>
                         </span>
@@ -127,11 +130,9 @@
                               *ngFor="let item of semesterExamList | paginate: configPagination; trackBy:semesterExamTrackByFn">
                               <td scope="row">
                                  <span class="custom-checkbox">
-
                                     <input type="checkbox" id="{{item.id}}" value="{{item.id}}" (change)="getId($event)"
                                        [checked]="isCheck">
                                     <label for="{{item.id}}"></label>
-
                                  </span>
                               </td>
                               <td><a routerLink="{{item.id}}">{{item.name}}</a></td>
@@ -155,10 +156,8 @@
                               <td>{{item.endTime | date: 'dd/MM/yyyy'}}</td>
                               <td></td>
                               <td style="width: 10% !important" class="text-center">
-
                                  <button class="btn btn-primary btn-sm" style="margin-right: 5px;"
                                     (click)="openModal(item.id,template)">
-
                                     <span class="glyphicon glyphicon-copy"></span>
                                     Clone
                                  </button>
@@ -176,18 +175,7 @@
                         <option [value]="item" *ngFor="let item of itempages">{{item}}</option>
                      </select>
                   </div>
-                  <div class="hint-text">&nbsp;out of <b>25</b> entries</div>
-
-                  <!-- <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                     </ul> -->
-
+                  <div class="hint-text">&nbsp;out of <b>{{totalRecord}}</b> entries</div>
                   <div class="pagination">
                      <pagination-controls (pageChange)="configPagination.currentPage = $event"></pagination-controls>
                   </div>
@@ -200,7 +188,6 @@
 
 
 <ng-template #template>
-
    <div class="modal-dialog modal-lg">
       <div class="modal-header">
          <h4 class="modal-title">Clone kỳ thi</h4>
@@ -210,13 +197,13 @@
       </div>
       <div class="modal-body">
          <tabset #staticTabs>
-            <tab heading="Static title">
+            <tab heading="info">
                <form class="form-horizontal" style="padding-top: 10px;">
                   <div class="form-group">
                      <label for="name" class="col-sm-2 control-label">Tên kỳ thi</label>
                      <div class="col-sm-10">
                         <input class="form-control" type="text" id="example-text-input" placeholder="Tên kỳ thi"
-                           autocomplete="off" [value]="obj.name">
+                           autocomplete="off" [value]="obj.name" [(ngModel)]="obj.name" name="name">
                      </div>
                   </div>
 
@@ -234,7 +221,8 @@
 
                         <div class="input-group">
                            <input type="text" placeholder="Chọn ngày bắt đầu" class="form-control" bsDatepicker
-                              #start="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                              #start="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                              [(ngModel)]="obj.startTime" name="startTime" autocomplete="off">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="start.show()">
                                  <i class="glyphicon glyphicon-calendar"></i>
@@ -247,7 +235,8 @@
                      <div class="col-sm-4">
                         <div class="input-group">
                            <input type="text" placeholder="Chọn ngày kết thúc" class="form-control" bsDatepicker
-                              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #end="bsDatepicker">
+                              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #end="bsDatepicker"
+                              [(ngModel)]="obj.endTime" name="endTime" autocomplete="off">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="end.show()">
                                  <i class="glyphicon glyphicon-calendar"></i>
@@ -260,8 +249,9 @@
                   <div class="form-group">
                      <label for="describe" class="col-sm-2 control-label">Mô tả kỳ thi</label>
                      <div class="col-sm-10">
-                        <ckeditor name="myckeditor" required>
-                        </ckeditor>
+                        <!-- <ckeditor name="myckeditor" required></ckeditor> -->
+                        <ckeditor [config]="ckeConfig" [readonly]="false" [(ngModel)]="obj.description"
+                           name="description"></ckeditor>
                      </div>
                   </div>
                </form>
@@ -274,7 +264,7 @@
       </div>
 
       <div class="modal-footer">
-         <button type="submit" class="btn btn-primary" [disabled]="true">Save</button>
+         <button type="submit" class="btn btn-primary" (click)="cloneSemesterExam()"><span class="glyphicon glyphicon-saved"></span> Save</button>
          <button type="button" class="btn btn-default" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i> close</span>
          </button>

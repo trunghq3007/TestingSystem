@@ -22,8 +22,8 @@
          <tr class="info">
             <th>
                <span class="custom-checkbox">
-                  <input type="checkbox" id="selectAll">
-                  <label for="selectAll"></label>
+                  <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)">
+                  <label for="checkboxAll"></label>
                </span>
             </th>
             <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -41,32 +41,35 @@
          </tr>
       </thead>
       <tbody>
-         <tr *ngFor="let item of data">
-            <td>
+         <tr *ngFor="let item of data | paginate: configPagination">
+            <td scope="row">
                <span class="custom-checkbox">
-                  <input type="checkbox" id="selectAll">
-                  <label for="selectAll"></label>
+                  <input type="checkbox" id="{{item.testID}}" value="{{item.testID}}" (change)="getId($event)"
+                     [checked]="isCheck">
+                  <label for="{{item.id}}"></label>
                </span>
             </td>
             <td>{{item.testID}}</td>
             <td class="sorting_1">{{item.exam.title}}</td>
             <td class="sorting_1">{{item.semesterExam.name}}</td>
             <td>{{item.testName}}</td>
-            <td>{{item.status}}</td>
+            <td>
+                  <ng-container *ngIf="item.status==0">
+                        <span class="label label-default text-status">draft</span>
+                     </ng-container>
+                     <ng-container *ngIf="item.status==1">
+                        <span class="label label-info text-status">public</span>
+                     </ng-container>
+            </td>
          </tr>
       </tbody>
    </table>
    <div class="clearfix">
-      <button class="btn btn-primary" type="button">Delete</button>
-      <ul class="pagination">
-         <li class="page-item disabled"><a href="#">Previous</a></li>
-         <li class="page-item"><a href="#" class="page-link">1</a></li>
-         <li class="page-item"><a href="#" class="page-link">2</a></li>
-         <li class="page-item active"><a href="#" class="page-link">3</a></li>
-         <li class="page-item"><a href="#" class="page-link">4</a></li>
-         <li class="page-item"><a href="#" class="page-link">5</a></li>
-         <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
+      <button class="btn btn-primary" type="button" (click)="deleteItem()"
+      [disabled]="arrDelete.length==0">Delete</button>
+      <div class="pagination">
+         <pagination-controls (pageChange)="configPagination.currentPage = $event"></pagination-controls>
+      </div>
    </div>
 </section>
 <!--Create bài thi đề thi-->
@@ -85,12 +88,12 @@
             <form novalidate novalidate [formGroup]="testFrm" class="row justify-content-md-center">
                <fieldset formGroupName="exam">
                   <div class="form-group row">
-                     <label class="col-sm-3 control-label" for="exams">Loại đề thi</label>
+                     <label class="col-sm-3 control-label" for="exams">Đề thi</label>
                      <div class="col-sm-9">
-                        <select style="width: 100%;" class="input-xs form-control" formControlName="examId" id="exams"
+                        <select  style="width: 100%;" class="input-xs form-control" formControlName="examId" id="exams"
                            style="font-size: 14px;">
-                           <option value="null" >Vui long chon</option>
-                           <option *ngFor="let item of exam" value="{{item.examId}}" [selected]="item.examId=='Exam001'">{{item.title}}</option>
+                           <option value="null">Vui Lòng Chọn</option>
+                           <option *ngFor="let item of exam;" value = "{{item.examId}}" >{{item.title}}</option>
                         </select>
                      </div>
                   </div>
@@ -98,7 +101,7 @@
                <div class="form-group row">
                   <label class="col-sm-3 control-label" for="test">Tên Bài Thi:</label>
                   <div class="col-sm-9">
-                     <input class="form-control" type="text" id="test" placeholder="testName" formControlName="testName"
+                     <input class="form-control" type="text" id="test" placeholder="Tên Bài Thi" formControlName="testName"
                         autocomplete="off">
                      <div *ngIf="testFrm.get('testName').invalid
                                    && testFrm.get('testName').touched" style="color: red" role="alert">

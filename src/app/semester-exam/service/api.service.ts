@@ -28,9 +28,23 @@ export class ApiService {
       return this.http.post(this.baseUrl + nameapi, id);
    }
 
+   deleteTest(nameapi: string): Observable<any> {
+      return this.http.delete(this.baseUrl + nameapi);
+   }
+
    getOne(nameapi: string, id: any):Observable<any> {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
+   getData(nameapi: string): Observable<any> {
+      var newUrl = this.baseUrl + nameapi;
+      return this.http.get(newUrl);
+
+   }
+   filter(nameapi: string, name: string): Observable<any> {
+      var newUrl = this.baseUrl + nameapi;
+      return this.http.post(newUrl,name);
+
+   }
 
 }

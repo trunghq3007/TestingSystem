@@ -28,16 +28,16 @@
             <div>
                <tabset>
                   <tab heading="Info" id="tab1">
-                     <app-info></app-info>
+                     <app-info [semester_id]="semesterID"></app-info>
                   </tab>
                   <tab heading="Candidate">
-                     <app-candidate></app-candidate>
+                     <app-candidate [semester_id]="semesterID" ></app-candidate>
                   </tab>
                   <tab heading="Exam">
                      <app-exam></app-exam>
                   </tab>
                   <tab heading="Report">
-                     <app-report></app-report>
+                     <app-report [semesterExamCode]="semesterID"></app-report>
                   </tab>
                   <tab heading="Testing Result">
                      <app-test-result [semester_id]="semesterID"></app-test-result>

@@ -22,160 +22,78 @@
          <tr class="info">
             <th>
                <span class="custom-checkbox">
-                  <input type="checkbox" id="selectAll">
-                  <label for="selectAll"></label>
+                  <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)">
+                  <label for="checkboxAll"></label>
                </span>
             </th>
-            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending"
-               aria-label="Username: activate to sort column descending">Tài Khoản</th>
-            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending">Email</th>
-            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">FullName</th>
-            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Department</th>
-            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Position</th>
+            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+               aria-sort="ascending" aria-label="Username: activate to sort column descending">Full Name</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+               aria-label="Date registered: activate to sort column ascending">Semester Name</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+               aria-label="Role: activate to sort column ascending">Email</th>
          </tr>
       </thead>
       <tbody>
-         <tr>
+         <tr *ngFor="let item of data | paginate: configPagination1">
             <td>
                <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                  <label for="checkbox1"></label>
+                  <input type="checkbox" id="{{item.id}}" value="{{item.id}}" (change)="getId($event)"
+                     [checked]="isCheck">
+                  <label for="{{item.id}}"></label>
                </span>
             </td>
-            <td class="sorting_1">nnduy</td>
-            <td class="sorting_1">nnduy@cmc.com.vn</td>
-            <td>Nguyễn Ngọc Duy</td>
-            <td>RRC</td>
-            <td>Junior</td>
-         </tr>
-
-         <tr>
-            <td>
-               <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                  <label for="checkbox1"></label>
-               </span>
-            </td>
-            <td class="sorting_1">nnduy</td>
-            <td class="sorting_1">nnduy@cmc.com.vn</td>
-            <td>Nguyễn Ngọc Duy</td>
-            <td>RRC</td>
-            <td>Junior</td>
-         </tr>
-
-         <tr>
-            <td>
-               <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                  <label for="checkbox1"></label>
-               </span>
-            </td>
-            <td class="sorting_1">nnduy</td>
-            <td class="sorting_1">nnduy@cmc.com.vn</td>
-            <td>Nguyễn Ngọc Duy</td>
-            <td>RRC</td>
-            <td>Junior</td>
-         </tr>
-
-         <tr>
-            <td>
-               <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                  <label for="checkbox1"></label>
-               </span>
-            </td>
-            <td class="sorting_1">nnduy</td>
-            <td class="sorting_1">nnduy@cmc.com.vn</td>
-            <td>Nguyễn Ngọc Duy</td>
-            <td>RRC</td>
-            <td>Junior</td>
+            <td class="sorting_1">{{item.user.fullName}}</td>
+            <td class="sorting_1">{{item.semesterExam.name}}</td>
+            <td>{{item.user.email}}</td>
          </tr>
       </tbody>
    </table>
    <div class="clearfix">
-      <button class="btn btn-primary" type="button">Delete</button>
-      <ul class="pagination">
-         <li class="page-item disabled"><a href="#">Previous</a></li>
-         <li class="page-item"><a href="#" class="page-link">1</a></li>
-         <li class="page-item"><a href="#" class="page-link">2</a></li>
-         <li class="page-item active"><a href="#" class="page-link">3</a></li>
-         <li class="page-item"><a href="#" class="page-link">4</a></li>
-         <li class="page-item"><a href="#" class="page-link">5</a></li>
-         <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
+      <button class="btn btn-primary" type="button" (click)="deleteItem()"
+         [disabled]="arrDelete.length==0">Delete</button>
+      <div class="pagination">
+         <pagination-controls (pageChange)="configPagination1.currentPage = $event"></pagination-controls>
+      </div>
    </div>
 </section>
 
 <!--Add user-->
-<div id="addEmployeeModal" class="modal fade">
-   <div class="modal-dialog modal-lg">
-     <div class="modal-content">
-       <form>
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
          <div class="modal-header">
-           <h3 class="modal-title">Thí Sinh</h3>
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-           <div class="input-group" style="width: 50%;">
-            <input type="text" class="form-control" placeholder="Search" id="Search">
-            <span class="input-group-btn">
-               <button class="btn btn-primary" type="button">Search</button>
-            </span>
+            <h3 class="modal-title" id="exampleModalLabel">Thêm ứng viên vào kỳ thi</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
          </div>
+         <div class="modal-body">
+            <form novalidate novalidate [formGroup]="CandidateFrm" class="row justify-content-md-center">
+               <fieldset formGroupName="user">
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label" for="users">Ứng viên</label>
+                     <div class="col-sm-9">
+                        <select style="width: 100%;" class="input-xs form-control" formControlName="userId" id="users"
+                           style="font-size: 14px;">
+                           <option value="null">Vui Lòng Chọn</option>
+                           <option *ngFor="let item of user;" value="{{item.userId}}">{{item.email}}</option>
+                        </select>
+                     </div>
+                  </div>
+               </fieldset>
+            </form>
          </div>
-         <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col"><span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                  <label for="checkbox2"></label>
-               </span></th>
-                <th scope="col">Tài Khoản</th>
-                <th scope="col">Email</th>
-                <th scope="col">Fullname</th>
-                <th scope="col">Department</th>
-                <th scope="col">Position</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"><span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                  <label for="checkbox2"></label>
-               </span></th>
-                <td>vvthuy</td>
-                <td>vvthuy@cmc.com.vn</td>
-                <td>Vũ Văn Thủy</td>
-                <td>RRC</td>
-                <td>Junior</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                  <label for="checkbox2"></label>
-               </span></th>
-               <td>vvthuy</td>
-               <td>vvthuy@cmc.com.vn</td>
-               <td>Vũ Văn Thủy</td>
-               <td>RRC</td>
-               <td>Junior</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                  <label for="checkbox2"></label>
-               </span></th>
-               <td>vvthuy</td>
-               <td>vvthuy@cmc.com.vn</td>
-               <td>Vũ Văn Thủy</td>
-               <td>RRC</td>
-               <td>Junior</td>
-              </tr>
-            </tbody>
-          </table>
          <div class="modal-footer">
-           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-           <input type="submit" class="btn btn-success" value="Add">
+            <div class="form-group">
+               <div style="float: right;" class="col-10 offset-2">
+                  <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               </div>
+            </div>
          </div>
-       </form>
-     </div>
+
+      </div>
    </div>
- </div>
+</div>

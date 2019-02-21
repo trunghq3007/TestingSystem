@@ -1,95 +1,133 @@
-<div id="menu2">
-   <h3 style="text-align: center;">Report</h3>
-   <div class="row form-group">
-         <div class="col-md-10" >
+<div id="interface-report">
+
+   <div class="panel panel-info">
+      <div class="panel-heading text-center">
+         <h3 class="panel-title">
+            Report
+         </h3>
+      </div>
+      <div class="panel-body">
+         <div class="row form-group">
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-2">
+               <button class="btn btn-success" (click)="openModal()">Export</button>
+            </div>
          </div>
-      <div class="col-md-2" >
-         <button class="btn btn-default">Print</button>
+         <div class="row form-group" #exportPDF>
+            <div class="col-md-10 col-md-offset-2">
+               <div class="row form-group">
+                  <div class="col-md-6">
+                     Tên kỳ thi: <label>{{data?.semesterExam?.name}}</label>
+                  </div>
+                  <div class="col-md-6">
+                     Trạng thái: <label>{{data?.status}}</label>
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-2">
+                     Người tạo kỳ thi:
+                  </div>
+                  <div class="col-md-6">
+                     <label>{{data?.semesterExam?.user?.fullName}}</label>
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-2">
+                     Thời gian thi:
+                  </div>
+                  <div class="col-md-6">
+                     <label>{{ data?.semesterExam?.startTime| date: 'dd/MM/yyyy'}} -
+                        {{ data?.semesterExam?.endTime| date: 'dd/MM/yyyy'}}</label>
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-2">
+                     Đề thi:
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-10 col-md-offset-1">
+                     +,Tổng số đề thi : {{ data?.total_number_exam}}
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-10 col-md-offset-1">
+                     +,Tổng số câu hỏi : {{ data?.total_number_question}}
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-2">
+                     Kết quả thi:
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-10 col-md-offset-1">
+                     +,Tổng số thí sinh : {{ data?.total_user_join}}
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-10 col-md-offset-1">
+                     +,Tổng số người tham gia : {{ data?.total_user_test}}
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-10 col-md-offset-1">
+                     +, Điểm trung bình : {{data?.mean_mark}}
+                  </div>
+               </div>
+               <div class="row form-group">
+                  <div class="col-md-6 col-md-offset-1">
+                     <table class="table table-bordered table-hover table-sm">
+                        <thead style="background: #f1eaea;">
+                           <tr>
+                              <th *ngFor="let rate of rate_title, let i =index" style="width:25%">{{rate}}</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td *ngFor="let total of rate_mark, let i =index">{{total}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </div>
-   <div class="row">
-         <div class="col-md-10 col-md-offset-2">
-               <div class="row form-group">
-                     <div class="col-md-6">
-                        Tên kỳ thi: <label>Thi tuyển fresher java</label>
-                     </div>
-                     <div class="col-md-6">
-                        Trạng thái: <label>Done</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Người tạo kỳ thi:
-                     </div>
-                     <div class="col-md-6">
-                        <label>nvdiem</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Thời gian thi:
-                     </div>
-                     <div class="col-md-6">
-                        <label>2/1/2019 - 3/2/2019</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Đề thi:
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số đề thi : 5
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số câu hỏi : 100
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Kết quả thi:
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số thí sinh : 50
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số người tham gia : 40
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Điểm trung bình : 7.75
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-4 col-md-offset-1">
-                        <table class="table table-bordered table-hover table-sm">
-                           <thead style="background: #f1eaea;">
-                              <tr>
-                                 <th style="width:33%;">Kém</th>
-                                 <th>Trung bình</th>
-                                 <th style="width:33%;">Giỏi</th>
-
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>10</td>
-                                 <td>20</td>
-                                 <td>20</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-         </div>
+</div>
+<!-- <ng-template #templateModal>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">Thông báo</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+         <span aria-hidden="true">&times;</span>
+      </button>
    </div>
-
+   <div class="modal-body">
+      Bạn có muốn xuất báo cáo này không ?
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="onExport()">Thực hiện</button>
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()">Thoát</button>
+   </div>
+</ng-template> -->
+<div bsModal #templateModal="bs-modal" class="modal fade" tabindex="-1">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Thông báo</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="templateModal.hide()">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Bạn có muốn xuất báo cáo này không ?
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="onExport()">Thực hiện</button>
+            <button type="button" class="btn btn-default" (click)="templateModal.hide()">Thoát</button>
+         </div>
+      </div>
+   </div>
 </div>

@@ -1,14 +1,10 @@
 
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { SemesterExam } from '../../models/SemesterExam';
+import { SemesterExam } from '../model/SemesterExam';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
-
-declare const modal: SemesterExam;
 
 @Component({
    selector: 'app-list',
@@ -23,23 +19,23 @@ export class ListComponent implements OnInit {
    selectedAll: any;
    modalRef: BsModalRef;
    arrDelete: any = [];
-   obj = [] ;
    isCheck: boolean = false;
-   public objFilter = {
-      status: ''
-   };
+   public obj: any = {};
+   public objFilter: any = {};
    public semesterExamList = [];
    configPagination: any;
-   itempages: any = [2, 4, 6, 8];
+   itempages: any = [5, 10, 15, 20];
+   totalRecord: number;
+   ckeConfig = {};
    constructor(private service: ApiService, private modalService: BsModalService) {
       this.configPagination = {
          currentPage: 1,
-         itemsPerPage: 2
+         itemsPerPage: 5
       }
+      this.ckeConfig = { extraPlugins: 'divarea', height: 110, allowedContent: false, forcePasteAsPlainText: true, fontSize_defaultLabel: 22 }
    }
 
    changeItemsPerPage(event: number) {
-      console.log(event);
       this.configPagination.itemsPerPage = event;
    }
 
@@ -85,7 +81,6 @@ export class ListComponent implements OnInit {
             this.arrDelete = [];
          }
       }
-
    }
 
    semesterExamTrackByFn(semesterExam: SemesterExam) {
@@ -99,6 +94,7 @@ export class ListComponent implements OnInit {
          });
       } else {
          this.service.search('semesterexam/search', this.keyword).subscribe(result => {
+            console.log(result);
             this.semesterExamList = result.data;
          });
       }
@@ -108,23 +104,53 @@ export class ListComponent implements OnInit {
    openModal(id: string, template: TemplateRef<any>) {
       this.service.getOne('semesterexam/getone', id).subscribe(result => {
          this.obj = result.data;
+         this.obj.id = null;
+         this.obj.startTime="";
+         this.obj.endTime="";
          // console.log(this.obj);
          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       })
-
    }
 
    getListSemesterExam() {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
+         this.totalRecord = result.totalRecord;
       });
    }
 
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
    }
+   //---------------------- ---filter ---------------------- ---
+   filterByStatus(status: any) {
+      console.log(status);
+   }
+
+   getDataFilter() {
+      console.log(this.objFilter);
+      this.service.filter('semesterexam/filter', this.objFilter.name).subscribe(res => {
+         console.log(res);
+      })
+   }
+   // ---------------------- --- end filter ---------------------- ---
+
+   cloneSemesterExam() {
+      console.log(this.obj);
+      // this.obj.id = null
+      try {
+         this.service.saveOne('semesterexam/add', this.obj).subscribe(data => {
+            console.log(data);
+            this.modalRef.hide();
+            this.getListSemesterExam();
+         });
+      } catch (error) {
+         console.log(error.message)
+      }
+   }
 
    ngOnInit() {
+      this.objFilter.status = null;
       this.getListSemesterExam();
    }
 }

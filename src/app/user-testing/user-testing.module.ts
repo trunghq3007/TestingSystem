@@ -5,6 +5,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { UserTestingRoutingModule } from './user-testing-routing.module';
 import { UserTestingResultComponent } from './user-testing-result/user-testing-result.component';
 import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [UserTestingComponent, UserTestingResultComponent],
@@ -12,7 +13,8 @@ import { RouterModule } from '@angular/router';
       CommonModule,
       ModalModule.forRoot(),
       UserTestingRoutingModule,
-      RouterModule
+      RouterModule,
+      HttpClientModule
    ],
    exports: [UserTestingComponent]
 })
