@@ -9,6 +9,7 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { HeaderModule } from './header/header.module';
 import { NavModule } from './nav/nav.module';
 import { FooterModule } from './footer/footer.module';
+import { CategoryQuestionModule } from './category-question/category-question.module';
 import { QuestionModule } from './question/question.module';
 import { ExamModule } from './exam/exam.module';
 import { CategoryModule } from './category/category.module';
@@ -25,6 +26,7 @@ import { HomeModule } from './home/home.module';
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
+
     NavModule,
     HeaderModule,
     FooterModule,
@@ -36,7 +38,8 @@ import { HomeModule } from './home/home.module';
     ListExamModule,
     HttpModule,
     UserModule,
-    HomeModule
+    HomeModule,
+    CategoryQuestionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

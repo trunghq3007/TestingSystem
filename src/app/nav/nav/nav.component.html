@@ -34,7 +34,7 @@
         </a>
       </li>
       <li class="treeview">
-        <a [routerLink]="['/question','list']" >
+        <a [routerLink]="['/question']" >
           <i class="fa fa-files-o"></i>
           <span>Question</span>
           <span class="pull-right-container">
@@ -45,12 +45,12 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['question','list']"><i class="fa fa-circle-o"></i> List Question</a></li>
+          <li><a [routerLink]="['question']"><i class="fa fa-circle-o"></i> List Question</a></li>
           <li><a [routerLink]="['question','importlist']"><i class="fa fa-circle-o"></i> Import List Question</a></li>
         </ul>
       </li>
       <li>
-        <a href="pages/widgets.html">
+        <a [routerLink]="['category']">
           <i class="fa fa-th"></i> <span>Category</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green"></small>
