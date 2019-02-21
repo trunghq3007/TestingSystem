@@ -96,6 +96,16 @@ public class SemesterExamController {
 		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
 	}
 
+	/**
+	 * Create by: pvhao - CMC
+	 * Create date: Feb 18, 2019
+	 * Modifier: User
+	 * Modified date: Feb 18, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/info/{id}")
 
 	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
