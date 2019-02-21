@@ -4,10 +4,10 @@
          <div class="col-md-10" >
          </div>
       <div class="col-md-2" >
-         <button class="btn btn-default">Print</button>
+         <button class="btn btn-default" (click)="onExport()">Print</button>
       </div>
    </div>
-   <div class="row">
+   <div class="row" #exportPDF>
          <div class="col-md-10 col-md-offset-2">
                <div class="row form-group">
                      <div class="col-md-6">
@@ -65,7 +65,7 @@
                   </div>
                   <div class="row form-group">
                      <div class="col-md-10 col-md-offset-1">
-                        +,Điểm trung bình : 7.75
+                        +,Điểm trung bình : {{data?.mean_mark}}
                      </div>
                   </div>
                   <div class="row form-group">
