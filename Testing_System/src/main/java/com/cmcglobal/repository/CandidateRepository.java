@@ -10,6 +10,5 @@ import com.cmcglobal.entity.User;
 
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
 	public List<Candidate> findBySemesterExam(SemesterExam semesterExam);
-
 	public List<Candidate> findByUser(User user);
 }
