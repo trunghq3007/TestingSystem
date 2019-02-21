@@ -20,23 +20,17 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
-   public obj = {};
-   public objFilter = {
-      name: '',
-      status: 0,
-      user: '',
-      startTime: '',
-      endTime: ''
-   };
+   public obj: any = {};
+   public objFilter: any = {};
    public semesterExamList = [];
    configPagination: any;
-   itempages: any = [2, 4, 6, 8];
+   itempages: any = [5, 10, 15, 20];
    totalRecord: number;
    ckeConfig = {};
    constructor(private service: ApiService, private modalService: BsModalService) {
       this.configPagination = {
          currentPage: 1,
-         itemsPerPage: 2
+         itemsPerPage: 5
       }
       this.ckeConfig = { extraPlugins: 'divarea', height: 110, allowedContent: false, forcePasteAsPlainText: true, fontSize_defaultLabel: 22 }
    }
@@ -100,6 +94,7 @@ export class ListComponent implements OnInit {
          });
       } else {
          this.service.search('semesterexam/search', this.keyword).subscribe(result => {
+            console.log(result);
             this.semesterExamList = result.data;
          });
       }
@@ -112,7 +107,6 @@ export class ListComponent implements OnInit {
          // console.log(this.obj);
          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       })
-
    }
 
    getListSemesterExam() {
@@ -126,6 +120,10 @@ export class ListComponent implements OnInit {
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
    }
+   //---------------------- ---filter ---------------------- ---
+   filterByStatus(status: any) {
+      console.log(status);
+   }
 
    getDataFilter() {
       console.log(this.objFilter);
@@ -133,10 +131,7 @@ export class ListComponent implements OnInit {
          console.log(res);
       })
    }
-
-   object = {
-      detail: {}
-   }
+   // ---------------------- --- end filter ---------------------- ---
 
    cloneSemesterExam() {
       console.log(this.obj);
@@ -153,6 +148,7 @@ export class ListComponent implements OnInit {
    }
 
    ngOnInit() {
+      this.objFilter.status = null;
       this.getListSemesterExam();
    }
 }
