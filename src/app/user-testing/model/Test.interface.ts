@@ -1,7 +1,6 @@
 import { Exam } from "./Exam.interface";
 
 interface Test {
-   testId: string;
+   testID: string;
    testName: string;
-   exam: Exam[];
 }
