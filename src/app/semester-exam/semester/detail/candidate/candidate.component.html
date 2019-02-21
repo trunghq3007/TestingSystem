@@ -78,7 +78,8 @@
                         <select style="width: 100%;" class="input-xs form-control" formControlName="userId" id="users"
                            style="font-size: 14px;">
                            <option value="null">Vui Lòng Chọn</option>
-                           <option *ngFor="let item of user;" value="{{item.userId}}">{{item.email}}</option>
+                           <option *ngFor="let item of user;" value="{{item.userId}}">{{item.fullName}} - {{item.email}}
+                           </option>
                         </select>
                      </div>
                   </div>

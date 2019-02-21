@@ -75,9 +75,23 @@ export class CandidateComponent implements OnInit {
          alert("Chưa chọn kỳ thi để xóa");
       } else {
          var temp = confirm("Bạn có chắc chắn muốn xóa không?");
+
          if (temp) {
+            console.log(this.arrDelete);
+            for (let i = 0; i < this.arrDelete.length; i++) {
+               for (let j = 0; j < this.data.length; j++) {
+                  if (this.arrDelete[i] == this.data[j].id) {
+                     this.user.push(this.data[j].user);
+                     // this.CandidateFrm.reset(null);
+                  }
+               }
+               this.user.push(this.data[i].user);
+            }
+            console.log(this.data);
+
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.deleteTest(`candidate/delete/${this.arrDelete[i]}`).subscribe(result => {
+
                   this.candidateList = result.data;
                   this.getAll();
                });
@@ -85,7 +99,6 @@ export class CandidateComponent implements OnInit {
             this.arrDelete = [];
          }
       }
-
    }
 
    getCandidateList() {
@@ -96,7 +109,8 @@ export class CandidateComponent implements OnInit {
    getAll() {
       this.service.getAll(`candidate/listBySemester/${this.semester_id}`).subscribe(result => {
          this.data = result;
-         console.log(this.semester_id);
+         console.log(this.data);
+         // console.log(this.semester_id);
       });
    }
    getAllUser() {
@@ -106,13 +120,15 @@ export class CandidateComponent implements OnInit {
    }
 
    onSubmit() {
-      console.log(this.CandidateFrm.value)
       try {
          const value = this.CandidateFrm.value;
          const test: Candidate = { ...value };
-         this.service.saveOne('candidate/add', test).subscribe(data => {
-            console.log("them thanh cong");
-            this.getAll();
+         console.log(test);
+         this.service.saveOne('candidate/add', test).subscribe(result => {
+            if (result.status == 'SUCCESS') {
+               this.user = this.user.filter(item => item.userId != test.user.userId);
+               this.getAll();
+            }
          });
       } catch (error) {
          console.log(error);

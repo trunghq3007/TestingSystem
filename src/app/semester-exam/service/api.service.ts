@@ -21,7 +21,7 @@ export class ApiService {
    }
 
 
-   saveOne(nameapi: string, data: any) {
+   saveOne(nameapi: string, data: any):Observable<any> {
       return this.http.post(this.baseUrl + nameapi, data);
    }
    delete(nameapi: string, id: string): Observable<any> {
