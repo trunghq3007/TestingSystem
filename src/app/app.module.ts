@@ -1,3 +1,4 @@
+import { ListExamModule } from './exam/list-exam/list-exam.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -12,6 +13,11 @@ import { QuestionModule } from './question/question.module';
 import { ExamModule } from './exam/exam.module';
 import { CategoryModule } from './category/category.module';
 import { HttpClientModule } from '@angular/common/http';
+
+import { HttpModule } from '@angular/http';
+import { UserModule } from './user/user.module';
+import { HomeModule } from './home/home.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,9 +32,13 @@ import { HttpClientModule } from '@angular/common/http';
     ExamModule,
     CategoryModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ListExamModule,
+    HttpModule,
+    UserModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

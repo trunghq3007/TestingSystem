@@ -1,33 +1,43 @@
-export interface ListExam {
-  id: string;
+export interface Exam {
+  examId: string;
   title: string;
   duration: number;
-  category_id: string;
+  category: {
+    id: number;
+    categoryName: string;
+  };
   note: string;
-  number_of_question: number;
+  numberOfQuestion: number;
   created_at: Date;
   create_by: string;
-  questions: [
-    {
-      question_id: number;
-      content: string;
-      answers: [
-        {
-          content: string;
-          is_true: number;
-        }
-      ];
-    }
-  ];
+  status: string;
+  examQuestions: ExamQuestion[];
+}
+
+export interface ExamQuestion {
+  id: number;
+  choiceOrder: string;
+  question: Question;
 }
 
 export interface Question {
-  question_id: number;
+  questionId: string;
   content: string;
   answers: [
     {
       content: string;
-      is_true: number;
+      true: number;
     }
   ];
+}
+
+export interface Selection {
+  id: string;
+  checked: boolean;
+}
+
+export interface TabInfo {
+  currentPage: number;
+  entities: number;
+  sizeOfPage: number;
 }
