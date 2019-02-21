@@ -1,9 +1,9 @@
-<div id="menu2">
+<div id="interface-report">
 
-   <div class="panel panel-default">
-      <div class="panel-heading">
+   <div class="panel panel-info">
+      <div class="panel-heading text-center">
          <h3 class="panel-title">
-            <h3 style="text-align: center;">Report</h3>
+            Report
          </h3>
       </div>
       <div class="panel-body">
@@ -11,7 +11,7 @@
             <div class="col-md-10">
             </div>
             <div class="col-md-2">
-               <button class="btn btn-default" (click)="onExport()">Export</button>
+               <button class="btn btn-success" (click)="openModal()">Export</button>
             </div>
          </div>
          <div class="row form-group" #exportPDF>
@@ -97,3 +97,18 @@
       </div>
    </div>
 </div>
+<ng-template #templateModal>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">Thông báo</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      Bạn có muốn xuất báo cáo này không ?
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="onExport()">Thực hiện</button>
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()">Thoát</button>
+   </div>
+</ng-template>

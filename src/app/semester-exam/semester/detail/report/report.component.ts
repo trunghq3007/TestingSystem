@@ -1,20 +1,22 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, TemplateRef } from '@angular/core';
 import { ApiService } from 'src/app/semester-exam/service/api.service';
 import { drawDOM, exportPDF, DrawOptions, Group } from '@progress/kendo-drawing';
 import { saveAs } from '@progress/kendo-file-saver';
+import { BsModalService, BsModalRef,ModalDirective } from 'ngx-bootstrap/modal';
 @Component({
    selector: 'app-report',
    templateUrl: './report.component.html',
-   styleUrls: ['./report.component.css','./pdf-styles.css']
+   styleUrls: ['./report.component.css', './pdf-styles.css']
 })
 export class ReportComponent implements OnInit {
 
    @Input()
    semesterExamCode: string;
    data = Object;
-   title_file : string;
+   title_file: string;
    rate_title = [];
    rate_mark = [];
+   modalRef: BsModalRef;
    options = {
       paperSize: "A4",
       repeatHeaders: true,
@@ -23,8 +25,10 @@ export class ReportComponent implements OnInit {
          top: "80pt"
       },
    };
+   config = {};
    @ViewChild("exportPDF", { read: ElementRef }) htmlPDF: ElementRef;
-   constructor(private apiService: ApiService) { }
+   @ViewChild("templateModal") templateModal:ModalDirective;
+   constructor(private apiService: ApiService, private modalService: BsModalService) { }
 
    ngOnInit() {
       this.getData();
@@ -41,13 +45,22 @@ export class ReportComponent implements OnInit {
          }
       );
    }
+   openModal() {
+      //this.modalRef = this.modalService.show(this.templateModal, this.config);
+      this.templateModal.show();
+   }
    onExport() {
-     // this.htmlPDF.nativeElement.setAttribute("class", "show");
-      drawDOM(this.htmlPDF.nativeElement, this.options).then((group: Group) => {
-        // this.htmlPDF.nativeElement.setAttribute("class", "hidden");
-         return exportPDF(group);
-      }).then((dataUri) => {
-         saveAs(dataUri, `${this.title_file}-${this.semesterExamCode}.pdf`);
-      });
+      // this.htmlPDF.nativeElement.setAttribute("class", "show");
+
+
+      //this.modalRef.hide();
+      this.templateModal.hide;
+     //this.templateModal
+      // drawDOM(this.htmlPDF.nativeElement, this.options).then((group: Group) => {
+      //    // this.htmlPDF.nativeElement.setAttribute("class", "hidden");
+      //    return exportPDF(group);
+      // }).then((dataUri) => {
+      //    saveAs(dataUri, `${this.title_file}-${this.semesterExamCode}.pdf`);
+      // });
    }
 }
