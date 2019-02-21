@@ -309,7 +309,8 @@
       </ul>
 
       <div class="index-question">
-         <div class="index-question-item" *ngFor="let i of examQuestion, let id = index" (click)="viewQuestion(id)">
+         <div class="index-question-item" *ngFor="let i of examQuestion, let id = index" (click)="viewQuestion(id)"
+            data-choice-2="1">
             {{id+1}}</div>
       </div>
    </section>
@@ -331,7 +332,8 @@
                      <div><b>{{id+1}}</b>. {{i.question.content}}</div>
                      <div *ngFor="let j of i.choiceOrderList, let id2 = index">
                         <div class="checkbox">
-                           <label><input type="checkbox" value="">{{labelOption[id2]}}.
+                           <label><input type="checkbox" value="{{i.question.answers[j-1].answerId}}"
+                                 (change)="change($event)">{{labelOption[id2]}}.
                               {{i.question.answers[j-1].content}}</label>
                         </div>
                      </div>

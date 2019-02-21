@@ -9,7 +9,7 @@ import { Question } from './model/Question.interface';
 import { HttpClient } from '@angular/common/http';
 import { ExamQuestion } from './model/ExamQuestion.interface';
 import { Answer } from './model/Answer.interface';
-import { TestingResult } from './model/TestingResutl';
+// import { TestingResult } from './model/TestingResutl';
 
 @Component({
    selector: 'app-user-testing',
@@ -33,7 +33,7 @@ export class UserTestingComponent implements OnInit {
    exam: Exam;
    duration: string;
    examQuestion: ExamQuestion[];
-   testingAnswer: TestingResult[];
+   // testingAnswer: TestingResult[];
    labelOption = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
    modalRef: BsModalRef;
@@ -56,7 +56,6 @@ export class UserTestingComponent implements OnInit {
             this.exam = res.data.exam;
             this.duration = res.data.exam.duration;
             this.examQuestion = res.data.exam.examQuestions;
-            console.log(this.examQuestion[0]);
             this.examQuestion.forEach(el => {
                el.choiceOrderList = el.choiceOrder.split(" ").map(Number);
             })
@@ -73,5 +72,8 @@ export class UserTestingComponent implements OnInit {
    initTestingAnswer() {
       this.examQuestion.forEach(el => {
       })
+   }
+   change(event: any) {
+      console.log(event.target.checked)
    }
 }
