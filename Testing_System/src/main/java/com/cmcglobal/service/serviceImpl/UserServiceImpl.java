@@ -14,7 +14,6 @@ import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.entity.Test;
 import com.cmcglobal.entity.User;
 import com.cmcglobal.repository.CandidateRepository;
-import com.cmcglobal.repository.ExamRepository;
 import com.cmcglobal.repository.SemesterExamRepository;
 import com.cmcglobal.repository.TestRepository;
 import com.cmcglobal.repository.UserRepository;
@@ -59,5 +58,10 @@ public class UserServiceImpl implements UserService {
 		result.setData(exams);
 		return result;
 	}
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
 }

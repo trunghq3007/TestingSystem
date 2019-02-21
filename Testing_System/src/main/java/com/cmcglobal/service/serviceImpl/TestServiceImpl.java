@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmcglobal.entity.Test;
-import com.cmcglobal.repository.SemesterExamRepository;
 import com.cmcglobal.repository.TestRepository;
 import com.cmcglobal.service.ServiceResult;
 import com.cmcglobal.service.TestService;
