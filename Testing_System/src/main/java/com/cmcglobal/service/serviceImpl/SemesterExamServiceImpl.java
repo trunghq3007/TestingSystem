@@ -107,62 +107,63 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	 */
 	public SemesterInformation getInformationOfSemester(String id) {
 
-		SemesterExam semesterExam = examRepository.findById(id).get();
-		List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
-		List<Test> list_test = testRepository.findBySemesterExam(semesterExam);
-		List<User> user_join = new ArrayList<User>();
-		List<User> user_test = new ArrayList<User>();
-		List<Exam> exams = new ArrayList<Exam>();
-		int total_number_question = 0;
-		int total_user_test = 0;
-		float mean_mark = 0;
-		TreeMap<Integer, Integer> classification_mark = new TreeMap<Integer, Integer>();
-		float[] start_mark = ConstantSemesterExam.startMarkclassification();
-		float[] end_mark = ConstantSemesterExam.endMarkclassification();
-		int[] rate_mark = new int[ConstantSemesterExam.classificationSemesterExam().length];
-		for (int i = 0; i < ConstantSemesterExam.classificationSemesterExam().length; i++) {
-			classification_mark.put(i, 0);
-		}
+		SemesterInformation semesterInformation = null;
+		try {
+			if (examRepository.existsById(id)) {
+				semesterInformation = new SemesterInformation();
+				SemesterExam semesterExam = examRepository.findById(id).get();
+				List<Candidate> list_candidate = candidateRepository.findBySemesterExam(semesterExam);
+				List<Test> list_test = testRepository.findBySemesterExam(semesterExam);
+				List<User> user_join = new ArrayList<User>();
+				List<User> user_test = new ArrayList<User>();
+				List<Exam> exams = new ArrayList<Exam>();
+				int total_number_question = 0;
+				int total_user_test = 0;
+				float mean_mark = 0;
+				float[] start_mark = ConstantSemesterExam.startMarkclassification();
+				float[] end_mark = ConstantSemesterExam.endMarkclassification();
+				int[] rate_mark = new int[ConstantSemesterExam.classificationSemesterExam().length];
+				for (Candidate candidate : list_candidate) {
+					User user = userRepository.findById(candidate.getUser().getUserId()).get();
+					user_join.add(user);
+					List<CandidateTest> listCandidateTest = candidateTestRepository.findByCandidates(candidate);
+					if (!listCandidateTest.isEmpty()) {
+						total_user_test++;
+					}
+					for (CandidateTest candidateTest : listCandidateTest) {
+						user_test.add(candidateTest.getCandidates().getUser());
+						mean_mark += candidateTest.getMark();
+						for (int i = 0; i < start_mark.length; i++) {
+							if (start_mark[i] <= candidateTest.getMark() && candidateTest.getMark() < end_mark[i]) {
+								rate_mark[i]++;
+							}
+						}
 
-		for (Candidate candidate : list_candidate) {
-			User user = userRepository.findById(candidate.getUser().getUserId()).get();
-			user_join.add(user);
-			List<CandidateTest> listCandidateTest = candidateTestRepository.findByCandidates(candidate);
-			if (!listCandidateTest.isEmpty()) {
-				total_user_test++;
-			}
-			for (CandidateTest candidateTest : listCandidateTest) {
-				user_test.add(candidateTest.getCandidates().getUser());
-				mean_mark += candidateTest.getMark();
-				for (int i = 0; i < start_mark.length; i++) {
-					if (start_mark[i] <= candidateTest.getMark() && candidateTest.getMark() < end_mark[i]) {
-						classification_mark.put(i, classification_mark.get(i) + 1);
 					}
 				}
-
+				for (Test test : list_test) {
+					Exam exam = exam_repository.findById(test.getExam().getExamId()).get();
+					exams.add(exam);
+					total_number_question += exam.getNumberOfQuestion();
+				}
+				if (total_user_test > 0)
+					mean_mark /= total_user_test;
+				semesterInformation.setSemesterExam(semesterExam);
+				semesterInformation.setStatus(
+						String.valueOf(ConstantSemesterExam.statusSemesterExam().get(semesterExam.getStatus())));
+				semesterInformation.setTotal_number_exam(exams.size());
+				semesterInformation.setTotal_number_question(total_number_question);
+				semesterInformation.setTotal_user_join(user_join.size());
+				semesterInformation.setTotal_user_test(total_user_test);
+				semesterInformation.setMean_mark(mean_mark);
+				semesterInformation.setRate_title(ConstantSemesterExam.classificationSemesterExam());
+				semesterInformation.setRate_mark(rate_mark);
 			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		for (Test test : list_test) {
-			Exam exam = exam_repository.findById(test.getExam().getExamId()).get();
-			exams.add(exam);
-			total_number_question += exam.getNumberOfQuestion();
-		}
-		if (total_user_test > 0)
-			mean_mark /= total_user_test;
-		for (int i = 0; i < rate_mark.length; i++) {
-			rate_mark[i] = classification_mark.get(i);
-		}
-		SemesterInformation semesterInformation = new SemesterInformation();
-		semesterInformation.setSemesterExam(semesterExam);
-		semesterInformation
-				.setStatus(String.valueOf(ConstantSemesterExam.statusSemesterExam().get(semesterExam.getStatus())));
-		semesterInformation.setTotal_number_exam(exams.size());
-		semesterInformation.setTotal_number_question(total_number_question);
-		semesterInformation.setTotal_user_join(user_join.size());
-		semesterInformation.setTotal_user_test(total_user_test);
-		semesterInformation.setMean_mark(mean_mark);
-		semesterInformation.setRate_title(ConstantSemesterExam.classificationSemesterExam());
-		semesterInformation.setRate_mark(rate_mark);
+
 		return semesterInformation;
 	}
 
