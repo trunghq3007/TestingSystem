@@ -38,7 +38,7 @@ export class InfoComponent implements OnInit {
          }),
          status: ['', [Validators.required]],
          startTime: ['', [Validators.required]],
-         endTime: ['', [Validators.required]],
+         endTime: [new Date(), [Validators.required]],
          description: ['', [Validators.required]],
       });
 

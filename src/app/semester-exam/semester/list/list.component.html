@@ -156,10 +156,8 @@
                               <td>{{item.endTime | date: 'dd/MM/yyyy'}}</td>
                               <td></td>
                               <td style="width: 10% !important" class="text-center">
-
                                  <button class="btn btn-primary btn-sm" style="margin-right: 5px;"
                                     (click)="openModal(item.id,template)">
-
                                     <span class="glyphicon glyphicon-copy"></span>
                                     Clone
                                  </button>
@@ -190,7 +188,6 @@
 
 
 <ng-template #template>
-
    <div class="modal-dialog modal-lg">
       <div class="modal-header">
          <h4 class="modal-title">Clone kỳ thi</h4>
@@ -200,7 +197,7 @@
       </div>
       <div class="modal-body">
          <tabset #staticTabs>
-            <tab heading="Static title">
+            <tab heading="info">
                <form class="form-horizontal" style="padding-top: 10px;">
                   <div class="form-group">
                      <label for="name" class="col-sm-2 control-label">Tên kỳ thi</label>
@@ -225,7 +222,7 @@
                         <div class="input-group">
                            <input type="text" placeholder="Chọn ngày bắt đầu" class="form-control" bsDatepicker
                               #start="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                              [(ngModel)]="obj.startTime" name="startTime">
+                              [(ngModel)]="obj.startTime" name="startTime" autocomplete="off">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="start.show()">
                                  <i class="glyphicon glyphicon-calendar"></i>
@@ -239,7 +236,7 @@
                         <div class="input-group">
                            <input type="text" placeholder="Chọn ngày kết thúc" class="form-control" bsDatepicker
                               [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #end="bsDatepicker"
-                              [(ngModel)]="obj.endTime" name="endTime">
+                              [(ngModel)]="obj.endTime" name="endTime" autocomplete="off">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="end.show()">
                                  <i class="glyphicon glyphicon-calendar"></i>
