@@ -4,8 +4,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Test } from './test.interface';
-import { TabsetComponent } from 'ngx-bootstrap';
-
 
 @Component({
    selector: 'app-test-result',
@@ -21,7 +19,6 @@ export class TestResultComponent implements OnInit {
    selectedAll: any;
    arrDelete: any = [];
    isCheck: boolean = false;
-   public obj={};
 
    public TestList = [];
    configPagination: any;
@@ -30,14 +27,13 @@ export class TestResultComponent implements OnInit {
       private http: HttpClient,
       private router: Router,
       private service: ApiService) {
-         this.configPagination = {
-            currentPage: 1,
-            itemsPerPage: 10
-         }
-       }
+      this.configPagination = {
+         currentPage: 1,
+         itemsPerPage: 8
+      }
+   }
 
    ngOnInit() {
-
       this.getAll();
       this.getAllExam();
       this.getListTest();
@@ -46,17 +42,12 @@ export class TestResultComponent implements OnInit {
          testName: ['', [Validators.required, Validators.minLength(5)]],
          status: 1,
          exam: this.fb.group({
-            examId: ['', [Validators.required, Validators.minLength(5)]]
+            examId: [null, [Validators.required, Validators.minLength(5)]]
          }),
          semesterExam: {
             id: this.semester_id
          }
       });
-   }
-
-   changeItemsPerPage(event: number) {
-      console.log(event);
-      this.configPagination.itemsPerPage = event;
    }
 
    isCheckAll(event: any) {
@@ -112,13 +103,11 @@ export class TestResultComponent implements OnInit {
 
    getAll() {
       this.service.getAll(`test/listBySemester/${this.semester_id}`).subscribe(result => {
-
          this.data = result;
       });
    }
    getAllExam() {
       this.service.getAll("exam/listExams").subscribe(result => {
-
          this.exam = result;
       });
    }
@@ -129,11 +118,18 @@ export class TestResultComponent implements OnInit {
          const test: Test = { ...value };
          this.service.saveOne('test/add', test).subscribe(data => {
             console.log("them thanh cong");
+            this.onReset();
             this.getAll();
          });
       } catch (error) {
          console.log(error);
       }
+   }
+
+   onReset(): void { this.resetForm(); }
+
+   resetForm(value: any = undefined): void {
+      this.testFrm.reset(value);
    }
 
 
