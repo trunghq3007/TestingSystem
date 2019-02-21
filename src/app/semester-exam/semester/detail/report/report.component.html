@@ -1,95 +1,94 @@
 <div id="menu2">
    <h3 style="text-align: center;">Report</h3>
    <div class="row form-group">
-         <div class="col-md-10" >
-         </div>
-      <div class="col-md-2" >
+      <div class="col-md-10">
+      </div>
+      <div class="col-md-2">
          <button class="btn btn-default" (click)="onExport()">Print</button>
       </div>
    </div>
    <div class="row" #exportPDF>
-         <div class="col-md-10 col-md-offset-2">
-               <div class="row form-group">
-                     <div class="col-md-6">
-                        Tên kỳ thi: <label>{{data?.semesterExam?.name}}</label>
-                     </div>
-                     <div class="col-md-6">
-                        Trạng thái: <label>{{data?.status}}</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Người tạo kỳ thi:
-                     </div>
-                     <div class="col-md-6">
-                        <label>{{data?.semesterExam?.user?.fullName}}</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Thời gian thi:
-                     </div>
-                     <div class="col-md-6">
-                        <label>{{ data?.semesterExam?.startTime| date: 'dd/MM/yyyy'}} - {{ data?.semesterExam?.endTime| date: 'dd/MM/yyyy'}}</label>
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Đề thi:
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số đề thi : {{ data?.total_number_exam}}
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số câu hỏi : {{ data?.total_number_question}}
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-2">
-                        Kết quả thi:
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số thí sinh : {{ data?.total_user_join}}
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Tổng số người tham gia : {{ data?.total_user_test}}
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-10 col-md-offset-1">
-                        +,Điểm trung bình : {{data?.mean_mark}}
-                     </div>
-                  </div>
-                  <div class="row form-group">
-                     <div class="col-md-4 col-md-offset-1">
-                        <table class="table table-bordered table-hover table-sm">
-                           <thead style="background: #f1eaea;">
-                              <tr>
-                                 <th style="width:33%;">Kém</th>
-                                 <th>Trung bình</th>
-                                 <th style="width:33%;">Giỏi</th>
-
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>10</td>
-                                 <td>20</td>
-                                 <td>20</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
+      <div class="col-md-10 col-md-offset-2">
+         <div class="row form-group">
+            <div class="col-md-6">
+               Tên kỳ thi: <label>{{data?.semesterExam?.name}}</label>
+            </div>
+            <div class="col-md-6">
+               Trạng thái: <label>{{data?.status}}</label>
+            </div>
          </div>
+         <div class="row form-group">
+            <div class="col-md-2">
+               Người tạo kỳ thi:
+            </div>
+            <div class="col-md-6">
+               <label>{{data?.semesterExam?.user?.fullName}}</label>
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-2">
+               Thời gian thi:
+            </div>
+            <div class="col-md-6">
+               <label>{{ data?.semesterExam?.startTime| date: 'dd/MM/yyyy'}} -
+                  {{ data?.semesterExam?.endTime| date: 'dd/MM/yyyy'}}</label>
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-2">
+               Đề thi:
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-10 col-md-offset-1">
+               +,Tổng số đề thi : {{ data?.total_number_exam}}
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-10 col-md-offset-1">
+               +,Tổng số câu hỏi : {{ data?.total_number_question}}
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-2">
+               Kết quả thi:
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-10 col-md-offset-1">
+               +,Tổng số thí sinh : {{ data?.total_user_join}}
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-10 col-md-offset-1">
+               +,Tổng số người tham gia : {{ data?.total_user_test}}
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-10 col-md-offset-1">
+               +, Điểm trung bình : {{data?.mean_mark}}
+            </div>
+         </div>
+         <div class="row form-group">
+            <div class="col-md-6 col-md-offset-1">
+               <table class="table table-bordered table-hover table-sm">
+                  <thead style="background: #f1eaea;">
+                     <tr>
+                        <th *ngFor="let rate of rate_title, let i =index" style="width:25%;">{{rate}}</th>
+                        <!-- <th>Trung bình</th>
+                                 <th style="width:25%;">Khá</th>
+                                 <th style="width:25%;">Giỏi</th> -->
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td *ngFor="let total of rate_mark, let i =index">{{total}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
    </div>
 
 </div>

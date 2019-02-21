@@ -13,6 +13,8 @@ export class ReportComponent implements OnInit {
    semesterExamCode: string;
    data = Object;
    title_file : string;
+   rate_title = [];
+   rate_mark = [];
    options = {
       paperSize: "A4",
       repeatHeaders: true,
@@ -32,6 +34,8 @@ export class ReportComponent implements OnInit {
          result => {
             this.data = result;
             this.title_file = result.semesterExam.name;
+            this.rate_title = result.rate_title;
+            this.rate_mark = result.rate_mark;
          },
          error => {
          }
@@ -43,7 +47,7 @@ export class ReportComponent implements OnInit {
         // this.htmlPDF.nativeElement.setAttribute("class", "hidden");
          return exportPDF(group);
       }).then((dataUri) => {
-         saveAs(dataUri, `${this.title_file}.pdf`);
+         saveAs(dataUri, `${this.title_file}-${this.semesterExamCode}.pdf`);
       });
    }
 }
