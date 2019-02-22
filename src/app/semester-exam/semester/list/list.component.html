@@ -96,7 +96,7 @@
                         <input type="text" class="form-control" placeholder="search by name or code"
                            [(ngModel)]="keyword" (keypress)="enterSearch($event)">
                         <span class="input-group-btn">
-                           <button class="btn btn-default btn-flat" type="submit" (click)="searchByKeyword()">
+                           <button class="btn btn-default btn-flat" type="submit" (click)="searchByKeyword()" matTooltip="Info about the action">
                               <i class="glyphicon glyphicon-search"></i>
                            </button>
                         </span>
