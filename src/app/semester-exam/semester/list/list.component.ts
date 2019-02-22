@@ -179,11 +179,11 @@ export class ListComponent implements OnInit {
             this.modalRef.hide();
             this.getListSemesterExam();
             Swal.fire({
-               position: 'top-end',
+               position: 'center',
                type: 'success',
                title: 'Clone Kỳ thi thành công',
                showConfirmButton: false,
-               timer: 1500
+               timer: 2000
             })
          });
       } catch (error) {

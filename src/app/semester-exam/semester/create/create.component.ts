@@ -85,6 +85,7 @@ export class CreateComponent implements OnInit {
 
    onSubmit() {
       try {
+         Swal.showLoading();
          const value = this.profileFrm.value;
          const semesterExam: SemesterExam = {
             user: this.user,
