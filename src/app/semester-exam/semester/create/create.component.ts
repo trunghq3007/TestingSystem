@@ -40,11 +40,39 @@ export class CreateComponent implements OnInit {
    }
    startTime: any;
    getStartTime(event: any) {
-
-      var selecttime = event.getTime();
+      console.log(typeof event + ' - ' + event);
+      if (event != null) {
+         var selecttime = event.getTime();
+      }
       var timenow = Date.now();
       if (selecttime < timenow) {
-         console.log('Error');
+         let timerInterval
+         Swal.fire({
+            html:
+               '<h4 class="text-danger">Thời gian bắt đầu phải lớn hơn hoặc bằng thời gian hiện tại' +
+               '<p style="color:red">Vui lòng chọn lại thời gian<br/></p>' +
+               '<i>Tự động đóng sau <strong></strong> seconds.</i>',
+            showCloseButton: true,
+            position: 'center',
+            type: 'error',
+            timer: 5000,
+            onBeforeOpen: () => {
+               Swal.showLoading()
+               timerInterval = setInterval(() => {
+                  Swal.getContent().querySelector('strong').textContent = (Swal.getTimerLeft() / 1000)
+                     .toFixed(0)
+               }, 100)
+            },
+            onClose: () => {
+               clearInterval(timerInterval)
+            }
+         }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer || result.dismiss === Swal.DismissReason.backdrop) {
+               console.log('chay het vao day');
+
+               this.startTime = null;
+            }
+         })
       }
 
       if (event == 'Invalid Date') {
@@ -52,14 +80,6 @@ export class CreateComponent implements OnInit {
       }
    }
 
-   getTime(event) {
-      console.log(event);
-      var d = new Date(event);
-      console.log(d);
-      console.log(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
-      var h = new Date(d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear());
-      console.log(h);
-   }
    onChange(event: any): void {
       console.log(event);
    }
@@ -80,7 +100,7 @@ export class CreateComponent implements OnInit {
             let timerInterval
             Swal.fire({
                html:
-                  '<h4 class="text-danger">Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc</h4>' +
+                  '<h4 class="text-danger">Thời gian kết thúc phải lớn hơn thời gian bắt đầu</h4>' +
                   '<p style="color:red">Vui lòng chọn lại thời gian<br/></p>' +
                   '<i>Tự động đóng sau <strong></strong> seconds.</i>',
                showCloseButton: true,
@@ -98,6 +118,7 @@ export class CreateComponent implements OnInit {
                   clearInterval(timerInterval)
                }
             }).then((result) => {
+               console.log(result);
                if (
                   // Read more about handling dismissals
                   result.dismiss === Swal.DismissReason.timer
