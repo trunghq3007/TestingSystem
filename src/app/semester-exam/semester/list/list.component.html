@@ -109,9 +109,8 @@
                            <tr>
                               <th>
                                  <span class="custom-checkbox">
-
-                                    <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)">
-
+                                    <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)"
+                                       [checked]="isCheck">
                                     <label for="checkboxAll"></label>
                                  </span>
                               </th>
@@ -130,10 +129,11 @@
                               *ngFor="let item of semesterExamList | paginate: configPagination; trackBy:semesterExamTrackByFn">
                               <td scope="row">
                                  <span class="custom-checkbox">
-                                    <input type="checkbox" id="{{item.id}}" value="{{item.id}}" (change)="getId($event)"
-                                       [checked]="isCheck">
+                                    <input type="checkbox" id="{{item.id}}" [value]="item.id"
+                                       (change)="getIdOfItem($event)" [checked]="isCheck">
                                     <label for="{{item.id}}"></label>
                                  </span>
+                                 {{isCheck}}
                               </td>
                               <td><a routerLink="{{item.id}}">{{item.name}}</a></td>
                               <!-- <td>{{item.description}}</td> -->
@@ -264,7 +264,8 @@
       </div>
 
       <div class="modal-footer">
-         <button type="submit" class="btn btn-primary" (click)="cloneSemesterExam()"><span
+         <button type="submit" class="btn btn-primary" (click)="cloneSemesterExam()"
+            [disabled]="obj.startTime == '' || obj.endTime=='' || obj.name==''"><span
                class="glyphicon glyphicon-saved"></span> Save</button>
          <button type="button" class="btn btn-default" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i> close</span>
@@ -272,5 +273,3 @@
       </div>
    </div>
 </ng-template>
-
-<!-- <button (click)="closePopup()">CLOSE</button> -->

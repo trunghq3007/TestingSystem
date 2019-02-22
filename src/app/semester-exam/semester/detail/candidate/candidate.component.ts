@@ -91,7 +91,7 @@ export class CandidateComponent implements OnInit {
 
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.deleteTest(`candidate/delete/${this.arrDelete[i]}`).subscribe(result => {
-
+                  console.log(result);
                   this.candidateList = result.data;
                   this.getAll();
                });

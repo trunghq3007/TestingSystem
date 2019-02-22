@@ -7,6 +7,8 @@ import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
+import { ConfirmComponent } from '../share-use/confirm/confirm.component';
+import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 
 @Component({
    selector: 'app-list',
@@ -49,7 +51,7 @@ export class ListComponent implements OnInit {
       }
    }
 
-   getId(event: any) {
+   getIdOfItem(event: any) {
       if (event.target.checked) {
          this.arrDelete.push(event.target.value);
       } else {
@@ -64,7 +66,6 @@ export class ListComponent implements OnInit {
          this.semesterExamList.filter(function (item) {
             othis.arrDelete.push(item.id);
          })
-
       } else {
          this.isCheck = false;
          this.arrDelete = [];
@@ -88,12 +89,25 @@ export class ListComponent implements OnInit {
                if (result.value) {
                   for (let i = 0; i < this.arrDelete.length; i++) {
                      this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                        this.semesterExamList = result.data;
-                        Swal.fire(
-                           'Deleted!',
-                           'Xóa thành công',
-                           'success'
-                        )
+                        console.log(result);
+                        if (result.status == 'SUCCESS') {
+                           this.semesterExamList = result.data;
+                           this.totalRecord = result.totalRecord;
+                           this.isCheck = false;
+                           Swal.fire(
+                              'Deleted!',
+                              'Xóa thành công',
+                              'success',
+                           )
+                        } else {
+                           this.isCheck = false;
+                           Swal.fire(
+                              'Deleted!',
+                              'Hệ thống đang xảy ra lỗi, vui lòng thử lại sau',
+                              'error'
+                           )
+                           return;
+                        }
                      });
                   }
                   this.arrDelete = [];
@@ -160,12 +174,18 @@ export class ListComponent implements OnInit {
 
    cloneSemesterExam() {
       console.log(this.obj);
-      // this.obj.id = null
       try {
          this.service.saveOne('semesterexam/add', this.obj).subscribe(data => {
             console.log(data);
             this.modalRef.hide();
             this.getListSemesterExam();
+            Swal.fire({
+               position: 'top-end',
+               type: 'success',
+               title: 'Clone Kỳ thi thành công',
+               showConfirmButton: false,
+               timer: 1500
+            })
          });
       } catch (error) {
          console.log(error.message)
@@ -176,29 +196,4 @@ export class ListComponent implements OnInit {
       this.objFilter.status = null;
       this.getListSemesterExam();
    }
-
-   // closePopup() {
-   //    let timerInterval
-   //    Swal.fire({
-   //       type: 'warning',
-   //       showCloseButton: true,
-   //       title: '<h5><b>BẠN ĐÃ HẾT THỜI GIAN LÀM BÀI!</b></h5>',
-   //       html:
-   //          '<p style="font-size:15px">Hệ thống sẽ tự động nộp bài sau: <strong style="color:red"></strong> s<br/><br/></p>',
-   //       timer: 3000,
-   //       onBeforeOpen: () => {
-   //          Swal.showLoading()
-   //          timerInterval = setInterval(() => {
-   //             Swal.getContent().querySelector('strong')
-   //                .textContent = (Swal.getTimerLeft() / 1000)
-   //                   .toFixed(0)
-   //          }, 100)
-   //       },
-   //       onClose: () => {
-   //          console.log("Close popup");
-   //          console.log(timerInterval);
-   //          clearInterval(timerInterval)
-   //       }
-   //    })
-   // }
 }

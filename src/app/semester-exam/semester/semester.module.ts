@@ -25,6 +25,7 @@ import { TestResultComponent } from './detail/test-result/test-result.component'
 import { DatepickerComponent } from './share-use/datepicker/datepicker.component';
 // import { GridModule, PDFModule } from '@progress/kendo-angular-grid';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { ConfirmComponent } from './share-use/confirm/confirm.component';
 
 @NgModule({
    declarations: [
@@ -37,7 +38,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
       CandidateComponent,
       ExamComponent,
       TestResultComponent,
-      DatepickerComponent
+      DatepickerComponent,
+      ConfirmComponent
    ],
    imports: [
       CommonModule,

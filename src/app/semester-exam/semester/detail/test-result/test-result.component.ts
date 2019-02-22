@@ -80,6 +80,7 @@ export class TestResultComponent implements OnInit {
          if (temp) {
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.deleteTest(`test/delete/${this.arrDelete[i]}`).subscribe(result => {
+                  console.log(result);
                   this.TestList = result.data;
                   this.getAll();
                });

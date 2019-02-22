@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, 
 import { Router } from '@angular/router';
 import { SemesterExam } from '../model/SemesterExam';
 import { ApiService } from '../../service/api.service';
+import Swal from 'sweetalert2';
 
 @Component({
    selector: 'app-create',
@@ -39,6 +40,13 @@ export class CreateComponent implements OnInit {
    }
    startTime: any;
    getStartTime(event: any) {
+
+      var selecttime = event.getTime();
+      var timenow = Date.now();
+      if (selecttime < timenow) {
+         console.log('Error');
+      }
+
       if (event == 'Invalid Date') {
          this.startTime = new Date();
       }
@@ -59,14 +67,46 @@ export class CreateComponent implements OnInit {
    onSubmit() {
       try {
          const value = this.profileFrm.value;
-
          const semesterExam: SemesterExam = {
             user: this.user,
             ...value
          };
-         this.service.saveOne('semesterexam/add', semesterExam).subscribe(data => {
-            this.router.navigateByUrl('manager/semester');
-         });
+         console.log(semesterExam);
+         if (semesterExam.startTime.getTime() < semesterExam.endTime.getTime()) {
+            this.service.saveOne('semesterexam/add', semesterExam).subscribe(data => {
+               this.router.navigateByUrl('manager/semester');
+            });
+         } else {
+            let timerInterval
+            Swal.fire({
+               html:
+                  '<h4 class="text-danger">Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc</h4>' +
+                  '<p style="color:red">Vui lòng chọn lại thời gian<br/></p>' +
+                  '<i>Tự động đóng sau <strong></strong> seconds.</i>',
+               showCloseButton: true,
+               position: 'center',
+               type: 'error',
+               timer: 5000,
+               onBeforeOpen: () => {
+                  Swal.showLoading()
+                  timerInterval = setInterval(() => {
+                     Swal.getContent().querySelector('strong').textContent = (Swal.getTimerLeft() / 1000)
+                        .toFixed(0)
+                  }, 100)
+               },
+               onClose: () => {
+                  clearInterval(timerInterval)
+               }
+            }).then((result) => {
+               if (
+                  // Read more about handling dismissals
+                  result.dismiss === Swal.DismissReason.timer
+               ) {
+                  console.log('I was closed by the timer')
+               }
+            })
+         }
+
       } catch (error) {
          console.log(error);
       }
