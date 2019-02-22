@@ -6,12 +6,16 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
 @Component({
    selector: 'app-list',
    templateUrl: './list.component.html',
    styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+
+
 
    @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
@@ -68,18 +72,36 @@ export class ListComponent implements OnInit {
    }
 
    deleteItem() {
-      if (this.arrDelete.length == 0) {
-         alert("Chưa chọn kỳ thi để xóa");
-      } else {
-         var temp = confirm("Bạn có chắc chắn muốn xóa không?");
-         if (temp) {
-            for (let i = 0; i < this.arrDelete.length; i++) {
-               this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
-                  this.semesterExamList = result.data;
-               });
-            }
-            this.arrDelete = [];
+      try {
+         if (this.arrDelete.length == 0) {
+            alert("Chưa chọn kỳ thi để xóa");
+         } else {
+            Swal.fire({
+               title: 'Are you sure?',
+               text: "You won't be able to revert this!",
+               type: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+               if (result.value) {
+                  for (let i = 0; i < this.arrDelete.length; i++) {
+                     this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
+                        this.semesterExamList = result.data;
+                        Swal.fire(
+                           'Deleted!',
+                           'Xóa thành công',
+                           'success'
+                        )
+                     });
+                  }
+                  this.arrDelete = [];
+               }
+            })
          }
+      } catch (error) {
+         console.log(error.message);
       }
    }
 
@@ -105,8 +127,8 @@ export class ListComponent implements OnInit {
       this.service.getOne('semesterexam/getone', id).subscribe(result => {
          this.obj = result.data;
          this.obj.id = null;
-         this.obj.startTime="";
-         this.obj.endTime="";
+         this.obj.startTime = "";
+         this.obj.endTime = "";
          // console.log(this.obj);
          this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       })
@@ -154,4 +176,29 @@ export class ListComponent implements OnInit {
       this.objFilter.status = null;
       this.getListSemesterExam();
    }
+
+   // closePopup() {
+   //    let timerInterval
+   //    Swal.fire({
+   //       type: 'warning',
+   //       showCloseButton: true,
+   //       title: '<h5><b>BẠN ĐÃ HẾT THỜI GIAN LÀM BÀI!</b></h5>',
+   //       html:
+   //          '<p style="font-size:15px">Hệ thống sẽ tự động nộp bài sau: <strong style="color:red"></strong> s<br/><br/></p>',
+   //       timer: 3000,
+   //       onBeforeOpen: () => {
+   //          Swal.showLoading()
+   //          timerInterval = setInterval(() => {
+   //             Swal.getContent().querySelector('strong')
+   //                .textContent = (Swal.getTimerLeft() / 1000)
+   //                   .toFixed(0)
+   //          }, 100)
+   //       },
+   //       onClose: () => {
+   //          console.log("Close popup");
+   //          console.log(timerInterval);
+   //          clearInterval(timerInterval)
+   //       }
+   //    })
+   // }
 }
