@@ -27,9 +27,8 @@ import com.cmcglobal.entity.Exam;
 import com.cmcglobal.repository.ExamRepository;
 import com.cmcglobal.service.CategoryService;
 import com.cmcglobal.service.ExamService;
-import java.util.Date;
 import java.util.Random;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import com.cmcglobal.entity.ExamQuestion;
 import com.cmcglobal.entity.Question;
@@ -103,34 +102,28 @@ public class ExamServiceImpl implements ExamService {
   }
 
   @Override
-  public List<Exam> pageExam(String searchContent, Pageable pageable) {
+  public List<Exam> pageExam(String searchContent, Sort pageable) {
     return examRepository.pageExam(searchContent, pageable);
   }
 
   @Override
-  public List<Exam> pageExamSortByUserCreatedByAsc(String searchContent,
-      Pageable pageable) {
-    return examRepository.pageExamSortByUserCreatedByAsc(searchContent,
-        pageable);
+  public List<Exam> pageExamSortByUserCreatedByAsc(String searchContent) {
+    return examRepository.pageExamSortByUserCreatedByAsc(searchContent);
   }
 
   @Override
-  public List<Exam> pageExamSortByUserCreatedByDesc(String searchContent,
-      Pageable pageable) {
-    return examRepository.pageExamSortByUserCreatedByDesc(searchContent,
-        pageable);
+  public List<Exam> pageExamSortByUserCreatedByDesc(String searchContent) {
+    return examRepository.pageExamSortByUserCreatedByDesc(searchContent);
   }
 
   @Override
-  public List<Exam> pageExamSortByCategoryAsc(String searchContent,
-      Pageable pageable) {
-    return examRepository.pageExamSortByCategoryAsc(searchContent, pageable);
+  public List<Exam> pageExamSortByCategoryAsc(String searchContent) {
+    return examRepository.pageExamSortByCategoryAsc(searchContent);
   }
 
   @Override
-  public List<Exam> pageExamSortByCategoryDesc(String searchContent,
-      Pageable pageable) {
-    return examRepository.pageExamSortByCategoryDesc(searchContent, pageable);
+  public List<Exam> pageExamSortByCategoryDesc(String searchContent) {
+    return examRepository.pageExamSortByCategoryDesc(searchContent);
   }
 
   /*
@@ -285,7 +278,7 @@ public class ExamServiceImpl implements ExamService {
   }
 
   @Override
-  public List<Exam> readExcel(final String exelFilePath) {
+  public List<Exam> readExcel(final String exelFilePath) throws Exception {
     final int COLUMN_INDEX_TITLE = 0;
     final int COLUMN_INDEX_DURATION = 1;
     final int COLUMN_INDEX_CATEGORYID = 2;
@@ -299,9 +292,6 @@ public class ExamServiceImpl implements ExamService {
 
       Workbook workbook = getWorkbook(fileInput, exelFilePath);
       Sheet sheet = workbook.getSheetAt(0);
-
-//			Row rowFirst = sheet.getRow(0);
-//			Iterator<Cell> cellrowFirst = rowFirst.cellIterator();
 
       for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
         Exam exam = new Exam();
@@ -319,7 +309,7 @@ public class ExamServiceImpl implements ExamService {
           }
           System.out.println(cell.toString());
 
-//					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
           int columnIndex = cell.getColumnIndex();
 
           switch (columnIndex) {
@@ -449,6 +439,23 @@ public class ExamServiceImpl implements ExamService {
         id = ("Exam") + id1;
       return id;
     }
+  }
+
+  /* (non-Javadoc)
+   * @see com.cmcglobal.service.ExamService#isEmptyQuestionOfExam(java.lang.String)
+   * Author: Sanero.
+   * Created date: Feb 22, 2019
+   * Created time: 11:14:11 AM
+   */
+  @Override
+  public boolean isEmptyQuestionOfExam(String examId) {
+    Exam exam = examRepository.findById(examId).get();
+    if (exam.getExamQuestions().size() == 0) {
+      exam.setStatus("Draft");
+      exam = examRepository.save(exam);
+      return true;
+    }
+    return false;
   }
 
 }

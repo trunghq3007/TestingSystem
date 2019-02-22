@@ -1,11 +1,14 @@
 package com.cmcglobal.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,16 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.cmcglobal.entity.Exam;
 import com.cmcglobal.entity.User;
 import com.cmcglobal.repository.CategoryRepository;
 import com.cmcglobal.service.ExamService;
-import com.cmcglobal.utils.ExportExamPDF;
-import java.io.File;
-import java.io.IOException;
-import org.springframework.web.multipart.MultipartFile;
 import com.cmcglobal.utils.Api;
+import com.cmcglobal.utils.ExportExamPDF;
 
 @RestController
 @RequestMapping(Api.Exam.BASE_URL)
@@ -51,8 +53,6 @@ public class ExamController {
 
   @RequestMapping(value = "listExams/pagination", method = RequestMethod.GET)
   private List<Exam> getPageExam(
-      @RequestParam(name = "pageNumber", required = false, defaultValue = "0") Integer page,
-      @RequestParam(name = "pageSize", required = false, defaultValue = "5") Integer size,
       @RequestParam(name = "sortOrder", required = false, defaultValue = "ASC") String sortOrder,
       @RequestParam(name = "sortTerm", required = false, defaultValue = "title") String sortTerm,
       @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent) {
@@ -110,28 +110,23 @@ public class ExamController {
     // sort theo trường fullname của user create_by
     case ("userCreated"):
       if (("asc").equals(sortOrder.toLowerCase())) {
-        sortedBy = PageRequest.of(page, size);
-        return examService.pageExamSortByUserCreatedByAsc(searchContent, sortedBy);
+        return examService.pageExamSortByUserCreatedByAsc(searchContent);
       }
       if (("desc").equals(sortOrder.toLowerCase())) {
-        sortedBy = PageRequest.of(page, size);
-        return examService.pageExamSortByUserCreatedByDesc(searchContent, sortedBy);
+        return examService.pageExamSortByUserCreatedByDesc(searchContent);
       }
       break;
     // sort theo trường category của category category_name
     case ("category"):
       if (("asc").equals(sortOrder.toLowerCase())) {
-        sortedBy = PageRequest.of(page, size);
-        return examService.pageExamSortByCategoryAsc(searchContent, sortedBy);
+        return examService.pageExamSortByCategoryAsc(searchContent);
       }
       if (("desc").equals(sortOrder.toLowerCase())) {
-        sortedBy = PageRequest.of(page, size);
-        return examService.pageExamSortByCategoryDesc(searchContent, sortedBy);
+        return examService.pageExamSortByCategoryDesc(searchContent);
       }
       break;
     }
-    sortedBy = PageRequest.of(page, size, sortable);
-    return examService.pageExam(searchContent, sortedBy);
+    return examService.pageExam(searchContent, sortable);
   }
 
   @GetMapping(value = "/export/{id}")
@@ -206,7 +201,8 @@ public class ExamController {
    */
   @PostMapping(value = Api.Exam.RANDOM_QUESTION)
   public ResponseEntity<String> randomQuestion(@RequestBody Exam exam) {
-    boolean success = examService.randomQuestion(exam.getExamId(), exam.getNumberOfQuestion());
+    boolean success = examService.randomQuestion(exam.getExamId(),
+        exam.getNumberOfQuestion());
     if (success)
       return ResponseEntity.ok(Api.Exam.OK);
     return ResponseEntity.ok(Api.Exam.NOT_OK);
@@ -224,7 +220,8 @@ public class ExamController {
   }
 
   @PutMapping("/update/update-common/{examId}")
-  public Exam updateCommon(@RequestBody Exam exam, @PathVariable String examId) {
+  public Exam updateCommon(@RequestBody Exam exam,
+      @PathVariable String examId) {
     Exam ex = examService.getOne(examId);
     if (ex != null) {
       ex.setTitle(exam.getTitle());
@@ -240,31 +237,32 @@ public class ExamController {
   }
 
   @PostMapping("/import-excel-file")
-  public ResponseEntity<String> readExcelFile(@RequestParam("multipartFile") MultipartFile multipartFile) {
+  public ResponseEntity<String> readExcelFile(
+      @RequestParam("multipartFile") MultipartFile multipartFile) {
 
     File file = new File("files");
     String pathToSave = file.getAbsolutePath();
     System.out.println(pathToSave);
 
-    File fileTranfer = new File(pathToSave + "/" + multipartFile.getOriginalFilename());
+    File fileTranfer = new File(
+        pathToSave + "/" + multipartFile.getOriginalFilename());
     try {
       multipartFile.transferTo(fileTranfer);
     } catch (IllegalStateException e) {
     } catch (IOException e) {
     }
     System.out.println(multipartFile.getOriginalFilename());
-
-    List<Exam> listExam = examService.readExcel(fileTranfer.toString());
+    List<Exam> listExam = new ArrayList<>();
+    try {
+      listExam = examService.readExcel(fileTranfer.toString());
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.OK).body("not Ok");
+    }
     if (listExam.size() == 0) {
       return ResponseEntity.status(HttpStatus.OK).body("not Ok");
     }
-    List<Exam> list = examService.findAll();
-    int x = list.size() + 1;
     for (Exam exam : listExam) {
-      String id = "Exam" + String.valueOf(x);
-
       exam.setExamId(examService.createId1());
-      ++x;
       User user = new User();
       user.setUserId(1);
       exam.setUserCreated(user);
@@ -273,5 +271,13 @@ public class ExamController {
       examService.insert(exam);
     }
     return ResponseEntity.status(HttpStatus.OK).body("Ok");
+  }
+
+  @GetMapping(value = Api.Exam.IS_EMPTY_QUESTION)
+  public ResponseEntity<String> isEmptyQuestion(@PathVariable String examId) {
+    boolean success = examService.isEmptyQuestionOfExam(examId);
+    System.out.println(examId);
+    if (success) return ResponseEntity.ok(Api.Exam.OK);
+    return ResponseEntity.ok(Api.Exam.NOT_OK);
   }
 }
