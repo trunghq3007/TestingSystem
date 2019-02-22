@@ -76,6 +76,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		} else {
 			examRepository.delete(semesterExam);
 			result.setStatus(Status.SUCCESS);
+			result.setTotalRecord(examRepository.findAll().size());
 			result.setData(examRepository.findAll());
 		}
 		return result;

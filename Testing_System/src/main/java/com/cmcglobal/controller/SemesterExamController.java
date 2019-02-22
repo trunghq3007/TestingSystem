@@ -31,9 +31,11 @@ public class SemesterExamController {
 	private CandidateRepository candidateRepository;
 
 	/**
-	 * Create by: dvthuan - CMC Create date: Feb 16, 2019 Modifier: dvthuan Modified
-	 * date: Feb 16, 2019 Description: GET ALL SEMESTER Exam Service Version 1.0
-	 * 
+	 * Create by: dvthuan - CMC 
+	 * Create date: Feb 16, 2019 Modifier: dvthuan 
+	 * Modified date: Feb 16, 2019 
+	 * Description: GET ALL SEMESTER Exam Service 
+	 * Version 1.0
 	 * @return
 	 */
 	@GetMapping("/all")
@@ -42,9 +44,12 @@ public class SemesterExamController {
 	}
 
 	/**
-	 * Create by: dvthuan - CMC Create date: Feb 16, 2019 Modifier: dvthuan Modified
-	 * date: Feb 16, 2019 Description: CREATE NEW SEMESTER Exam Version 1.0
-	 * 
+	 * Create by: dvthuan - CMC 
+	 * Create date: Feb 16, 2019 
+	 * Modifier: dvthuan 
+	 * Modified date: Feb 16, 2019 
+	 * Description: CREATE NEW SEMESTER Exam 
+	 * Version 1.0
 	 * @param semesterExam
 	 * @return
 	 */
@@ -56,9 +61,11 @@ public class SemesterExamController {
 	}
 
 	/**
-	 * Create by: dvthuan - CMC Create date: Feb 16, 2019 Modifier: dvthuan Modified
-	 * date: Feb 16, 2019 Description: SEARCH SEMESTER Exam Version 1.0
-	 * 
+	 * Create by: dvthuan - CMC 
+	 * Create date: Feb 16, 2019 
+	 * Modifier: dvthuan 
+	 * Modified date: Feb 16, 2019 
+	 * Description: SEARCH SEMESTER Exam Version 1.0
 	 * @param keyword
 	 * @return
 	 */
@@ -68,9 +75,12 @@ public class SemesterExamController {
 	}
 
 	/**
-	 * Create by: dvthuan - CMC Create date: Feb 16, 2019 Modifier: dvthuan Modified
-	 * date: Feb 16, 2019 Description: DELETE SEMESTER Exam Version 1.0
-	 * 
+	 * Create by: dvthuan - CMC 
+	 * Create date: Feb 16, 2019 
+	 * Modifier: dvthuan 
+	 * Modified date: Feb 16, 2019 
+	 * Description: DELETE SEMESTER Exam 
+	 * Version 1.0
 	 * @param id
 	 * @return
 	 */
@@ -80,9 +90,12 @@ public class SemesterExamController {
 	}
 
 	/**
-	 * Create by: dvthuan - CMC Create date: Feb 18, 2019 Modifier: dvthuan Modified
-	 * date: Feb 18, 2019 Description: get one by id Version 1.0
-	 * 
+	 * Create by: dvthuan - CMC 
+	 * Create date: Feb 18, 2019 
+	 * Modifier: dvthuan 
+	 * Modified date: Feb 18, 2019 
+	 * Description: get one by id 
+	 * Version 1.0
 	 * @param id
 	 * @return
 	 */
@@ -91,6 +104,16 @@ public class SemesterExamController {
 		return new ResponseEntity<ServiceResult>(examService.findById(id), HttpStatus.OK);
 	}
 
+	/**
+	 * Create by: dvthuan - CMC
+	 * Create date: Feb 22, 2019
+	 * Modifier: dvthuan
+	 * Modified date: Feb 22, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * @param name
+	 * @return
+	 */
 	@PostMapping("/filter")
 	public ResponseEntity<ServiceResult> filterByKeyword(@RequestBody String name) {
 		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
