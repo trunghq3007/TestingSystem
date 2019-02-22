@@ -117,6 +117,9 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngIf="!(tests?.data.length > 0)">
+    <div style="height: 175px"></div>
+  </ng-container>
 </div>
 
 <!-- Footer -->
