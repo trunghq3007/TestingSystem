@@ -69,7 +69,6 @@ export class CreateComponent implements OnInit {
          }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer || result.dismiss === Swal.DismissReason.backdrop) {
                console.log('chay het vao day');
-
                this.startTime = null;
             }
          })
