@@ -155,7 +155,6 @@ export class ListComponent implements OnInit {
       });
    }
 
-
    selectTab(tabId: number) {
       this.staticTabs.tabs[tabId].active = true;
    }
