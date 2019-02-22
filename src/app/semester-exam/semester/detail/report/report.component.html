@@ -97,7 +97,7 @@
       </div>
    </div>
 </div>
-<ng-template #templateModal>
+<!-- <ng-template #templateModal>
    <div class="modal-header">
       <h4 class="modal-title pull-left">Thông báo</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -111,4 +111,23 @@
       <button type="button" class="btn btn-success" (click)="onExport()">Thực hiện</button>
       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Thoát</button>
    </div>
-</ng-template>
+</ng-template> -->
+<div bsModal #templateModal="bs-modal" class="modal fade" tabindex="-1">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title pull-left">Thông báo</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="templateModal.hide()">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Bạn có muốn xuất báo cáo này không ?
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="onExport()">Thực hiện</button>
+            <button type="button" class="btn btn-default" (click)="templateModal.hide()">Thoát</button>
+         </div>
+      </div>
+   </div>
+</div>

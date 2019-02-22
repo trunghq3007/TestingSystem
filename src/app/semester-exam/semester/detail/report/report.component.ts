@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild, TemplateRef } from '@a
 import { ApiService } from 'src/app/semester-exam/service/api.service';
 import { drawDOM, exportPDF, DrawOptions, Group } from '@progress/kendo-drawing';
 import { saveAs } from '@progress/kendo-file-saver';
-import { BsModalService, BsModalRef,ModalDirective } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 @Component({
    selector: 'app-report',
    templateUrl: './report.component.html',
@@ -27,7 +27,7 @@ export class ReportComponent implements OnInit {
    };
    config = {};
    @ViewChild("exportPDF", { read: ElementRef }) htmlPDF: ElementRef;
-   @ViewChild("templateModal") templateModal:ModalDirective;
+   @ViewChild("templateModal") templateModal: ModalDirective;
    constructor(private apiService: ApiService, private modalService: BsModalService) { }
 
    ngOnInit() {
@@ -46,21 +46,16 @@ export class ReportComponent implements OnInit {
       );
    }
    openModal() {
-      //this.modalRef = this.modalService.show(this.templateModal, this.config);
       this.templateModal.show();
    }
    onExport() {
       // this.htmlPDF.nativeElement.setAttribute("class", "show");
-
-
-      //this.modalRef.hide();
-      this.templateModal.hide;
-     //this.templateModal
-      // drawDOM(this.htmlPDF.nativeElement, this.options).then((group: Group) => {
-      //    // this.htmlPDF.nativeElement.setAttribute("class", "hidden");
-      //    return exportPDF(group);
-      // }).then((dataUri) => {
-      //    saveAs(dataUri, `${this.title_file}-${this.semesterExamCode}.pdf`);
-      // });
+      this.templateModal.hide();
+      drawDOM(this.htmlPDF.nativeElement, this.options).then((group: Group) => {
+         // this.htmlPDF.nativeElement.setAttribute("class", "hidden");
+         return exportPDF(group);
+      }).then((dataUri) => {
+         saveAs(dataUri, `${this.title_file}-${this.semesterExamCode}.pdf`);
+      });
    }
 }
