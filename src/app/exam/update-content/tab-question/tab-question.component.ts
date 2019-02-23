@@ -4,6 +4,7 @@ import { TabInfo, Selection } from '../update-content.interface';
 import { ActivatedRoute } from '@angular/router';
 import { ExamService } from 'src/app/service/examService.service';
 import { NotifierService } from 'angular-notifier';
+import { ExamQuestion } from 'src/app/entity/ExamQuestion.interface';
 
 @Component({
   selector: 'app-tab-question',
@@ -32,13 +33,19 @@ export class TabQuestionComponent implements OnInit {
   numberOption = [];
   optionWidth = '';
   maxOption = 0;
-  reset = false;
+  reset = false; // when search change
+  countQuestionInExam = 0;
+
+  @Input()
+  questionInExam: ExamQuestion[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private examService: ExamService,
     private notifierService: NotifierService
-  ) {}
+  ) {
+    this.check();
+  }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(pm => {
@@ -46,8 +53,20 @@ export class TabQuestionComponent implements OnInit {
     });
 
     this.tabAllQuestion = { currentPage: 0, entities: 0, sizeOfPage: 10 };
-
     this.loadDataByPage();
+  }
+
+  check() {
+    if (this.questionInExam !== null) {
+      if (this.questionInExam.length !== this.countQuestionInExam) {
+        console.log('reload data tab all question');
+        this.loadDataByPage();
+      }
+    }
+
+    setTimeout(() => {
+      this.check();
+    }, 1000);
   }
 
   // reset all info to default.
@@ -58,6 +77,7 @@ export class TabQuestionComponent implements OnInit {
     this.tabAllQuestion.currentPage = 0;
   }
 
+  // ====================== LOAD DATA
   loadDataByPage() {
     let observable;
     if (this.isSearching) {
@@ -87,39 +107,76 @@ export class TabQuestionComponent implements OnInit {
     }
 
     observable.subscribe(questions => {
+      this.countQuestionInExam =
+        this.questionInExam !== null ? this.questionInExam.length : 0;
       this.questions = questions;
-      // this.selection = [];
-
       questions.forEach(question => {
+        // check loaded
         const existedQuestion = this.selection.filter(
           v => v.id === question.questionId
         );
         if (existedQuestion.length === 0) {
-          let select: Selection = {
-            id: question.questionId,
-            checked: false,
-            status: false
-          };
-
-          if (question.category.categoryId === this.categoryId) {
-            select.status = true;
-            if (this.isCheckAll) {
-              select.checked = this.isCheckAll;
-            }
-          } else {
-            select.status = false;
-          }
-
-          this.selection.push(select);
-          this.maxOption = Math.max(this.maxOption, question.answers.length);
+          this.addSelection(question);
         }
       });
-      this.numberOption = [];
-      this.numberOption = Array(this.maxOption)
-        .fill(1)
-        .map((v, k) => k);
-      this.optionWidth = 74 / this.maxOption + '%';
+      this.checkInExam();
+      // number option
+      this.caculateNumberOption();
     });
+  }
+
+  // add selection when load Data
+  addSelection(question) {
+    let select: Selection = {
+      id: question.questionId,
+      checked: false,
+      status: false,
+      categoryId: question.category.categoryId
+    };
+
+    if (question.category.categoryId === this.categoryId) {
+      select.status = true;
+      if (this.isCheckAll) {
+        select.checked = this.isCheckAll;
+      }
+    } else {
+      select.status = false;
+    }
+
+    this.selection.push(select);
+    this.maxOption = Math.max(this.maxOption, question.answers.length);
+  }
+
+  // check in exam
+  checkInExam() {
+    this.selection.forEach(v => {
+      if (this.questionInExam.length > 0) {
+        const inExam = this.questionInExam.filter(
+          e => e.question.questionId === v.id
+        );
+
+        if (v.categoryId === this.categoryId) {
+          v.status = true;
+        }
+
+        if (inExam.length > 0) {
+          v.status = false;
+        }
+      } else {
+        if (v.categoryId === this.categoryId) {
+          v.status = true;
+        }
+      }
+    });
+  }
+
+  // calculate number option
+  caculateNumberOption() {
+    this.numberOption = [];
+    this.numberOption = Array(this.maxOption)
+      .fill(1)
+      .map((v, k) => k);
+    this.optionWidth = 74 / this.maxOption + '%';
   }
 
   // change page size tab one
@@ -130,7 +187,7 @@ export class TabQuestionComponent implements OnInit {
     this.loadDataByPage();
   }
 
-  // click checkbox question
+  // ====================== CLICK checkbox question
   selectQuestion(questionId) {
     console.log(questionId);
 
@@ -165,9 +222,15 @@ export class TabQuestionComponent implements OnInit {
     // console.log(JSON.stringify(this.selection));
   }
 
-  // click checkbox all
+  // ====================== CLICK CHECK ALL
   selectAll() {
     this.isCheckAll = !this.isCheckAll;
+    if (this.isCheckAll) {
+      const count = this.selection.filter(v => v.status === true).length;
+      if (count === 0) {
+        this.isCheckAll = false;
+      }
+    }
     this.isAdd = this.isCheckAll;
     this.selection.forEach(item => {
       if (item.status === true) {
@@ -176,6 +239,7 @@ export class TabQuestionComponent implements OnInit {
     });
   }
 
+  // ====================== CLICK SUBMIT
   clickSubmitTab2() {
     if (!this.isAdd) {
       return;
@@ -215,12 +279,15 @@ export class TabQuestionComponent implements OnInit {
     this.selection.forEach(v => (v.checked = false));
   }
 
+  // ====================== CLICK PREVIOUS
   previousPage() {
     this.tabAllQuestion.currentPage--;
     this.loadDataByPage();
     // this.isCheckAll = false;
     // console.log(this.tabAllQuestion.currentPage);
   }
+
+  // ====================== CLICK NEXT
   nextPage() {
     this.tabAllQuestion.currentPage++;
     this.loadDataByPage();
@@ -228,10 +295,8 @@ export class TabQuestionComponent implements OnInit {
     // console.log(this.tabAllQuestion.currentPage);
   }
 
+  // ====================== SORT BY CONTENT
   sortTableByContent() {
-    // console.log(this.isSort);
-    // console.log(this.questions);
-    // console.log(this.backupSort);
     if (this.isSort === 0) {
       this.isSort = 1;
       this.backupSort = this.questions.map(v => v);
@@ -244,7 +309,6 @@ export class TabQuestionComponent implements OnInit {
     if (this.isSort === 1) {
       this.questions = this.questions.reverse();
       this.isSort = 2;
-      // console.log(this.backupSort);
       return;
     }
 
@@ -254,6 +318,7 @@ export class TabQuestionComponent implements OnInit {
     }
   }
 
+  // ====================== CLICK SEARCH
   clickSearch() {
     this.tabAllQuestion.currentPage = 0;
     if (this.searchStr !== '') {
@@ -265,6 +330,7 @@ export class TabQuestionComponent implements OnInit {
     this.loadDataByPage();
   }
 
+  // ====================== ENTER SEARCH
   keyPressSearch(e) {
     if (e.charCode === 13) {
       this.clickSearch();
