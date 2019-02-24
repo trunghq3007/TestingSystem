@@ -19,6 +19,7 @@ import { HttpModule } from '@angular/http';
 import { UserModule } from './user/user.module';
 import { HomeModule } from './home/home.module';
 import { HighlightPipe } from './exam/list-exam/highlight.pipe';
+import { ErrorsModule } from './errors/errors.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,8 +42,9 @@ import { HighlightPipe } from './exam/list-exam/highlight.pipe';
     UserModule,
     HomeModule,
     CategoryQuestionModule
+    ErrorsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
