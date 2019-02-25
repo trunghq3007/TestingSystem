@@ -1,21 +1,5 @@
 package com.cmcglobal.service.serviceImpl;
 
-import com.cmcglobal.builder.FilterBuilder;
-import com.cmcglobal.entity.Category;
-import com.cmcglobal.entity.Exam;
-import com.cmcglobal.entity.ExamQuestion;
-import com.cmcglobal.entity.Question;
-import com.cmcglobal.entity.User;
-import com.cmcglobal.repository.ExamRepository;
-import com.cmcglobal.service.CategoryService;
-import com.cmcglobal.service.ExamQuestionService;
-import com.cmcglobal.service.ExamService;
-import com.cmcglobal.service.QuestionServices;
-import com.cmcglobal.service.UploadFileService;
-import com.cmcglobal.utils.Constants;
-import com.cmcglobal.utils.Helper;
-import com.cmcglobal.utils.MyException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -51,6 +34,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cmcglobal.builder.FilterBuilder;
+import com.cmcglobal.entity.Category;
+import com.cmcglobal.entity.Exam;
+import com.cmcglobal.entity.ExamQuestion;
+import com.cmcglobal.entity.Question;
+import com.cmcglobal.entity.User;
+import com.cmcglobal.repository.ExamRepository;
+import com.cmcglobal.service.CategoryService;
+import com.cmcglobal.service.ExamQuestionService;
+import com.cmcglobal.service.ExamService;
+import com.cmcglobal.service.QuestionServices;
+import com.cmcglobal.service.UploadFileService;
+import com.cmcglobal.utils.Constants;
+import com.cmcglobal.utils.Helper;
+import com.cmcglobal.utils.MyException;
 
 /*
  * @author Sanero.
@@ -88,7 +87,7 @@ public class ExamServiceImpl implements ExamService {
    * Created time: 2:11:47 PM
    */
   @Override
-  public void createExam(Exam ex) {
+  public boolean createExam(Exam ex) {
     try {
       User user = new User();
       user.setUserId(1);
@@ -96,15 +95,18 @@ public class ExamServiceImpl implements ExamService {
       ex.setTitle(ex.getTitle().trim());
       ex.setNote(ex.getNote().substring(3, ex.getNote().length() - 4));
       ex.setUserCreated(user);
-      ex.setCreateAt(new Date());
+      // ex.setCreateAt(new Date());
       ex.setEnable(true);
       examRepository.save(ex);
+      return true;
     } catch (PersistenceException exception) {
       LOGGER.error(Constants.Exam.CREATE_FAILED + exception.getClass() + " - "
           + exception.getMessage());
+      return false;
     } catch (Exception e) {
       LOGGER.error(
           Constants.Exam.CREATE_FAILED + e.getClass() + " - " + e.getMessage());
+      return false;
     }
   }
 
@@ -493,12 +495,14 @@ public class ExamServiceImpl implements ExamService {
    * Created time: 2:14:02 PM
    */
   @Override
-  public void deleteExam(String examId) {
+  public boolean deleteExam(String examId) {
     try {
       examRepository.deleteById(examId);
+      return true;
     } catch (Exception e) {
       LOGGER.error(Constants.Exam.DELETE_EXAM_FAILED + e.getClass() + " - "
           + e.getMessage());
+      return false;
     }
   }
 
@@ -531,8 +535,8 @@ public class ExamServiceImpl implements ExamService {
   public FilterBuilder getFilterBuilder(Exam exam) {
     return new FilterBuilder.Builder()
         .setNumberOfQuestion(exam.getNumberOfQuestion())
-        .setDuration(exam.getDuration()).setDateExam(exam.getCreateAt())
-        .setStatus(exam.getStatus()).setCaterogyName(exam.getCategoryName())
+        .setDuration(exam.getDuration()).setStatus(exam.getStatus())
+        .setCaterogyName(exam.getCategoryName()).setCreateAt(exam.getCreateAt())
         .builder();
   }
 
@@ -698,7 +702,7 @@ public class ExamServiceImpl implements ExamService {
         user.setUserId(1);
         exam.setUserCreated(user);
         exam.setStatus("Draft");
-        exam.setCreateAt(new Date());
+        // exam.setCreateAt(new Date());
         listExam.add(exam);
       }
     } catch (IOException e) {
