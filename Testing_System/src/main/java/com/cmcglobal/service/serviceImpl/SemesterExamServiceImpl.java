@@ -1,9 +1,12 @@
 package com.cmcglobal.service.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,9 @@ import com.cmcglobal.utils.ConstantSemesterExam;
 public class SemesterExamServiceImpl implements SemesterExamService {
 
 	@Autowired
+	EntityManager entityManager;
+
+	@Autowired
 	private SemesterExamRepository examRepository;
 
 	@Autowired
@@ -47,8 +53,8 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	@Override
 	public ServiceResult getAllSemesterExam() {
 		ServiceResult result = new ServiceResult();
-		result.setTotalRecord(examRepository.findAll().size());
-		result.setData(examRepository.findAll());
+		result.setTotalRecord((int) examRepository.count());
+		result.setData(examRepository.findAllByOrderByCreatedDateDesc());
 		return result;
 	}
 
@@ -76,8 +82,8 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		} else {
 			examRepository.delete(semesterExam);
 			result.setStatus(Status.SUCCESS);
-			result.setTotalRecord(examRepository.findAll().size());
-			result.setData(examRepository.findAll());
+			result.setTotalRecord((int) examRepository.count());
+			result.setData(examRepository.findAllByOrderByCreatedDateDesc());
 		}
 		return result;
 	}
@@ -90,9 +96,41 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	}
 
 	@Override
-	public ServiceResult filter(String name) {
+	public ServiceResult filter(String name, Integer status, String fullname, Date startTime, Date endTime) {
+		System.err.println("THUAN: " + name);
 		ServiceResult result = new ServiceResult();
-		result.setData(examRepository.filterByAll(name));
+		int check = 0;
+
+		StringBuilder stringBuilder = new StringBuilder("SELECT s FROM SemesterExam s ");
+
+		if (!"null".equals(name)) {
+			System.err.println("CHAY VAO DAY");
+			stringBuilder.append("WHERE s.name like '%" + name + "%'");
+			check++;
+		}
+
+		if (!"null".equals(status)) {
+			if (check == 0) {
+				stringBuilder.append("WHERE s.status like '%" + status + "%'");
+				check++;
+			} else {
+				stringBuilder.append("and s.status like '%" + status + "%'");
+			}
+		}
+
+		if (!"null".equals(fullname)) {
+			if (check == 0) {
+				stringBuilder.append("WHERE s.user.fullName like '%" + fullname + "%'");
+				check++;
+			} else {
+				stringBuilder.append("and s.user.fullName like '%" + fullname + "%'");
+			}
+		}
+
+		Query query = entityManager.createQuery(stringBuilder.toString(), SemesterExam.class);
+		List<SemesterExam> lists = query.getResultList();
+		result.setData(lists);
+		result.setTotalRecord(lists.size());
 		return result;
 	}
 

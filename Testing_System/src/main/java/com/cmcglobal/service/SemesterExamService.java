@@ -1,5 +1,7 @@
 package com.cmcglobal.service;
 
+import java.util.Date;
+
 import com.cmcglobal.entity.SemesterExam;
 
 public interface SemesterExamService {
@@ -12,7 +14,7 @@ public interface SemesterExamService {
 	public ServiceResult delete(String id);
 
 	public ServiceResult findById(String id);
-	
-	public ServiceResult filter(String name);
+
+	public ServiceResult filter(String name, Integer status,String fullname, Date startTime, Date endTime);
 
 }

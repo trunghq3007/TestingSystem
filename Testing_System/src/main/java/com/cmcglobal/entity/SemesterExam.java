@@ -15,8 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "semester_exam")
@@ -34,7 +33,6 @@ public class SemesterExam {
 
 	@ManyToOne
 	@JoinColumn(name = "create_by", nullable = false)
-	@JsonIgnoreProperties("candidates")
 	private User user;
 
 	@Column(name = "status")
@@ -43,21 +41,24 @@ public class SemesterExam {
 	private Date startTime;
 	@Column(name = "end_at")
 	private Date endTime;
+	
+	@Column(name="created_date")
+	@UpdateTimestamp
+	private Date createdDate;
 
 	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Test> tests;
-	
+
 	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<Candidate> candidate;
+	private List<Candidate> candidate;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "semester_exam_id")
 	private List<SemesterExamCode> semesterExamCode;
-	
+
 //	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL,mappedBy="semesterExam")
 //	@JsonIgnoreProperties("semesterExam")
 //    private List<Candidate> candidates;
-	
 
 	public List<SemesterExamCode> getSemesterExamCode() {
 		return semesterExamCode;
@@ -125,6 +126,11 @@ public class SemesterExam {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Name semesterExam: "+name + " - Status: " + status + " - " + user.getFullName();
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.cmcglobal.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.SemesterExam;
@@ -113,15 +116,21 @@ public class SemesterExamController {
 	 * @param name
 	 * @return
 	 */
-	@PostMapping("/filter")
-	public ResponseEntity<ServiceResult> filterByKeyword(@RequestBody String name) {
-		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
-	}
+	@GetMapping("/filter")
+	public ResponseEntity<ServiceResult> filterByKeyword(@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "status", required = false) Integer status,
+			@RequestParam(value = "fullname", required = false) String fullname,
+			@RequestParam(value = "", required = false) Date startTime,
+			@RequestParam(value = "", required = false) Date endTime) {
 
+		System.err.println("Fullname: "+fullname);
+		return new ResponseEntity<ServiceResult>(examService.filter(name, status, fullname, startTime, endTime),
+				HttpStatus.OK);
+	}
 	/**
 	 * Create by: pvhao - CMC
 	 * Create date: Feb 18, 2019
-	 * Modifier: User
+	 * Modifier: User,
 	 * Modified date: Feb 18, 2019
 	 * Description: ....
 	 * Version 1.0
@@ -129,11 +138,8 @@ public class SemesterExamController {
 	 * @return
 	 */
 	@GetMapping("/info/{id}")
-
 	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
-
 		return new ResponseEntity<>(semesterexamService.getInformationOfSemester(id), HttpStatus.OK);
-
 	}
 
 }
