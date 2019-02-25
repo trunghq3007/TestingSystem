@@ -111,7 +111,10 @@ export class TestResultComponent implements OnInit {
 
    getAll() {
       this.service.getAll(`test/listBySemester/${this.semester_id}`).subscribe(result => {
+         // var test : Test = result;
+         // console.log(test);
          this.data = result;
+         console.log(result);
       });
    }
    getAllExam() {

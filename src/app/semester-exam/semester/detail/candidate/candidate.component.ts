@@ -35,7 +35,7 @@ export class CandidateComponent implements OnInit {
 
    ngOnInit() {
       this.getAll();
-      this.getAllUser();
+
       this.getCandidateList();
       this.CandidateFrm = this.fb.group({
          id: null,
@@ -82,17 +82,12 @@ export class CandidateComponent implements OnInit {
                for (let j = 0; j < this.data.length; j++) {
                   if (this.arrDelete[i] == this.data[j].id) {
                      this.user.push(this.data[j].user);
-                     // this.CandidateFrm.reset(null);
                   }
                }
-               this.user.push(this.data[i].user);
-            }
-            console.log(this.data);
-
+            };
             for (let i = 0; i < this.arrDelete.length; i++) {
                this.service.deleteTest(`candidate/delete/${this.arrDelete[i]}`).subscribe(result => {
-                  console.log(result);
-                  this.candidateList = result.data;
+                  this.data = result.data;
                   this.getAll();
                });
             }
@@ -109,13 +104,20 @@ export class CandidateComponent implements OnInit {
    getAll() {
       this.service.getAll(`candidate/listBySemester/${this.semester_id}`).subscribe(result => {
          this.data = result;
+         console.log("helo")
          console.log(this.data);
-         // console.log(this.semester_id);
+         this.getAllUser();
       });
    }
    getAllUser() {
+      var othis = this;
       this.service.getAll("user/listuser").subscribe(result => {
          this.user = result;
+         console.log(this.user);
+         console.log('THUAN DINH VAN: '+this.data);
+         this.data.filter(function (item2) {
+            othis.user = othis.user.filter(item => item.userId !== item2.user.userId);
+         })
       });
    }
 

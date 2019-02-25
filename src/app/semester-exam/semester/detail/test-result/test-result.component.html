@@ -124,7 +124,7 @@
          <div class="modal-footer">
             <div class="form-group">
                <div style="float: right;" class="col-10 offset-2">
-                  <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()">Add</button>
+                  <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="testFrm.pristine || testFrm.invalid" (click)="onSubmit()">Add</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                </div>
             </div>
