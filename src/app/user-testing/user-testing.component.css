@@ -1,7 +1,7 @@
 /* --------------------------------sidebar */
 .main-sidebar {
    position: fixed;
-   width: 16%;
+   width: 231px;
 }
 .duration-wrapper {
    height: 100px;
@@ -30,7 +30,8 @@
 }
 
 .index-question-item {
-   padding: 5px 10px;
+   width: 30px;
+   line-height: 30px;
    margin: 3px;
    text-align: center;
    background: #fff;
@@ -58,7 +59,7 @@
 }
 
 .question-wrapper {
-   padding: 10px 5%;
+   padding-top: 10px;
 }
 
 .question-wrapper .form-check label {
@@ -68,4 +69,13 @@
 /* --------------------confirm testing complete */
 .modal-body>button {
    margin: 0 10px;
+}
+
+.exam-done-message {
+   padding: 30px 50px;
+}
+
+.disable-event-click {
+   cursor: not-allowed;
+   pointer-events: none;
 }
