@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/semester-exam/service/api.service';
 import { Router } from '@angular/router';
 import { SemesterExam } from '../../model/SemesterExam';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
    selector: 'app-info',
@@ -10,26 +11,23 @@ import { SemesterExam } from '../../model/SemesterExam';
    styleUrls: ['./info.component.css']
 })
 export class InfoComponent implements OnInit {
-   public time = new Date();
-   public buttonName: any = 'Show';
-   public obj: {}
-   object = {}
-   arrDelete: any = [];
-   edit: FormGroup;
-   create: FormGroup;
+   public obj: any = {}
+   data: FormGroup;
    @Input() semester_id: string;
    ckeConfig: any;
    @ViewChild("myckeditor") ckeditor: any;
-   public semesterExamList = [];
-   totalRecord: number;
 
-   constructor(private fb: FormBuilder, private service: ApiService, private router: Router) {
+   startTime: Date;
+   endTime: Date;
 
+   // public dpConfig: Partial<BsDatepickerConfig> = new BsDatepickerConfig();
+
+   constructor(private fb: FormBuilder, private service: ApiService, private router: Router, private _bsDatepickerConfig: BsDatepickerConfig) {
    }
 
    ngOnInit() {
       this.getOneByID(this.semester_id);
-      this.edit = this.fb.group({
+      this.data = this.fb.group({
          id: '',
          name: ['', [Validators.required]],
          user: this.fb.group({
@@ -42,24 +40,24 @@ export class InfoComponent implements OnInit {
          description: ['', [Validators.required]],
       });
 
+      // this._bsDatepickerConfig.dateInputFormat = 'DD/MM/YYYY';
+      // this.dpConfig.dateInputFormat = 'DD/MM/YYYY';
    }
 
    getOneByID(id: string) {
-
       this.service.getOne('semesterexam/getone', id).subscribe(result => {
          this.obj = result.data;
          const semesterUser: SemesterExam = result.data;
-         this.edit.patchValue(semesterUser);
-
-         console.log(this.edit.value);
+         this.data.patchValue(semesterUser);
+         console.log(this.data.value);
          /// console.log(semesterUser);
       });
    }
 
    save() {
-      console.log(this.edit.value)
+      console.log(this.data.value)
       try {
-         const value = this.edit.value;
+         const value = this.data.value;
          const test: SemesterExam = { ...value };
          this.service.saveOne('semesterexam/add', test).subscribe(data => {
             console.log(data);
@@ -67,6 +65,10 @@ export class InfoComponent implements OnInit {
       } catch (error) {
          console.log(error);
       }
+   }
+
+   comeBack() {
+      this.router.navigateByUrl("manager/semester")
    }
    onsubmit() {
 

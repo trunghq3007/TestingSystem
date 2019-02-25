@@ -6,7 +6,7 @@
       <div class="panel-body">
          <div class="row">
             <div class="col-md-12">
-               <form class="form-horizontal" [formGroup]="edit" novalidate (ngSubmit)="save()">
+               <form class="form-horizontal" [formGroup]="data" novalidate (ngSubmit)="save()">
                   <div class="form-group">
                      <label class="col-md-2 control-label">Tên kỳ thi </label>
                      <div class="col-md-10">
@@ -34,7 +34,7 @@
                      <div class="col-md-4">
                         <div class="input-group">
                            <input type="text" placeholder="" class="form-control" bsDatepicker #start="bsDatepicker"
-                              [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" formControlName="startTime">
+                           [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="startTime" value="{{startTime | date: 'dd/MM/yyyy'}}" [(ngModel)]="startTime">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="start.toggle()">
                                  <i class="glyphicon glyphicon-calendar"></i>
@@ -47,8 +47,7 @@
                      <div class="col-md-4">
                         <div class="input-group">
                            <input type="text" placeholder="" class="form-control" bsDatepicker #time_end="bsDatepicker"
-                              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="endTime"
-                             >
+                              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControlName="endTime" value="{{endTime | date: 'dd/MM/yyyy'}}" [(ngModel)]="endTime">
                            <div class="input-group-btn">
                               <button type="button" class="btn btn-default" (click)="time_end.toggle()">
                                  <i class="glyphicon glyphicon-calendar"></i>
@@ -64,8 +63,8 @@
                         <div class="input-group">
                            <input type="text" class="form-control" disabled value="codesemester0001">
                            <div class="input-group-btn">
-                              <button class="btn btn-info" type="submit">
-                                 <i class="glyphicon glyphicon-refresh"></i>
+                              <button class="btn btn-success" type="submit">
+                                 <i class="glyphicon glyphicon-plus"></i>
                               </button>
                            </div>
                         </div>
@@ -83,17 +82,17 @@
 
                   <div class="form-group">
                      <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default">
-                           <span class="glyphicon glyphicon-triangle-left"></span> Back
-                        </button>
-                        <button class="btn btn-primary" type="submit" style="margin-left: 5px;">
+                        <button class="btn btn-primary" type="submit">
                            <span class="glyphicon glyphicon-saved"></span> Save
+                        </button>
+                        <button class="btn btn-default" (click)="comeBack()" style="margin-left: 5px;">
+                           <span class="glyphicon glyphicon-triangle-left"></span> Back
                         </button>
                      </div>
                   </div>
                </form>
             </div>
-            <pre>{{edit.value|json}}</pre>
+            <!-- <pre>{{data.value|json}}</pre> -->
          </div>
       </div>
    </div>

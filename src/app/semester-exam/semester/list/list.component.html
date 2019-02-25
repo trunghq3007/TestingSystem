@@ -27,26 +27,25 @@
                         <div class="form-group">
                            <div class="col-sm-4">
                               <input type="text" class="input-sm form-control" placeholder="Tên kỳ thi"
-                                 [(ngModel)]="objFilter.name" name="name">
+                                 [(ngModel)]="objFilter.name" name="name" autocomplete="off">
                            </div>
                            <div class="col-md-4">
                               <select type="text" class="input-sm form-control" [(ngModel)]="objFilter.status"
-                                 name="status" (change)="filterByStatus($event.target.value)">
+                                 name="status">
                                  <option value="null">Trạng thái</option>
-                                 <option value="0">draft</option>
-                                 <option value="1">public</option>
-                                 <option value="2">done</option>
+                                 <option [ngValue]="0">draft</option>
+                                 <option [ngValue]="1">public</option>
+                                 <option [ngValue]="2">done</option>
                               </select>
                            </div>
                            <div class="col-md-4">
                               <input type="text" class="input-sm form-control" placeholder="Người tạo"
-                                 [(ngModel)]="objFilter.user" name="user">
+                                 [(ngModel)]="objFilter.fullname" name="fullname" autocomplete="off">
                            </div>
                         </div>
 
                         <div class="form-group">
                            <div class="col-sm-4">
-
                               <div class="input-group">
                                  <input type="text" placeholder="Ngày bắt đầu" class="form-control" bsDatepicker
                                     [(ngModel)]="objFilter.startTime" name="startTime" #startTime="bsDatepicker"
@@ -70,9 +69,9 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="col-md-4 text-center">
-                              <button type="button" class="btn btn-primary" (click)="getDataFilter()">
-                                 <span class="glyphicon glyphicon-filter"></span> filter
+                           <div class="col-md-4">
+                              <button type="button" class="btn btn-primary" (click)="filterData()">
+                                 <span class="glyphicon glyphicon-filter"></span> Filter
                               </button>
                            </div>
                         </div>
@@ -83,7 +82,7 @@
                <div class="row">
                   <div class="col-md-6">
                      <a routerLink="create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add
-                        news</a>
+                        new</a>
 
                      <button class="btn btn-danger" style="margin-left: 5px;" (click)="deleteItem()"
                         [disabled]="arrDelete.length==0">
@@ -108,7 +107,7 @@
                   <div class="col-md-12">
                      <table class="table table-bordered table-hover table-sm">
                         <thead>
-                           <tr>
+                           <tr class="info">
                               <th>
                                  <span class="custom-checkbox">
                                     <input type="checkbox" id="checkboxAll" (change)="isCheckAll($event)"
@@ -117,7 +116,6 @@
                                  </span>
                               </th>
                               <th>Tên kỳ thi</th>
-                              <!-- <th>Mô tả kỳ thi</th> -->
                               <th>Người tạo</th>
                               <th>Status</th>
                               <th>Ngày bắt đầu</th>
@@ -137,9 +135,7 @@
                                  </span>
                               </td>
                               <td><a routerLink="{{item.id}}">{{item.name}}</a></td>
-                              <!-- <td>{{item.description}}</td> -->
                               <td>{{item.user.fullName}}</td>
-                              <!-- <td>{{item.status}}</td> -->
 
                               <td>
                                  <ng-container *ngIf="item.status==0">

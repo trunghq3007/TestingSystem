@@ -7,8 +7,6 @@ import { TabsetComponent } from 'ngx-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
-import { ConfirmComponent } from '../share-use/confirm/confirm.component';
-import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 
 @Component({
    selector: 'app-list',
@@ -93,19 +91,12 @@ export class ListComponent implements OnInit {
                         if (result.status == 'SUCCESS') {
                            this.semesterExamList = result.data;
                            this.totalRecord = result.totalRecord;
+                           this.deleteElementOfItempages();
                            this.isCheck = false;
-                           Swal.fire(
-                              'Deleted!',
-                              'Xóa thành công',
-                              'success',
-                           )
+                           this.messageDeleteSuccess();
                         } else {
                            this.isCheck = false;
-                           Swal.fire(
-                              'Deleted!',
-                              'Hệ thống đang xảy ra lỗi, vui lòng thử lại sau',
-                              'error'
-                           )
+                           this.messageDeletFailed();
                            return;
                         }
                      });
@@ -117,6 +108,35 @@ export class ListComponent implements OnInit {
       } catch (error) {
          console.log(error.message);
       }
+   }
+
+
+   // delete element of array when displayed Showing
+   deleteElementOfItempages() {
+      for (let i = 0; i < this.itempages.length; i++) {
+         if (this.itempages[i] >= this.totalRecord) {
+            this.itempages[i] = this.totalRecord;
+            this.itempages.splice(++i, this.itempages.length - i);
+         }
+      }
+   }
+
+   // message notification delete success
+   messageDeleteSuccess() {
+      Swal.fire(
+         'Deleted!',
+         'Xóa thành công',
+         'success',
+      )
+   }
+
+   // message notification delete failed
+   messageDeletFailed() {
+      Swal.fire(
+         'Deleted!',
+         'Hệ thống đang xảy ra lỗi, vui lòng thử lại sau',
+         'error'
+      )
    }
 
    semesterExamTrackByFn(semesterExam: SemesterExam) {
@@ -152,6 +172,8 @@ export class ListComponent implements OnInit {
       this.service.getAll('semesterexam/all').subscribe(result => {
          this.semesterExamList = result.data;
          this.totalRecord = result.totalRecord;
+         this.itempages = [5, 10, 15, 20];
+         this.deleteElementOfItempages();
       });
    }
 
@@ -159,14 +181,12 @@ export class ListComponent implements OnInit {
       this.staticTabs.tabs[tabId].active = true;
    }
    //---------------------- ---filter ---------------------- ---
-   filterByStatus(status: any) {
-      console.log(status);
-   }
 
-   getDataFilter() {
+   filterData() {
       console.log(this.objFilter);
-      this.service.filter('semesterexam/filter', this.objFilter.name).subscribe(res => {
+      this.service.filter('semesterexam/filter', this.objFilter.name, this.objFilter.status, this.objFilter.fullname, this.objFilter.startTime, this.objFilter.endTime).subscribe(res => {
          console.log(res);
+         this.semesterExamList = res.data;
       })
    }
    // ---------------------- --- end filter ---------------------- ---
@@ -183,7 +203,7 @@ export class ListComponent implements OnInit {
                type: 'success',
                title: 'Clone Kỳ thi thành công',
                showConfirmButton: false,
-               timer: 2000
+               timer: 1500
             })
          });
       } catch (error) {

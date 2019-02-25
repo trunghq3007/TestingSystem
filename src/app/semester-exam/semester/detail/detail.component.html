@@ -22,7 +22,6 @@
                   <div class="col-sm-6">
                      <h2>Manage <b>Semester detail</b></h2>
                   </div>
-
                </div>
             </div>
             <div>
@@ -39,12 +38,11 @@
                   <tab heading="Report">
                      <app-report [semesterExamCode]="semesterID"></app-report>
                   </tab>
-                  <tab heading="Testing Result">
+                  <tab heading="Testing Result" [active]="true">
                      <app-test-result [semester_id]="semesterID"></app-test-result>
                   </tab>
                </tabset>
             </div>
-
          </div>
       </div>
    </div>

@@ -21,7 +21,7 @@ export class ApiService {
    }
 
 
-   saveOne(nameapi: string, data: any):Observable<any> {
+   saveOne(nameapi: string, data: any): Observable<any> {
       return this.http.post(this.baseUrl + nameapi, data);
    }
    delete(nameapi: string, id: string): Observable<any> {
@@ -32,7 +32,7 @@ export class ApiService {
       return this.http.delete(this.baseUrl + nameapi);
    }
 
-   getOne(nameapi: string, id: any):Observable<any> {
+   getOne(nameapi: string, id: any): Observable<any> {
       return this.http.get(this.baseUrl + nameapi + '/' + id);
    }
 
@@ -41,10 +41,10 @@ export class ApiService {
       return this.http.get(newUrl);
 
    }
-   filter(nameapi: string, name: string): Observable<any> {
+   filter(nameapi: string, name: string = null, status: number = null, fullname: string = null, startTime: Date = null, endTime: Date = null): Observable<any> {
+      console.log(status);
       var newUrl = this.baseUrl + nameapi;
-      return this.http.post(newUrl,name);
-
+      return this.http.get(newUrl+'?name='+name+'&status='+status+'&fullname='+fullname);
    }
 
 }

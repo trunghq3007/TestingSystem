@@ -16,9 +16,9 @@ export class CreateComponent implements OnInit {
    @ViewChild("myckeditor") ckeditor: any;
 
    user = {
-      userId: 3,
-      fullName: "Pham Thi Phuong",
-      email: "phuong@gmail.com",
+      userId: 1,
+      fullName: "Vu Van Dong",
+      email: "vudongkm1997@gmail.com",
       mobile: "0332132609",
       password: "123",
       status: 1,
@@ -85,7 +85,6 @@ export class CreateComponent implements OnInit {
 
    onSubmit() {
       try {
-         Swal.showLoading();
          const value = this.profileFrm.value;
          const semesterExam: SemesterExam = {
             user: this.user,
