@@ -2,6 +2,7 @@ package com.cmcglobal.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Candidate implements Serializable {
 	@Column(name = "candidate_id")
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name = "semester_exam_id")
 	@JsonIgnoreProperties("candidates")
 	private SemesterExam semesterExam;

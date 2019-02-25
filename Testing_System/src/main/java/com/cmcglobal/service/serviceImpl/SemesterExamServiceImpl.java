@@ -109,7 +109,7 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 			check++;
 		}
 
-		if (!"null".equals(status)) {
+		if (status != -1) {
 			if (check == 0) {
 				stringBuilder.append("WHERE s.status like '%" + status + "%'");
 				check++;
