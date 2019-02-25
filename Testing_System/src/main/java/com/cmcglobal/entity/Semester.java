@@ -79,5 +79,4 @@ public class Semester {
 		this.endTime = endTime;
 	}
 
-	
 }

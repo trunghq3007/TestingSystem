@@ -1,7 +1,10 @@
 package com.cmcglobal.service;
 
+import org.springframework.http.HttpStatus;
+
 public class ServiceResult {
 	private Status status = Status.SUCCESS;
+	private HttpStatus httpStatus;
 	private String message;
 	private Object data;
 
@@ -17,6 +20,14 @@ public class ServiceResult {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public HttpStatus getHttpStatus() {
+		return httpStatus;
+	}
+
+	public void setHttpStatus(HttpStatus httpStatus) {
+		this.httpStatus = httpStatus;
 	}
 
 	public String getMessage() {

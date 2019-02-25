@@ -3,7 +3,7 @@ package com.cmcglobal.entity;
 public class TestDetail {
 	private Test test;
 	private int isTest;
-	
+
 	public TestDetail(Test test, int isTest) {
 		this.test = test;
 		this.isTest = isTest;

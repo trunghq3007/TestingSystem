@@ -33,35 +33,13 @@ public class UserServiceImpl implements UserService {
 	private SemesterExamRepository semesterRepo;
 
 	@Override
-	public ServiceResult getSemseterListByUserId(String id) {
-		ServiceResult result = new ServiceResult();
-		User user = userRepository.findById(Integer.parseInt(id)).get();
-		List<Candidate> candidate = candidateRepository.findByUser(user);
-		List<SemesterExam> semesters = new ArrayList<SemesterExam>();
-
-		for (Candidate ca : candidate) {
-			semesters.add(ca.getSemesterExam());
-		}
-		result.setData(semesters);
-		return result;
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 
 	@Override
-	public ServiceResult getExamBySemesterExamId(String id) {
-		ServiceResult result = new ServiceResult();
-		SemesterExam semesterExam = semesterRepo.getOne(id);
-		List<Exam> exams = new ArrayList<>();
-		List<Test> list = testRepository.findBySemesterExam(semesterExam);
-		for (Test test : list) {
-			exams.add(test.getExam());
-		}
-		result.setData(exams);
-		return result;
+	public User findOne(int userId) {
+		return userRepository.getOne(userId);
 	}
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
 
 }

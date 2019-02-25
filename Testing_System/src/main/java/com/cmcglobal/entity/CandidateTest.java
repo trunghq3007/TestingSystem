@@ -94,4 +94,11 @@ public class CandidateTest {
 		this.mark = mark;
 	}
 
+	@Override
+	public String toString() {
+		return "CandidateTest [candidate_test_id=" + candidate_test_id + ", candidates=" + candidates + ", tests="
+				+ tests + ", start_time=" + start_time + ", end_time=" + end_time + ", correct_number=" + correct_number
+				+ ", mark=" + mark + "]";
+	}
+
 }

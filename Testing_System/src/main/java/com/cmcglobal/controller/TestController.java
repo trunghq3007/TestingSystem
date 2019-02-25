@@ -25,83 +25,100 @@ import com.cmcglobal.service.TestService;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class TestController {
 
-    @Autowired
-    TestService testService;
+	@Autowired
+	TestService testService;
 
-    /**
-     * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
-     * date: Feb 19, 2019 Description: List table test. Version 1.0
-     * 
-     * @return
-     */
-    @GetMapping(value = "/listTest")
-    public List<Test> listTest() {
-        return testService.findAll();
-    }
-
-    /**
-     * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
-     * date: Feb 19, 2019 Description: listBySemester in table test Version 1.0
-     * 
-     * @param id
-     * @return
-     */
-    @GetMapping(value = "/listBySemester/{id}")
-    public List<Test> listBySemester(@PathVariable("id") String id) {
-        return testService.findBySemesterID(id);
-    }
-
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: ....
-      Version 1.0
-      @param test
-      @return
-     */
-    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ServiceResult> insertTest(@RequestBody Test test) {
-        return new ResponseEntity<ServiceResult>(testService.insertTest(test), HttpStatus.OK);
-    }
-
-    /**
-     * Create by: VuThuy - CMC
-      Create date: Feb 19, 2019
-      Modifier: VuThuy
-      Modified date: Feb 19, 2019
-      Description: ....
-      Version 1.0
-      @param id
-      @return
-     */
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<ServiceResult> deleteTest(@PathVariable Integer id) {
-        return new ResponseEntity<ServiceResult>(testService.deleteTest(id), HttpStatus.OK);
-    }
-
-	@RequestMapping(value = "/semesters/{semesterId}/tests/{testId}")
-	public ResponseEntity<ServiceResult> getTestById(@PathVariable("semesterId") String semesterId,
-			@PathVariable("semesterId") String testId) {
-		ServiceResult result = new ServiceResult();
-		result.setData(testService.getTestById(semesterId, testId));
-		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: List table test. Version 1.0
+	 * 
+	 * @return
+	 */
+	@GetMapping(value = "/listTest")
+	public List<Test> listTest() {
+		return testService.findAll();
 	}
 
-//	@RequestMapping(value = "/userId/semesters/{semesterId}/tests/")
-//	public ResponseEntity<ServiceResult> getTestsDetail(@PathVariable("userId") String semesterId,
-//			@PathVariable("semesterId") String testId) {
-//		ServiceResult result = new ServiceResult();
-//		result.setData(testService.getTestById(semesterId, testId));
-//		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
-//	}
+	/**
+	 * Create by: VuThuy - CMC Create date: Feb 19, 2019 Modifier: VuThuy Modified
+	 * date: Feb 19, 2019 Description: listBySemester in table test Version 1.0
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value = "/listBySemester/{id}")
+	public List<Test> listBySemester(@PathVariable("id") String id) {
+		return testService.findBySemesterID(id);
+	}
 
-	@RequestMapping(value = "/users/{userId}/semesters/{semesterId}/tests/", method=RequestMethod.GET)
-	public ResponseEntity<ServiceResult> getTestsDetail(@PathVariable("userId") String userId,
+	/**
+	 * Create by: VuThuy - CMC
+	 * Create date: Feb 19, 2019
+	 * Modifier: VuThuy
+	 * Modified date: Feb 19, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param test
+	 * @return
+	 */
+	@PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ServiceResult> insertTest(@RequestBody Test test) {
+		return new ResponseEntity<ServiceResult>(testService.insertTest(test), HttpStatus.OK);
+	}
+
+	/**
+	 * Create by: VuThuy - CMC
+	 * Create date: Feb 19, 2019
+	 * Modifier: VuThuy
+	 * Modified date: Feb 19, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(value = "/delete/{id}")
+	public ResponseEntity<ServiceResult> deleteTest(@PathVariable Integer id) {
+		return new ResponseEntity<ServiceResult>(testService.deleteTest(id), HttpStatus.OK);
+	}
+
+	/**
+	 * Create by: nvdiem - CMC
+	 * Create date: Feb 23, 2019
+	 * Modifier: nvdiem -CMC
+	 * Modified date: Feb 23, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param semesterId
+	 * @param examId
+	 * @return
+	 */
+	@RequestMapping(value = "/semesters/{semesterId}/tests/{examId}")
+	public ResponseEntity<ServiceResult> getTestById(@PathVariable("semesterId") String semesterId,
+			@PathVariable("examId") String examId) {
+		ServiceResult result = testService.getTestBySemesterIdAndExamId(semesterId, examId);
+		return new ResponseEntity<ServiceResult>(result, result.getHttpStatus());
+	}
+
+	/**
+	 * Create by: nvdiem - CMC
+	 * Create date: Feb 23, 2019
+	 * Modifier: nvdiem -CMC
+	 * Modified date: Feb 23, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param userId
+	 * @param semesterId
+	 * @return
+	 */
+	@RequestMapping(value = "/users/{userId}/semesters/{semesterId}/tests/", method = RequestMethod.GET)
+	public ResponseEntity<ServiceResult> getTestsOfSemesterOfUser(@PathVariable("userId") int userId,
 			@PathVariable("semesterId") String semesterId) {
 		ServiceResult result = new ServiceResult();
-		result.setData(testService.getTestDetail(userId, semesterId));
+		result.setData(testService.getTestsOfSemesterOfUser(userId, semesterId));
 		return new ResponseEntity<ServiceResult>(result, HttpStatus.OK);
 	}
 }

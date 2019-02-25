@@ -1,5 +1,7 @@
 package com.cmcglobal.service;
 
+import java.util.Date;
+
 import com.cmcglobal.entity.SemesterExam;
 
 public interface SemesterExamService {
@@ -12,7 +14,20 @@ public interface SemesterExamService {
 	public ServiceResult delete(String id);
 
 	public ServiceResult findById(String id);
-	
-	public ServiceResult filter(String name);
+
+	public ServiceResult filter(String name, Integer status,String fullname, Date startTime, Date endTime);
+
+	/**
+	 * Create by: nvdiem - CMC
+	 * Create date: Feb 23, 2019
+	 * Modifier: nvdiem -CMC
+	 * Modified date: Feb 23, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param id this is user's id
+	 * @return
+	 */
+	ServiceResult getSemesterListByUserId(int id);
 
 }

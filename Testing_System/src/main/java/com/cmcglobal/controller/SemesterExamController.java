@@ -1,5 +1,7 @@
 package com.cmcglobal.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.entity.SemesterInformation;
 import com.cmcglobal.repository.CandidateRepository;
@@ -91,9 +94,27 @@ public class SemesterExamController {
 		return new ResponseEntity<ServiceResult>(examService.findById(id), HttpStatus.OK);
 	}
 
-	@PostMapping("/filter")
-	public ResponseEntity<ServiceResult> filterByKeyword(@RequestBody String name) {
-		return new ResponseEntity<ServiceResult>(examService.filter(name), HttpStatus.OK);
+	/**
+	 * Create by: dvthuan - CMC
+	 * Create date: Feb 22, 2019
+	 * Modifier: dvthuan
+	 * Modified date: Feb 22, 2019
+	 * Description: ....
+	 * Version 1.0
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@GetMapping("/filter")
+	public ResponseEntity<ServiceResult> filterByKeyword(@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "status", required = false) Integer status,
+			@RequestParam(value = "fullname", required = false) String fullname,
+			@RequestParam(value = "", required = false) Date startTime,
+			@RequestParam(value = "", required = false) Date endTime) {
+
+		System.err.println("Fullname: " + fullname);
+		return new ResponseEntity<ServiceResult>(examService.filter(name, status, fullname, startTime, endTime),
+				HttpStatus.OK);
 	}
 
 	/**
@@ -103,16 +124,23 @@ public class SemesterExamController {
 	 * Modified date: Feb 18, 2019
 	 * Description: ....
 	 * Version 1.0
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@GetMapping("/report/{id}")
 	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
 		SemesterInformation semesterInformation = semesterexamService.getInformationOfSemester(id);
-		if(semesterInformation == null) {
+		if (semesterInformation == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return new ResponseEntity<>(semesterInformation, HttpStatus.OK);
 
 	}
+
+	@RequestMapping(value = "/users/{id}/semesters", method = RequestMethod.GET)
+	public ResponseEntity<ServiceResult> getSemesterListByUserId(@PathVariable("id") int id) {
+		return new ResponseEntity<ServiceResult>(examService.getSemesterListByUserId(id), HttpStatus.OK);
+	}
+
 }
