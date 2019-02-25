@@ -24,6 +24,7 @@ export class ListComponent implements OnInit {
    modalRef: BsModalRef;
    arrDelete: any = [];
    isCheck: boolean = false;
+   check: boolean = false;
    public obj: any = {};
    public objFilter: any = {};
    public semesterExamList = [];
@@ -85,6 +86,7 @@ export class ListComponent implements OnInit {
                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                if (result.value) {
+                  this.check = false;
                   for (let i = 0; i < this.arrDelete.length; i++) {
                      this.service.delete('semesterexam/delete', this.arrDelete[i]).subscribe(result => {
                         console.log(result);
@@ -92,10 +94,10 @@ export class ListComponent implements OnInit {
                            this.semesterExamList = result.data;
                            this.totalRecord = result.totalRecord;
                            this.deleteElementOfItempages();
-                           this.isCheck = false;
+                           this.check = false;
                            this.messageDeleteSuccess();
                         } else {
-                           this.isCheck = false;
+                           // this.check = false;
                            this.messageDeletFailed();
                            return;
                         }
