@@ -18,7 +18,7 @@ public class Answer implements Serializable {
 	@Column(name = "is_true")
 	private boolean isTrue;
 	private int status;
-	
+
 	public String getAnswerId() {
 		return answerId;
 	}

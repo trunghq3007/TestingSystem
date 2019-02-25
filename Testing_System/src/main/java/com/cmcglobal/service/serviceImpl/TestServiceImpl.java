@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,13 +38,6 @@ public class TestServiceImpl implements TestService {
 	@Autowired
 	private CandidateTestRepository candidateTestRepository;
 
-	@Autowired
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.cmcglobal.service.TestService#findAll()
-	 */
 	@Override
 	public List<Test> findAll() {
 		// TODO Auto-generated method stub
@@ -112,27 +106,26 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public Test getTestById(String semesterId, String testId) {
-		List<Test> list = findBySemesterID(semesterId);
-		for (Test test : list) {
-			if (testId.equals(test.getSemesterExam().getId()))
-				return test;
-		}
-		return null;
+	public Test getTestById(int id) {
+		Test test = testRepository.getOne(id);
+		return test;
 	}
 
 	@Override
-	public List<TestDetail> getTestDetail(String userId, String semesterId) {
+	public ServiceResult getTestsOfSemesterOfUser(int userId, String semesterId) {
+		ServiceResult result = new ServiceResult();
 		List<TestDetail> testDetailList = new ArrayList<TestDetail>();
 		SemesterExam exam = semesterExamRepository.findById(semesterId).get();
 		List<Test> testList = testRepository.findBySemesterExam(exam);
+
 		for (Test test : testList) {
 			testDetailList.add(new TestDetail(test, 0));
 		}
-		User user = userRepository.getOne(Integer.parseInt(userId));
+		User user = userRepository.getOne(userId);
 		List<Candidate> candidateList = candidateRepository.findByUser(user);
 		List<CandidateTest> candidateTestList = candidateTestRepository.findAll();
 		testList = new ArrayList<Test>();
+
 		for (Candidate candidate : candidateList) {
 			for (CandidateTest candidateTest : candidateTestList) {
 				if (candidateTest.getCandidates().getId() == candidate.getId()) {
@@ -143,12 +136,31 @@ public class TestServiceImpl implements TestService {
 
 		for (TestDetail testDetail : testDetailList) {
 			for (Test tests : testList) {
-				if (testDetail.getIsTest() == tests.getTestID()) {
+				if (testDetail.getTest().getTestID() == tests.getTestID()) {
 					testDetail.setIsTest(1);
 				}
 			}
 		}
-		return testDetailList;
+		return result;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	@Override
+	public ServiceResult getTestBySemesterIdAndExamId(String semesterId, String examId) {
+		ServiceResult result = new ServiceResult();
+		List<Test> tests = testRepository.findAll();
+		for (Test test : tests) {
+			if (test.getSemesterExam().getId().equals(semesterId) && test.getExam().getExamId().equals(examId)) {
+				result.setData(test);
+				result.setHttpStatus(HttpStatus.OK);
+				return result;
+			}
+		}
+		result.setHttpStatus(HttpStatus.NOT_FOUND);
+		return result;
+	}
+
+>>>>>>> master
 }

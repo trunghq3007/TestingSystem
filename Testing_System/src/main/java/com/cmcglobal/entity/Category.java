@@ -27,8 +27,8 @@ public class Category implements Serializable {
 	private Date dateCreated;
 	private int status;
 
-	@OneToMany(mappedBy="category",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    private List<Exam> exams;
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Exam> exams;
 
 	public int getCategoryId() {
 		return categoryId;

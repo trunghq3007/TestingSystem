@@ -2,6 +2,7 @@ package com.cmcglobal.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "candidate")
 public class Candidate implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "candidate_id")
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name = "semester_exam_id")
 	@JsonIgnoreProperties("candidates")
 	private SemesterExam semesterExam;
@@ -55,6 +56,11 @@ public class Candidate implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Candidate [id=" + id + ", semesterExam=" + semesterExam + ", user=" + user + "]";
 	}
 
 }
