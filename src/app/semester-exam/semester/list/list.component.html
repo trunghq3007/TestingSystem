@@ -32,7 +32,7 @@
                            <div class="col-md-4">
                               <select type="text" class="input-sm form-control" [(ngModel)]="objFilter.status"
                                  name="status">
-                                 <option value="null">Trạng thái</option>
+                                 <option [ngValue]="-1">Trạng thái</option>
                                  <option [ngValue]="0">draft</option>
                                  <option [ngValue]="1">public</option>
                                  <option [ngValue]="2">done</option>

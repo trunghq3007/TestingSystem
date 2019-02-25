@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
    styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-
+   actived: boolean = false;
    constructor(private activateRoute: ActivatedRoute) { }
 
    semesterID: string;
@@ -15,4 +15,10 @@ export class DetailComponent implements OnInit {
       this.semesterID = this.activateRoute.snapshot.paramMap.get('id');
    }
 
+   receiveData(event: any) {
+      console.log(event);
+      this.actived = event;
+   }
+
 }
+

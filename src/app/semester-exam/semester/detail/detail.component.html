@@ -32,14 +32,14 @@
                   <tab heading="Candidate">
                      <app-candidate [semester_id]="semesterID" ></app-candidate>
                   </tab>
-                  <tab heading="Exam">
+                  <tab heading="Exam" [active]="actived">
                      <app-exam></app-exam>
                   </tab>
                   <tab heading="Report">
                      <app-report [semesterExamCode]="semesterID"></app-report>
                   </tab>
-                  <tab heading="Testing Result" [active]="true">
-                     <app-test-result [semester_id]="semesterID"></app-test-result>
+                  <tab heading="Testing Result">
+                     <app-test-result [semester_id]="semesterID" (eventName)="receiveData($event)" [actived]="false"></app-test-result>
                   </tab>
                </tabset>
             </div>

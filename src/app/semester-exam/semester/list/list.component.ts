@@ -212,7 +212,7 @@ export class ListComponent implements OnInit {
    }
 
    ngOnInit() {
-      this.objFilter.status = null;
+      this.objFilter.status = -1;
       this.getListSemesterExam();
    }
 }

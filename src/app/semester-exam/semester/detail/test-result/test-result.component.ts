@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ApiService } from 'src/app/semester-exam/service/api.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,8 @@ import { Test } from './test.interface';
    styleUrls: ['./test-result.component.css']
 })
 export class TestResultComponent implements OnInit {
+   @Output() public eventName = new EventEmitter();
+   @Input() public actived: boolean;
    data = [];
    exam = [];
    testFrm: FormGroup;
@@ -88,6 +90,11 @@ export class TestResultComponent implements OnInit {
             this.arrDelete = [];
          }
       }
+   }
+
+   changeTabs() {
+      console.log("ahihi");
+      this.eventName.emit(true);
 
    }
 

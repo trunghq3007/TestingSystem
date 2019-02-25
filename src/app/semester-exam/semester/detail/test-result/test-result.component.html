@@ -53,7 +53,7 @@
                      </span>
                   </td>
                   <td>{{item.testID}}</td>
-                  <td class="sorting_1">{{item.exam.title}}</td>
+                  <td class="sorting_1" (click)="changeTabs()" style="cursor: pointer">{{item.exam.title}}</td>
                   <td class="sorting_1">{{item.semesterExam.name}}</td>
                   <td>{{item.testName}}</td>
                   <td>

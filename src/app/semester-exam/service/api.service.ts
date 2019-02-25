@@ -41,10 +41,10 @@ export class ApiService {
       return this.http.get(newUrl);
 
    }
-   filter(nameapi: string, name: string = null, status: number = null, fullname: string = null, startTime: Date = null, endTime: Date = null): Observable<any> {
+   filter(nameapi: string, name: string = null, status: number = -1, fullname: string = null, startTime: Date = null, endTime: Date = null): Observable<any> {
       console.log(status);
       var newUrl = this.baseUrl + nameapi;
-      return this.http.get(newUrl+'?name='+name+'&status='+status+'&fullname='+fullname);
+      return this.http.get(newUrl + '?name=' + name + '&status=' + status + '&fullname=' + fullname + '&startTime=' + startTime + '&endTime' + endTime);
    }
 
 }
