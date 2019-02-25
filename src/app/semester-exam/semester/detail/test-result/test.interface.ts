@@ -1,4 +1,4 @@
 export interface Test {
-   testID: string,
+   testID: number,
    testName: string
 }

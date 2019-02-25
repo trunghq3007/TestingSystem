@@ -21,4 +21,13 @@ export class UserTestingServiceService {
       return this.http.get(`http://localhost:8080/test/semesters/${semesterId}/tests/${testId}`);
    }
 
+   submitResultTest(userId: number, testId: number, data: any): Observable<any> {
+      return this.http.post<any>(`http://localhost:8080/users/${userId}/tests/${testId}`, JSON.stringify(data), this.httpOptions)
+         .pipe(
+         );
+   }
+
+   getResultTest(userId: number, semesterId: string, testId: string): Observable<any> {
+      return this.http.get(`http://localhost:8080/users/${userId}/semesters/${semesterId}/result/${testId}`);
+   }
 }
