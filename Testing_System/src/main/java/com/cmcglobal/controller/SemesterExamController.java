@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.SemesterExam;
@@ -107,8 +106,7 @@ public class SemesterExamController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/info/{id}")
-
+	@GetMapping("/report/{id}")
 	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
 		SemesterInformation semesterInformation = semesterexamService.getInformationOfSemester(id);
 		if(semesterInformation == null) {
@@ -117,5 +115,4 @@ public class SemesterExamController {
 		return new ResponseEntity<>(semesterInformation, HttpStatus.OK);
 
 	}
-
 }

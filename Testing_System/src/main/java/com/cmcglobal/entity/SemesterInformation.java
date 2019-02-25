@@ -1,8 +1,5 @@
 package com.cmcglobal.entity;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-
 public class SemesterInformation {
 	private SemesterExam semesterExam;
 	private int total_number_exam;
