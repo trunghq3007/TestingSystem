@@ -27,7 +27,8 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
-
+    
+    
     @GetMapping(value = "/listCandidate")
     public List<Candidate> ListCandidate() {
         return candidateService.findAllCandidate();
