@@ -195,6 +195,7 @@ export class ListComponent implements OnInit {
 
    cloneSemesterExam() {
       console.log(this.obj);
+      this.obj.semesterExamCode = [];
       try {
          this.service.saveOne('semesterexam/add', this.obj).subscribe(data => {
             console.log(data);
