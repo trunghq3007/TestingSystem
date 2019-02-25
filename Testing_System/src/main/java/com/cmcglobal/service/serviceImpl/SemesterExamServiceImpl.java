@@ -100,8 +100,9 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 	 * Create date: Feb 18, 2019
 	 * Modifier: User
 	 * Modified date: Feb 18, 2019
-	 * Description: .... 
+	 * Description: ....
 	 * Version 1.0
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -164,6 +165,19 @@ public class SemesterExamServiceImpl implements SemesterExamService {
 		semesterInformation.setRate_title(ConstantSemesterExam.classificationSemesterExam());
 		semesterInformation.setRate_mark(rate_mark);
 		return semesterInformation;
+	}
+
+	@Override
+	public ServiceResult getSemesterListByUserId(int id) {
+		ServiceResult result = new ServiceResult();
+		List<SemesterExam> semesterExams = new ArrayList<SemesterExam>();
+		User user = userRepository.findById(id).get();
+		List<Candidate> candidates = candidateRepository.findByUser(user);
+		for (Candidate candidate : candidates) {
+			semesterExams.add(candidate.getSemesterExam());
+		}
+		result.setData(semesterExams);
+		return result;
 	}
 
 }

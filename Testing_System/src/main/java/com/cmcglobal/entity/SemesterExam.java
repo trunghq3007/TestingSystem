@@ -46,18 +46,17 @@ public class SemesterExam {
 
 	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Test> tests;
-	
+
 	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<Candidate> candidate;
+	private List<Candidate> candidate;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "semester_exam_id")
 	private List<SemesterExamCode> semesterExamCode;
-	
+
 //	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL,mappedBy="semesterExam")
 //	@JsonIgnoreProperties("semesterExam")
 //    private List<Candidate> candidates;
-	
 
 	public List<SemesterExamCode> getSemesterExamCode() {
 		return semesterExamCode;

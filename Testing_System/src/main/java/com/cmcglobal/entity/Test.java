@@ -87,4 +87,10 @@ public class Test implements Serializable {
 		this.semesterExam = semesterExam;
 	}
 
+	@Override
+	public String toString() {
+		return "Test [testID=" + testID + ", testName=" + testName + ", status=" + status + ", exam=" + exam
+				+ ", semesterExam=" + semesterExam + "]";
+	}
+	
 }

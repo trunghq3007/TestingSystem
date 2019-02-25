@@ -1,4 +1,3 @@
-
 package com.cmcglobal.entity;
 
 import javax.persistence.Column;

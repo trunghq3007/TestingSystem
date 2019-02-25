@@ -20,21 +20,11 @@ import com.cmcglobal.service.UserService;
 @RequestMapping(value = "user")
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class UserController {
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @GetMapping(value = "/listuser")
-    public List<User> listUser() {
-        return userService.findAll();
-    }
-
-    @RequestMapping(value = "/users/{id}/semesters", method = RequestMethod.GET)
-    public ResponseEntity<ServiceResult> getSemesterListByUserId(@PathVariable("id") String id) {
-        return new ResponseEntity<ServiceResult>(userService.getSemseterListByUserId(id), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/semesters/{semesterId}/tests/", method = RequestMethod.GET)
-    public ResponseEntity<ServiceResult> getTestListOfUser(@PathVariable("semesterId") String semesterId) {
-        return new ResponseEntity<ServiceResult>(userService.getExamBySemesterExamId(semesterId), HttpStatus.OK);
-    }
+	@GetMapping(value = "/listuser")
+	public List<User> listUser() {
+		return userService.findAll();
+	}
 }
