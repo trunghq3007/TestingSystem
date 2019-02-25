@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.SemesterExam;
+import com.cmcglobal.entity.SemesterInformation;
 import com.cmcglobal.repository.CandidateRepository;
 import com.cmcglobal.service.SemesterExamService;
 import com.cmcglobal.service.ServiceResult;
@@ -111,8 +112,11 @@ public class SemesterExamController {
 	@GetMapping("/info/{id}")
 
 	public ResponseEntity<?> getInformationOfSemester(@PathVariable("id") String id) {
-
-		return new ResponseEntity<>(semesterexamService.getInformationOfSemester(id), HttpStatus.OK);
+		SemesterInformation semesterInformation = semesterexamService.getInformationOfSemester(id);
+		if(semesterInformation == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return new ResponseEntity<>(semesterInformation, HttpStatus.OK);
 
 	}
 
