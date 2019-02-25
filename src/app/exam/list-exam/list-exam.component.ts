@@ -68,33 +68,39 @@ export class ListExamComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
 
   listExam: Exam[] = [];
+
   listId: string[] = [];
   listDuration: number[] = [];
   numberOfQuestions: number[] = [];
   statuss: String[] = [];
   caterogyNames: String[] = [];
   isCheckALL = false;
+  disabled = true;
   examFrm: FormGroup;
 
-  showFile = false
-  fileUploads: Observable<string[]>
+  showFile = false;
+  fileUploads: Observable<string[]>;
 
   pageEvent: PageEvent;
   searchTerm: string;
 
   public duration: number;
   public numberOfQuestion: number;
-  public createAt: Date = new Date('dd/mm/yyyy');
+  public create: Date = new Date('dd/mm/yyyy');
   public status: String;
   public category: Category;
   public categoryName: String;
 
-  constructor(private fb: FormBuilder, private uploadService: UploadserviceService, private router: Router,
-    private http: HttpClient, private notifierService: NotifierService) {
-
-  }
+  constructor(
+    private fb: FormBuilder,
+    private uploadService: UploadserviceService,
+    private router: Router,
+    private http: HttpClient,
+    private notifierService: NotifierService
+  ) {}
   ngOnInit() {
     this.findExams('title', 'ASC', '');
+    // this.loadExamsPage();
     this.examFrm = this.fb.group({
       duration: [''],
       numberOfQuestion: [''],
@@ -132,8 +138,8 @@ export class ListExamComponent implements OnInit, AfterViewInit {
   }
   // This function is to find Exams from the API backend
   public findExams = (
-   // pageNumber = 0,
-   // pageSize = 5,
+    // pageNumber = 0,
+    // pageSize = 5,
     sortTerm = 'title',
     sortOrder = 'ASC',
     searchContent = ''
@@ -141,8 +147,8 @@ export class ListExamComponent implements OnInit, AfterViewInit {
     this.http
       .get<Exam[]>('http://localhost:8080/exam/listExams/pagination', {
         params: new HttpParams()
-         // .set('pageNumber', pageNumber.toString())
-         // .set('pageSize', pageSize.toString())
+          // .set('pageNumber', pageNumber.toString())
+          // .set('pageSize', pageSize.toString())
           .set('sortTerm', sortTerm)
           .set('sortOrder', sortOrder)
           .set('searchContent', searchContent)
@@ -155,15 +161,15 @@ export class ListExamComponent implements OnInit, AfterViewInit {
 
   public loadExamsPage() {
     this.findExams(
-      //this.paginator.pageIndex,
-      //this.paginator.pageSize,
+      // this.paginator.pageIndex,
+      // this.paginator.pageSize,
       this.sort.active,
       this.sort.direction,
       this.input.nativeElement.value
     );
+    console.log(this.dataSource.paginator.length);
   }
   public doFilter = (value: string) => {
-
     this.paginator.pageIndex = 0;
     this.findExams(
       // this.paginator.pageIndex,
@@ -182,8 +188,10 @@ export class ListExamComponent implements OnInit, AfterViewInit {
   onchange(event, examId) {
     const checkId = event.target.checked;
     if (checkId) {
+      this.disabled = false;
       this.listId.push(examId);
     } else {
+      this.disabled = true;
       const x = this.listId.findIndex(x => {
         return x === examId;
       });
@@ -191,10 +199,16 @@ export class ListExamComponent implements OnInit, AfterViewInit {
         this.listId.splice(x, 1);
       }
     }
+    if (this.listId.length > 0) {
+      this.disabled = false;
+    } else {
+      this.disabled = true;
+    }
   }
   onCheckAllId(event) {
     const checkId = event.target.checked;
     if (checkId) {
+      this.disabled = false;
       if (this.listId.length > 0) {
         this.listId = [];
       }
@@ -202,28 +216,30 @@ export class ListExamComponent implements OnInit, AfterViewInit {
         this.listId.push(x.examId);
       });
     } else {
+      this.disabled = true;
       this.listId = [];
     }
   }
 
   deleteAllExam() {
-      if (this.listId.length > 0) {
-        this.listId.forEach(element => {
-          this.http
-            .delete(`http://localhost:8080/exam/${element}`)
-            .pipe(
-              mergeMap(() =>
-                this.http.get<Exam[]>(
-                  'http://localhost:8080/exam/listExams/pagination'
-                )
+    if (this.listId.length > 0) {
+      this.listId.forEach(element => {
+        this.http
+          .delete(`http://localhost:8080/exam/${element}`)
+          .pipe(
+            mergeMap(() =>
+              this.http.get<Exam[]>(
+                'http://localhost:8080/exam/listExams/pagination'
               )
             )
-            .subscribe(listExam => {
-              this.listExam = listExam;
-              this.dataSource.data = listExam;
-            });
-        });
-      }
+          )
+          .subscribe(listExam => {
+            this.listExam = listExam;
+            this.dataSource.data = listExam;
+            this.isCheckALL = false;
+          });
+      });
+    }
   }
   // end
 
@@ -254,24 +270,24 @@ export class ListExamComponent implements OnInit, AfterViewInit {
           this.statuss.push(x.status);
           this.caterogyNames.push(x.category.categoryName);
         });
-        (this.listDuration = this.listDuration.filter(function (
+        (this.listDuration = this.listDuration.filter(function(
           item,
           index,
           self
         ) {
           return index === self.indexOf(item);
         })),
-          (this.numberOfQuestions = this.numberOfQuestions.filter(function (
+          (this.numberOfQuestions = this.numberOfQuestions.filter(function(
             item,
             index,
             self
           ) {
             return index === self.indexOf(item);
           })),
-          (this.statuss = this.statuss.filter(function (item, index, self) {
+          (this.statuss = this.statuss.filter(function(item, index, self) {
             return index === self.indexOf(item);
           })),
-          (this.caterogyNames = this.caterogyNames.filter(function (
+          (this.caterogyNames = this.caterogyNames.filter(function(
             item,
             index,
             self
@@ -289,45 +305,64 @@ export class ListExamComponent implements OnInit, AfterViewInit {
     this.currentFileUpload = this.selectedFiles.item(0);
     this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
       success => {
-        console.log("upload succesfully!")
+        console.log('upload succesfully!');
       },
       error => {
-        console.log("error: " + error.error.text);
+        console.log('error: ' + error.error.text);
         if (error.error.text === 'Not matching extension file') {
           this.notifierService.notify('error', 'Not matching extension file');
-        }else if (error.error.text === 'OK') {
-          this.notifierService.notify('success', 'successfully uploaded ' + this.currentFileUpload.name + '!');
+        } else if (error.error.text === 'OK') {
+          this.notifierService.notify(
+            'success',
+            'successfully uploaded ' + this.currentFileUpload.name + '!'
+          );
           this.showFiles(false);
-          this.uploadService.importToServer(this.currentFileUpload)
-            .subscribe(
-              success => {
-              },
-              error => {
-                console.log("error: " + error.error.text);
-                if (error.error.text === 'Ok') {
-                  this.notifierService.notify('success', 'Import exam successfully');
-                  this.loadExamsPage();
-                  //window.location.reload();
-                  //this.router.navigate(['']);
-                } else if (error.error.text === 'not Ok') {
-                  this.notifierService.notify('error', 'Import exam Failed');
-                }else if(error.error.text === 'this excel file is empty'){
-                  this.notifierService.notify('warning', 'this excel file is empty');
-                }else if(error.error.text === "this excel file is not formatted with one's template"){
-                  this.notifierService.notify('warning', "this excel file is not formatted with one's template");
-                }
+          this.uploadService.importToServer(this.currentFileUpload).subscribe(
+            success => {},
+            error => {
+              console.log('error: ' + error.error.text);
+              if (error.error.text === 'Ok') {
+                this.notifierService.notify(
+                  'success',
+                  'Import exam successfully'
+                );
+                this.loadExamsPage();
+                //window.location.reload();
+                //this.router.navigate(['']);
+              } else if (error.error.text === 'not Ok') {
+                this.notifierService.notify('error', 'Import exam Failed');
+              } else if (error.error.text === 'this excel file is empty') {
+                this.notifierService.notify(
+                  'warning',
+                  'this excel file is empty'
+                );
+              } else if (
+                error.error.text ===
+                "this excel file is not formatted with one's template"
+              ) {
+                this.notifierService.notify(
+                  'warning',
+                  "this excel file is not formatted with one's template"
+                );
               }
-            );
-        } else if (error.error.text === ("ERROR! can't upload " + this.selectFile + "!")) {
-          this.notifierService.notify('error', '"ERROR! cant upload "' + this.selectFile + "!");
+            }
+          );
+        } else if (
+          error.error.text ===
+          "ERROR! can't upload " + this.selectFile + '!'
+        ) {
+          this.notifierService.notify(
+            'error',
+            '"ERROR! cant upload "' + this.selectFile + '!'
+          );
         }
       }
-    )
+    );
     //end
   }
 
   showFiles(enable: boolean) {
-    this.showFile = enable
+    this.showFile = enable;
     if (enable) {
       this.fileUploads = this.uploadService.getFiles();
     }

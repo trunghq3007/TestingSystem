@@ -18,8 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { UserModule } from './user/user.module';
 import { HomeModule } from './home/home.module';
-import { HighlightPipe } from './exam/list-exam/highlight.pipe';
+
 import { ErrorsModule } from './errors/errors.module';
+import { HighlightPipeModule } from './exam/list-exam/highlight.pipe.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,7 @@ import { ErrorsModule } from './errors/errors.module';
     HttpModule,
     UserModule,
     HomeModule,
-    CategoryQuestionModule
+    CategoryQuestionModule,
     ErrorsModule
   ],
   providers: [],

@@ -215,3 +215,11 @@ min-width: 100px;
 font-weight: normal;
 }
 
+
+.highlight {
+	color: black;
+  background:yellow;
+	border: 1px solid red;
+	border-radius: 2px;
+	margin: -1px;
+}
