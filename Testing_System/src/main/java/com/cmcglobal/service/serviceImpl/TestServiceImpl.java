@@ -143,9 +143,7 @@ public class TestServiceImpl implements TestService {
 		}
 		return result;
 	}
-<<<<<<< HEAD
 	
-=======
 
 	@Override
 	public ServiceResult getTestBySemesterIdAndExamId(String semesterId, String examId) {
@@ -162,5 +160,4 @@ public class TestServiceImpl implements TestService {
 		return result;
 	}
 
->>>>>>> master
 }
