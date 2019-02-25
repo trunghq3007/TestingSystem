@@ -46,8 +46,9 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
+        alert('Đăng Nhập Thành Công ');
         this.roles = this.tokenStorage.getAuthorities();
-        this.router.navigate(['cms']);
+        this.router.navigate(['home']);
 
       },
       error => {

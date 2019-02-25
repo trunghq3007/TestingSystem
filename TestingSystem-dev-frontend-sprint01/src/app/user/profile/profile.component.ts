@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    return this.userService.getExamById(1).subscribe(user => {
+    return this.userService.getUserById(1).subscribe(user => {
         this.user = user;
     });
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../service/homeService.service';
 import { HttpClient } from '@angular/common/http';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +10,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  private roles: string[];
+  private authority: string;
+  info: any;
   image = [
     '../../assets/image/slider1.png',
     '../../assets/image/slider2.png',
@@ -17,11 +22,31 @@ export class HomeComponent implements OnInit {
   tests;
   semesterExamCode = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private token: TokenStorageService, private router: Router) {
     this.changeSlide();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.roles = this.tokenStorage.getAuthorities();
+      this.roles.every(role => {
+        if (role === 'ROLE_ADMIN') {
+          this.authority = 'admin';
+          return false;
+        } else if (role === 'ROLE_MANAGER') {
+          this.authority = 'pm';
+          return false;
+        }
+        this.authority = 'user';
+        return true;
+      });
+    }
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
+  }
 
   changeSlide() {
     this.currentSlide++;
@@ -50,5 +75,10 @@ export class HomeComponent implements OnInit {
   change(e) {
     this.semesterExamCode = e.value;
     console.log(this.semesterExamCode);
+  }
+  logout() {
+    this.token.signOut();
+    window.location.reload();
+    this.router.navigate(['/']);
   }
 }

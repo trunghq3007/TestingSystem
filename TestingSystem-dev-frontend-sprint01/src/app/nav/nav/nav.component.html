@@ -65,8 +65,8 @@
       </li>
       <!--Team3-nmanh-->
       <li *ngIf="authority === 'admin'" class="treeview">
-        <a [routerLink]="['/question']" >
-          <i class="fa fa-files-o"></i>
+        <a>
+          <i class="fa fa-paper-plane"></i>
           <span>User</span>
           <span class="pull-right-container">
             <span class="label label-primary pull-right"></span>
@@ -76,13 +76,13 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['question']"><i class="fa fa-circle-o"></i> List Question</a></li>
-          <li><a [routerLink]="['question','importlist']"><i class="fa fa-circle-o"></i> Import List Question</a></li>
+          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List User</a></li>
+          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create User</a></li>
         </ul>
       </li>
       <li *ngIf="authority === 'admin'" class="treeview">
-        <a [routerLink]="['/question']" >
-          <i class="fa fa-files-o"></i>
+        <a>
+          <i class="fa fa-paper-plane"></i>
           <span>Group</span>
           <span class="pull-right-container">
             <span class="label label-primary pull-right"></span>
@@ -92,11 +92,28 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['question']"><i class="fa fa-circle-o"></i> List Question</a></li>
-          <li><a [routerLink]="['question','importlist']"><i class="fa fa-circle-o"></i> Import List Question</a></li>
+          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List Exam</a></li>
+          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create Exam</a></li>
+        </ul>
+      </li>
+      <li *ngIf="authority === 'admin'" class="treeview">
+        <a>
+          <i class="fa fa-paper-plane"></i>
+          <span>Menu</span>
+          <span class="pull-right-container">
+            <span class="label label-primary pull-right"></span>
+          </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List User</a></li>
+          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create User</a></li>
         </ul>
       </li>
     </ul>
+    
   </section>
   <!-- /.sidebar -->
 </aside>

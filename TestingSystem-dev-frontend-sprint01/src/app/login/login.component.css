@@ -1,0 +1,37 @@
+.container_position_relative {
+  position: relative;
+
+}
+.row_position_absolute {
+  background: url("http://hinhdep.com.vn/wp-content/uploads/2012/10/the-gioi-than-tien.jpg") no-repeat center;
+  height: 578px;
+  position : absolute;
+  top: 40%;
+  left: 40%;
+}
+.text-center {
+  text-align : center;
+  margin-top: 210px;
+  font-size: 40px;
+}
+.text-white {
+  color: #fff;
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.button:active {
+  background-color: red;
+}
+.text-red {
+  color: #AA0000;
+  font-weight: bold;
+  font-size: 16px;
+}
