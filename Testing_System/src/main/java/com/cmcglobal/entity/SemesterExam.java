@@ -47,7 +47,7 @@ public class SemesterExam {
 	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Test> tests;
 
-	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "semesterExam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Candidate> candidate;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
