@@ -59,27 +59,13 @@
                      </div>
                   </div>
 
-                  <!-- <div class="form-group">
-                     <label for="describe" class="col-sm-2 control-label">Tạo mã kỳ thi</label>
-                     <div class="col-sm-4">
-                        <div class="input-group">
-                           <input type="text" class="form-control" disabled value="codesemester0001">
-                           <div class="input-group-btn">
-                              <button class="btn btn-success" type="submit">
-                                 <i class="glyphicon glyphicon-plus"></i>
-                              </button>
-                           </div>
-                        </div>
-                     </div>
-                  </div> -->
-
                   <div class="form-group">
                      <label for="describe" class="col-sm-2 control-label">Tạo mã code kỳ thi</label>
                      <div class="col-sm-4">
                         <div class="input-group" formGroupName="semesterExamCode">
                            <input type="text" class="form-control" disabled formControlName="code">
                            <div class="input-group-btn">
-                              <button class="btn btn-info" type="button" (click)="radomString()">
+                              <button class="btn btn-primary" type="button" (click)="autoCodeSemesterExam()">
                                  <i class="glyphicon glyphicon-plus"></i>
                               </button>
                            </div>
