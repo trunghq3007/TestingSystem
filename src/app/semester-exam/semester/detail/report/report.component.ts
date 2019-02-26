@@ -34,7 +34,7 @@ export class ReportComponent implements OnInit {
       this.getData();
    }
    getData() {
-      this.apiService.getData(`semesterexam/info/${this.semesterExamCode}`).subscribe(
+      this.apiService.getData(`semesterexam/report/${this.semesterExamCode}`).subscribe(
          result => {
             this.data = result;
             this.title_file = result.semesterExam.name;

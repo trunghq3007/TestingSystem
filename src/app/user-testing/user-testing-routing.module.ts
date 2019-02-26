@@ -5,11 +5,11 @@ import { UserTestingResultComponent } from './user-testing-result/user-testing-r
 
 const routes: Routes = [
    {
-      path: 'semester/:semesterId/testing/:testId',
+      path: 'semester/:semesterId/testing/:examId',
       component: UserTestingComponent,
    },
    {
-      path: 'semester/:semesterId/result/:resultId',
+      path: 'semester/:semesterId/result/:examId',
       component: UserTestingResultComponent,
    }
 

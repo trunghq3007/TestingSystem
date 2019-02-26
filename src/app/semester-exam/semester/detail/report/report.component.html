@@ -11,7 +11,8 @@
             <div class="col-md-10">
             </div>
             <div class="col-md-2">
-               <button class="btn btn-success" (click)="openModal()">Export</button>
+               <button class="btn btn-success" (click)="openModal()"><span
+                     class="glyphicon glyphicon-save-file"></span> Export</button>
             </div>
          </div>
          <div class="row form-group" #exportPDF>
@@ -48,12 +49,12 @@
                </div>
                <div class="row form-group">
                   <div class="col-md-10 col-md-offset-1">
-                     +,Tổng số đề thi : {{ data?.total_number_exam}}
+                     + Tổng số đề thi : {{ data?.total_number_exam}}
                   </div>
                </div>
                <div class="row form-group">
                   <div class="col-md-10 col-md-offset-1">
-                     +,Tổng số câu hỏi : {{ data?.total_number_question}}
+                     + Tổng số câu hỏi : {{ data?.total_number_question}}
                   </div>
                </div>
                <div class="row form-group">
@@ -63,21 +64,21 @@
                </div>
                <div class="row form-group">
                   <div class="col-md-10 col-md-offset-1">
-                     +,Tổng số thí sinh : {{ data?.total_user_join}}
+                     + Tổng số thí sinh : {{ data?.total_user_join}}
                   </div>
                </div>
                <div class="row form-group">
                   <div class="col-md-10 col-md-offset-1">
-                     +,Tổng số người tham gia : {{ data?.total_user_test}}
+                     + Tổng số người tham gia : {{ data?.total_user_test}}
                   </div>
                </div>
                <div class="row form-group">
                   <div class="col-md-10 col-md-offset-1">
-                     +, Điểm trung bình : {{data?.mean_mark}}
+                     + Điểm trung bình : <label>{{data?.mean_mark}}</label>
                   </div>
                </div>
                <div class="row form-group">
-                  <div class="col-md-6 col-md-offset-1">
+                  <div class="col-md-7 col-md-offset-1">
                      <table class="table table-bordered table-hover table-sm">
                         <thead style="background: #f1eaea;">
                            <tr>

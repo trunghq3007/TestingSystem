@@ -22,7 +22,6 @@ import { UserTestingSemesterModule } from './user-testing-semester/user-testing-
 import { SemesterRoutingModule } from './semester-exam/semester/semester-routing.module';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UnregisterTestingSemesterModule } from './unregister-testing-semester/unregister-testing-semester.module';
 @NgModule({
    declarations: [
       AppComponent,
@@ -45,8 +44,6 @@ import { UnregisterTestingSemesterModule } from './unregister-testing-semester/u
       UserTestingSemesterModule,
       HttpClientModule,
       SemesterRoutingModule,
-      UnregisterTestingSemesterModule,
-
    ],
    providers: [],
    bootstrap: [AppComponent]
