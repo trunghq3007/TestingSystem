@@ -108,7 +108,7 @@ export class CandidateComponent implements OnInit {
    }
    getAllUser() {
       var othis = this;
-      this.service.getAll("user/listuser").subscribe(result => {
+      this.service.getAll("user/listUsers").subscribe(result => {
          this.user = result;
          this.data.filter(function (item2) {
             othis.user = othis.user.filter(item => item.userId !== item2.user.userId);
