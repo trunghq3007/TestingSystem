@@ -1,7 +1,8 @@
 import { User } from './User';
 
+
 export class Category {
-  id: number;
+  categoryId: number;
   categoryName: string;
   userCategory: User;
   dateCreated: Date;
