@@ -17,24 +17,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.entity.Menu;
-import com.cmcglobal.service.serviceImpl.MenuServiceImpl;
+import com.cmcglobal.service.MenuService;
+import com.cmcglobal.utils.Api;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = Api.Menu.API_CROSS_ORIGIN)
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = Api.Menu.API_URL_MENUS)
 public class MenuController {
 
 	@Autowired
-	private MenuServiceImpl menuService;
+	private MenuService menuService;
 	
-	@GetMapping("/menu")
+	@GetMapping(value = Api.Menu.API_URL_LIST_MENUS)
 	public List<Menu> getAllMenu() {
 		System.out.println("Get all Menu...");
 		return menuService.getAllMenu();
 	}
 	
-	@PutMapping("/menu/edit/{id}")
+	@PutMapping(value = Api.Menu.API_URL_MENUS_UPDATE)
 	public ResponseEntity<Menu> updateMenu(@PathVariable("id") int id, @RequestBody Menu menus) {
 		System.out.println("Update Menu with ID = " + id + "...");
  
@@ -52,13 +53,13 @@ public class MenuController {
 		}
 	}
 	
-	@PostMapping(value = "/menu/create")
+	@PostMapping(value = Api.Menu.API_URL_MENUS_ADD)
 	public Menu createMenu(@RequestBody Menu menu) {
 
 		return menuService.createMenu(menu);
 	}
 	
-	@DeleteMapping("/menu/delete/{id}")
+	@DeleteMapping(value = Api.Menu.API_URL_MENUS_DELETE)
 	public ResponseEntity<String> deleteMenu(@PathVariable("id") int id) {
 		System.out.println("Delete Menu with ID = " + id + "...");
 
@@ -67,7 +68,7 @@ public class MenuController {
 		return new ResponseEntity<>("Menur has been deleted!", HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/menu/delete")
+	@DeleteMapping(value = Api.Menu.API_URL_MENUS_DELETE_ALL)
 	public ResponseEntity<String> deleteAllGroupUsers() {
 		System.out.println("Delete All Menu...");
 
@@ -76,14 +77,14 @@ public class MenuController {
 		return new ResponseEntity<>("All menu have been deleted!", HttpStatus.OK);
 	}
 	
-	@GetMapping("/menu/detail/{id}")
+	@GetMapping(value = Api.Menu.API_URL_MENUS_DETAIL)
 	public Menu getMenuById(@PathVariable("id") int id) {
 		System.out.println("Get Menu By Id..." + id + "...");
 
 		return menuService.findByMenuId(id);
 	}
 	
-	@GetMapping("/menu/menu-list/{name}")
+	@GetMapping(value = Api.Menu.API_URL_MENUS_SEARCH_BY_NAME)
 	public List<Menu> findByMenuNameContaining(@PathVariable("name") String name) {
 		return menuService.findByMenuNameContaining(name);
 	}

@@ -1,9 +1,11 @@
 package com.cmcglobal.service.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.cmcglobal.entity.Candidate;
 import com.cmcglobal.entity.Exam;
+import com.cmcglobal.entity.Role;
 import com.cmcglobal.entity.SemesterExam;
 import com.cmcglobal.entity.Test;
 import com.cmcglobal.entity.User;
@@ -23,6 +26,7 @@ import com.cmcglobal.repository.CandidateRepository;
 import com.cmcglobal.repository.SemesterExamRepository;
 import com.cmcglobal.repository.TestRepository;
 import com.cmcglobal.repository.UserRepository;
+import com.cmcglobal.service.RoleService;
 import com.cmcglobal.service.ServiceResult;
 import com.cmcglobal.service.UserService;
 
@@ -35,6 +39,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	private RoleService roleService;
 	
 	@Autowired
 	private CandidateRepository candidateRepository;
@@ -111,10 +117,6 @@ public class UserServiceImpl implements UserService {
 	public boolean addUser(User user) {
 		// TODO Auto-generated method stub
 		try {
-			Optional<User> currentUser = userRepository.findById(user.getUserId());
-			if( currentUser.isPresent() == false) {
-				return false;
-			}
 			userRepository.save(user);
 			return true;
 		} catch (Exception e) {
@@ -146,14 +148,51 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteUser(int id) {
+	public void deleteUser(int id) {
 		// TODO Auto-generated method stub
 		try {
-			userRepository.deleteById(id);
-			return true;
+			userRepository.deleteUserByID(id);
 		} catch (EntityNotFoundException e){
 			logger.warn(LOG4J_WARM + e); 
 			
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(LOG4J_ERROR + e);
+		}
+	}
+
+	@Override
+	public List<User> findByFullName(String keyword) {
+		// TODO Auto-generated method stub
+		try {
+			return userRepository.findByFullname(keyword);
+		} catch (Exception e) {
+			// TODO: handle excepti
+			logger.warn(LOG4J_WARM + e);
+		}
+		return new LinkedList<User>();
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		try {
+			return userRepository.findByEmail(email);
+		} catch (Exception e) {
+			logger.error(LOG4J_ERROR + e);
+	    }
+		return null;
+	}
+
+	@Override
+	public Boolean existsByEmail(String email) {
+		try {
+			Optional<User> currentUser = userRepository.findByEmail(email);
+			if( currentUser.isPresent() == false) {
+				return false;
+			}
+			userRepository.existsByEmail(email);
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error(LOG4J_ERROR + e);

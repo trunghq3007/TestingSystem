@@ -92,23 +92,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/api/auth/**", "/question/all", "/question/add", "/question/edit/**",
-				"/questions/**", "/question/delete/**").permitAll();
+				"/questions/**", "/question/delete/**","/admin/user/**","/admin/group/**","/admin/menu/**").permitAll();
 
-		http.authorizeRequests().antMatchers("/user/singup").access("hasAnyRole('ROLE_USER',ROLE_ADMIN)");
+		http.authorizeRequests().antMatchers("/user/singup").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
 
 		// Trang chỉ dành cho ADMIN
-		http.authorizeRequests().antMatchers("/user/list").access("hasRole('ROLE_ADMIN')");
+		//http.authorizeRequests().antMatchers("/admin/user/**").access("hasRole('ROLE_ADMIN')");
 
 		// Khi người dùng đã login, với vai trò XX.
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,
 		// Ngoại lệ AccessDeniedException sẽ ném ra.
-		http.authorizeRequests().and().exceptionHandling();
-
-//	.authenticationEntryPoint(unauthorizedHandler).and()
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//	http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		// Cấu hình login
 		http.authorizeRequests().and().formLogin().loginProcessingUrl("/j_spring_security_check")
@@ -120,17 +119,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe().tokenRepository(this.persistentTokenRepository()) //
 				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 
-//	http.cors().and().csrf().disable()
-//	.authorizeRequests()
-//	.antMatchers("/api/auth/**").permitAll()
-//	
-//	
-//	.anyRequest()
+//		http.cors().and().csrf().disable()
+//		.authorizeRequests()
+//		.antMatchers("/api/auth/**").permitAll()
+//		
+//		
+//		.anyRequest()
 //
-//			.authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//				.authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //
-//	http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Bean

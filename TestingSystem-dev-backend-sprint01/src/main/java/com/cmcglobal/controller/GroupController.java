@@ -21,25 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cmcglobal.entity.Group;
 import com.cmcglobal.entity.User;
 import com.cmcglobal.entity.User_Group;
-import com.cmcglobal.service.serviceImpl.GroupServiceImpl;
+import com.cmcglobal.service.GroupService;
+import com.cmcglobal.utils.Api;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = Api.Group.API_CROSS_ORIGIN)
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = Api.Group.API_URL_GROUPS)
 public class GroupController {
 
 	@Autowired
-	GroupServiceImpl groupService;
+	GroupService groupService;
 	
 	
-	@GetMapping("/product")
+	@GetMapping(value = Api.Group.API_URL_LIST_GROUPS)
 	public List<Group> getAllGroupUsers() {
 		System.out.println("Get all Group Users...");
 		return groupService.getAllGroupUser();
 	}
 	
-	@PutMapping("/product/edit/{id}")
+	@PutMapping(value = Api.Group.API_URL_GROUPS_UPDATE)
 	public ResponseEntity<Group> updateGroupUser(@PathVariable("id") int id, @RequestBody Group customer) {
 		System.out.println("Update GroupUser with ID = " + id + "...");
  
@@ -56,13 +57,13 @@ public class GroupController {
 		}
 	}
 
-	@PostMapping(value = "/product/create")
+	@PostMapping(value = Api.Group.API_URL_GROUPS_ADD)
 	public Group createGroupUser(@RequestBody Group groupUser) {
 
 		return groupService.createGroupUser(groupUser);
 	}
 
-	@DeleteMapping("/product/delete/{id}")
+	@DeleteMapping(value = Api.Group.API_URL_GROUPS_DELETE)
 	public ResponseEntity<String> deleteGroupUser(@PathVariable("id") int id) {
 		System.out.println("Delete GroupUser with ID = " + id + "...");
 
@@ -71,7 +72,7 @@ public class GroupController {
 		return new ResponseEntity<>("GroupUser has been deleted!", HttpStatus.OK);
 	}
 
-	@DeleteMapping("/product/delete")
+	@DeleteMapping(value = Api.Group.API_URL_GROUPS_DELETE_ALL)
 	public ResponseEntity<String> deleteAllGroupUsers() {
 		System.out.println("Delete All Customers...");
 
@@ -80,63 +81,63 @@ public class GroupController {
 		return new ResponseEntity<>("All group-users have been deleted!", HttpStatus.OK);
 	}
 
-	@GetMapping("/product/detail/{id}")
+	@GetMapping(value = Api.Group.API_URL_GROUPS_DETAIL)
 	public Group getGroupUserById(@PathVariable("id") int id) {
 		System.out.println("Get Group User By Id..." + id + "...");
 
 		return groupService.findByGroupId(id);
 	}
 
-	@GetMapping("/product/group-user/{name}")
+	@GetMapping(value = Api.Group.API_URL_GROUPS_SEARCH_BY_NAME)
 	public List<Group> findByGroupNameContaining(@PathVariable("name") String name) {
 		return groupService.findByGroupNameContaining(name);
 	}
 	
-	@GetMapping("/product/detail/{id}/users")
-	public Set<User> getUserFromGroup(@PathVariable("id") int id) {
-		System.out.println("Get Group User By Id..." + id + "...");
-
-		Group groupUser = groupService.findByGroupId(id);
-		Set<User_Group> list = groupUser.getUserGroups();
-		
-		Set<User> users = new HashSet<>();
-		
-		for(User_Group user_group : list) {
-			users.add(user_group.getUser());
-		}
-		
-		return users;
-	}
+//	@GetMapping("/detail/{id}/users")
+//	public Set<User> getUserFromGroup(@PathVariable("id") int id) {
+//		System.out.println("Get Group User By Id..." + id + "...");
+//
+//		Group groupUser = groupService.findByGroupId(id);
+//		Set<User_Group> list = groupUser.getUserGroups();
+//		
+//		Set<User> users = new HashSet<>();
+//		
+//		for(User_Group user_group : list) {
+//			users.add(user_group.getUser());
+//		}
+//		
+//		return users;
+//	}
+//	
+//	@GetMapping("/add/{group_id}/users/{user_id}")
+//	public Set<User> addUserIntoGroup(@PathVariable("group_id") int group_id, @PathVariable("user_id") int user_id) {
+//		System.out.println("ADD USER INTO GROUP BY ID ... GROUP_ID = " + group_id + "... USER_ID = " + user_id);
+//		groupService.addUserIntoGroup(user_id, group_id);
+//		Group groupUser = groupService.findByGroupId(group_id);
+//		Set<User_Group> list = groupUser.getUserGroups();
+//		
+//		Set<User> users = new HashSet<>();
+//		
+//		for(User_Group user_group : list) {
+//			users.add(user_group.getUser());
+//		}
+//		
+//		return users;
+//	}
 	
-	@GetMapping("/product/add/{group_id}/users/{user_id}")
-	public Set<User> addUserIntoGroup(@PathVariable("group_id") int group_id, @PathVariable("user_id") int user_id) {
-		System.out.println("ADD USER INTO GROUP BY ID ... GROUP_ID = " + group_id + "... USER_ID = " + user_id);
-		groupService.addUserIntoGroup(user_id, group_id);
-		Group groupUser = groupService.findByGroupId(group_id);
-		Set<User_Group> list = groupUser.getUserGroups();
-		
-		Set<User> users = new HashSet<>();
-		
-		for(User_Group user_group : list) {
-			users.add(user_group.getUser());
-		}
-		
-		return users;
-	}
-	
-	@GetMapping("/product/delete/{group_id}/users/{user_id}")
-	public Set<User> removeUserIntoGroup(@PathVariable("group_id") int group_id, @PathVariable("user_id") int user_id) {
-		System.out.println("ADD USER INTO GROUP BY ID ... GROUP_ID = " + group_id + "... USER_ID = " + user_id);
-		groupService.removeUserIntoGroup(user_id, group_id);
-		Group groupUser = groupService.findByGroupId(group_id);
-		Set<User_Group> list = groupUser.getUserGroups();
-		
-		Set<User> users = new HashSet<>();
-		
-		for(User_Group user_group : list) {
-			users.add(user_group.getUser());
-		}
-		
-		return users;
-	}
+//	@GetMapping("/delete/{group_id}/users/{user_id}")
+//	public Set<User> removeUserIntoGroup(@PathVariable("group_id") int group_id, @PathVariable("user_id") int user_id) {
+//		System.out.println("ADD USER INTO GROUP BY ID ... GROUP_ID = " + group_id + "... USER_ID = " + user_id);
+//		groupService.removeUserIntoGroup(user_id, group_id);
+//		Group groupUser = groupService.findByGroupId(group_id);
+//		Set<User_Group> list = groupUser.getUserGroups();
+//		
+//		Set<User> users = new HashSet<>();
+//		
+//		for(User_Group user_group : list) {
+//			users.add(user_group.getUser());
+//		}
+//		
+//		return users;
+//	}
 }

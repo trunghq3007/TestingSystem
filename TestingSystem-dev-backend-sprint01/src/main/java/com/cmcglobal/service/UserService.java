@@ -1,6 +1,7 @@
 package com.cmcglobal.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.cmcglobal.entity.User;
 
@@ -26,14 +27,68 @@ public interface UserService {
      */
     public User findByID(int id);
     
+    /**
+     * Create by: HoangLinh - CMC
+     * Create date: Feb 25, 2019
+     * Modified date: Feb 25, 2019
+     * Description: show list user
+     */
     List<User> findAll();
 	
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: get user by id
+	 */
 	User findUserById(int id);
 	
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: add user
+	 */
 	boolean addUser(User user);
 	
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: edit user
+	 */
 	User editUser(User user,int id);
 	
-	boolean deleteUser(int id);
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: delete user by id
+	 */
+	void deleteUser(int id);
+	
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: search user by fullname
+	 */
+	List<User> findByFullName(String keyword);
+	
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: ....
+	 */
+	Optional<User> findByEmail(String email);
+
+	/**
+	 * Create by: HoangLinh - CMC
+	 * Create date: Feb 25, 2019
+	 * Modified date: Feb 25, 2019
+	 * Description: ....
+	 */
+	Boolean existsByEmail(String email);
     
 }

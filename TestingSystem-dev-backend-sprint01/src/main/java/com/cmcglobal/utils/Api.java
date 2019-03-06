@@ -15,6 +15,7 @@ package com.cmcglobal.utils;
  * Created time: 10:56:12 AM
  * Description: TODO - API.
  */
+
 public interface Api {
   public static final String BASE_URL_CORS = "http://localhost:4200";
 
@@ -40,4 +41,49 @@ public interface Api {
     public static final String UPDATE_COMMON = "/update/update-common/{examId}";
     public static final String IMPORT_EXCEL = "/import-excel-file";
   }
+  
+  
+  
+ /**
+ * @author HoangLinh
+ * Create date: Feb 24, 2019
+ */
+  interface User {
+	  public final static String API_CROSS_ORIGIN = "http://localhost:4200";
+	  public final static String API_URL_USERS = "/admin/user";
+	  public final static String API_URL_LIST_USERS = "/list";
+	  public final static String API_URL_USERS_ADD = "/add";
+	  public final static String API_URL_USERS_UPDATE = "/{id}/edit";
+	  public final static String API_URL_USERS_DELETE = "/{id}/delete";
+	  public final static String API_URL_USERS_INFOR = "/{id}/infor";
+	  public final static String API_URL_USERS_SEARCH_BY_NAME = "/search/{keyword}";
+	  public final static String API_URL_LIST_ROLES = "/role";
+  }
+  
+  interface Group {
+	  public final static String API_CROSS_ORIGIN = "http://localhost:4200";
+	  public final static String API_URL_GROUPS = "/admin/group";
+	  public final static String API_URL_LIST_GROUPS = "/list";
+	  public final static String API_URL_GROUPS_ADD = "/add";
+	  public final static String API_URL_GROUPS_UPDATE = "/{id}/edit";
+	  public final static String API_URL_GROUPS_DELETE = "/{id}/delete";
+	  public final static String API_URL_GROUPS_DETAIL = "/{id}/detail";
+	  public final static String API_URL_GROUPS_SEARCH_BY_NAME = "/search/{name}";
+	  public final static String API_URL_GROUPS_DELETE_ALL = "/delete";
+	  
+  }
+  
+  interface Menu {
+	  public final static String API_CROSS_ORIGIN = "http://localhost:4200";
+	  public final static String API_URL_MENUS = "/admin/menu";
+	  public final static String API_URL_LIST_MENUS = "/list";
+	  public final static String API_URL_MENUS_ADD = "/add";
+	  public final static String API_URL_MENUS_UPDATE = "/{id}/edit";
+	  public final static String API_URL_MENUS_DELETE = "/{id}/delete";
+	  public final static String API_URL_MENUS_DETAIL = "/{id}/detail";
+	  public final static String API_URL_MENUS_SEARCH_BY_NAME = "/search/{name}";
+	  public final static String API_URL_MENUS_DELETE_ALL = "/delete";
+  }
+  
+  
 }

@@ -30,7 +30,6 @@ public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "group_id")
 	private int groupId;
 
@@ -56,7 +55,7 @@ public class Group implements Serializable {
 	public Group() {
 		super();
 	}
-
+	
 	public Group(int createBy, Date createDate, String groupName) {
 		super();
 		this.createBy = createBy;
@@ -64,6 +63,13 @@ public class Group implements Serializable {
 		this.groupName = groupName;
 	}
 
+	public Set<User_Group> getUserGroups() {
+		return userGroups;
+	}
+
+	public void setUserGroups(Set<User_Group> userGroups) {
+		this.userGroups = userGroups;
+	}
 
 	public int getGroupId() {
 		return this.groupId;
@@ -105,13 +111,5 @@ public class Group implements Serializable {
 		this.users = users;
 	}
 
-	public Set<User_Group> getUserGroups() {
-		return userGroups;
-	}
-
-	public void setUserGroups(Set<User_Group> userGroups) {
-		this.userGroups = userGroups;
-	}
-	
 	
 }

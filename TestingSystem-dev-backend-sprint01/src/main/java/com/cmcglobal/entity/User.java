@@ -49,12 +49,19 @@ public class User implements Serializable {
 			@JoinColumn(name = "role_id") })
 	@JsonIgnoreProperties("users")
 	private Set<Role> roles = new HashSet<>();
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	
+	@OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("user")
 	private Set<User_Group> userGroups;
 
-	
+//	public Set<User_Group> getUserGroups() {
+//		return userGroups;
+//	}
+//
+//	public void setUserGroups(Set<User_Group> userGroups) {
+//		this.userGroups = userGroups;
+//	}
+
 	public List<Group> getGroups() {
 		return groups;
 	}

@@ -1,8 +1,6 @@
 package com.cmcglobal.controller;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -10,20 +8,23 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmcglobal.configuration.JwtProvider;
+import com.cmcglobal.entity.ConfirmationToken;
 import com.cmcglobal.entity.Role;
 import com.cmcglobal.entity.User;
+import com.cmcglobal.repository.ConfirmationTokenRepository;
 import com.cmcglobal.repository.RoleRepository;
 import com.cmcglobal.repository.UserRepository;
+import com.cmcglobal.service.EmailSenderService;
 import com.cmcglobal.service.UserService;
 import com.cmcglobal.service.serviceImpl.UserDetailsServiceImpl;
 import com.cmcglobal.utils.RoleName;
@@ -38,8 +39,14 @@ public class AuthRestAPIs {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
+	ConfirmationTokenRepository confirmationTokenRepository;
+	
+	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	EmailSenderService emailSenderService;
+	
 	@Autowired
 	RoleRepository roleRepository;
 
@@ -55,10 +62,10 @@ public class AuthRestAPIs {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(value = "/list")
-	public ResponseEntity<List<User>> viewListUser(){
-		return new ResponseEntity<List<User>>(userService.findAll(),HttpStatus.OK);
-	}
+//	@GetMapping(value = "/list")
+//	public ResponseEntity<List<User>> viewListUser(){
+//		return new ResponseEntity<List<User>>(userService.findAll(),HttpStatus.OK);
+//	}
 
 	@PostMapping(value = "/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpFrom signUpRequest) {
@@ -99,6 +106,19 @@ public class AuthRestAPIs {
 		user.setRoles(roles);
 		// lưu role
 		userRepository.save(user);
+		ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+		confirmationTokenRepository.save(confirmationToken);
+
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(user.getEmail());
+		mailMessage.setSubject("Welcome you to RRC!");
+		mailMessage.setFrom("hiepmessi97@gmail.com");
+		mailMessage.setText("Welcome to group 3. This is a text for authentication"+
+		"<img style='width: 15%' src='https://www.cmc.com.vn/sites/default/files/screenshot_1.png' alt='cmc global' title='cmc global'> <br><br>"
+				+ "Địa chỉ: Phố Duy Tân, phường Dịch Vọng Hậu, Cầu Giấy, Hà Nội <br>"
+				+ "Tel: 04. 3 795 8668   |   Fax: 04. 3 795 8989 <br>" + "Website: http://www.cmc.com.vn");
+		emailSenderService.sendEmail(mailMessage);
 		return new ResponseEntity<>(new ResponseMessage("User Registered successfully!"), HttpStatus.OK);
 
 	}
