@@ -7,16 +7,24 @@ import { FooterModule } from '../footer/footer.module';
 import { NavModule } from '../nav/nav.module';
 import { ExamModule } from '../exam/exam.module';
 import { QuestionModule } from '../question/question.module';
+import { GroupModule } from '../group/group.module';
+import { MenuModule } from '../menu/menu.module';
+import { RoleModule } from '../role/role.module';
 
 @NgModule({
   declarations: [CmsComponent],
   imports: [
     CommonModule,
-    CmsRoutingModule,
     HeaderModule,
     FooterModule,
     NavModule,
-    ExamModule, QuestionModule
+    GroupModule,
+    MenuModule,
+    ExamModule,
+    RoleModule,
+    QuestionModule,
+    CmsRoutingModule,
+    MenuModule
   ],
   exports: [CmsComponent]
 })

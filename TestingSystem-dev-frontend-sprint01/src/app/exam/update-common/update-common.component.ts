@@ -24,7 +24,7 @@ export class UpdateCommonComponent implements OnInit {
   category: Category;
   categories: Category[] = [];
   checkStatus: boolean;
-
+  examid : string;
   inputCategory: string;
 
   public Editor = ClassicEditor;
@@ -42,7 +42,7 @@ export class UpdateCommonComponent implements OnInit {
       note: ['']
     })
 
-    this.http.get<Category[]>(`http://localhost:8080/category/list-category`)
+    this.http.get<Category[]>(`http://localhost:8080/category/listCategories`)
       .subscribe(categories => {
         this.categories = categories;
         console.table(this.categories)
@@ -51,6 +51,7 @@ export class UpdateCommonComponent implements OnInit {
     this.activatedRoute.paramMap.pipe(
       mergeMap(params => {
         const examId = params.get('id');
+        this.examid =examId;
         console.log(examId);
         return this.http.get<Exam>(`http://localhost:8080/exam/${examId}`);
       })
@@ -96,7 +97,7 @@ export class UpdateCommonComponent implements OnInit {
 
     this.http.put(`http://localhost:8080/exam/update/update-common/${this.exam.examId}`, exam)
       .subscribe(() => {
-        this.router.navigateByUrl('/exam');
+        this.router.navigateByUrl('cms/exam');
       })
   }
 

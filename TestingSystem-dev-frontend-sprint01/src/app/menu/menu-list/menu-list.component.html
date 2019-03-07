@@ -1,0 +1,48 @@
+<section class="content-header">
+  <h2 style="text-align: center">List Menu</h2>
+  <div style="margin-bottom: 4em">
+    <!-- <a class="btn btn-primary pull-left" routerLink="../add">Add Menus</a> -->
+
+    <a class="btn btn-primary pull-left" [routerLink]="['/menu','add']">Add Menu</a>
+
+    <div class="pull-right">
+      <input type="text" placeholder="Search" [(ngModel)]="menuName" style="margin-right: 1em">
+
+      <button type="button" (click)="searchMenu()" class="btn btn-primary" routerLink= "../search" >Search</button>
+
+      <!-- <button type="button" class="btn btn-primary">Filter</button>
+      <button type="button" class="btn btn-primary">Sort</button> -->
+    </div>
+
+    <!-- <div *ngIf="menu">  -->
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Menu Name</th>
+          <th>Menu Description</th>
+          <th>Menu Function</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class=" table-table-primary" *ngFor="let item of menus | async">
+          <!-- <a [routerLink]="['/menu',item.menuId]" style="text-decoration: none"> -->
+          <td>{{item.menuId}}</td>
+          <td>{{item.menuName}}</td>
+          <td>{{item.menuDescription}}</td>
+          <td>{{item.menuFunction}}</td>
+          <!-- </a> -->
+          <td><button type="button" class="btn btn-danger" (click)="deleteMenu(item.menuId)">Delete</button></td>
+          
+          <td style="width: 15% !important"><button type="button" class="btn btn-primary" [routerLink]="['/menu','details',item.menuId]">Detail</button> &nbsp;
+          
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- </div> -->
+
+
+</section>

@@ -30,7 +30,9 @@ export class RegisterComponent implements OnInit {
         this.form.password,
         this.form.status
       );
-
+          // subscribe là phương thức để nhận giá trị khi hàm trả về giá trị trong tương lai
+          // observables các định 1 hàm nhưng đợi tới khi người dùng đăng ký để thực thi
+          // subscribe()trả về một Subscription có một unsubscribe() để dừng nhận thông báo
     this.authService.signUp(this.signupInfo).subscribe(
       data => {
         console.log(data);

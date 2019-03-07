@@ -44,7 +44,7 @@ export class UpdateExamComponent implements OnInit {
           if (error.error.text === 'Ok') {
             this.detailExam.status = 'Public';
             this.notifierService.notify('success', 'Approve exam successfully', '');
-            setTimeout(() => { this.router.navigateByUrl('/exam'); }, 2000);
+            setTimeout(() => { this.router.navigateByUrl('cms/exam'); }, 2000);
           } else {
             this.notifierService.notify('warning', 'Can not approve this exam: No question in this exam', '');
           }

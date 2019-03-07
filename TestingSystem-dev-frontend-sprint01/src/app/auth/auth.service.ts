@@ -14,13 +14,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
+  // login
   private loginUrl = 'http://localhost:8080/api/auth/signin';
+  // registe
   private signupUrl = 'http://localhost:8080/user/signup';
 
   constructor(private http: HttpClient) {
   }
-
+  // credentials: thông tin đăng nhập
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(this.loginUrl, credentials, httpOptions);
   }

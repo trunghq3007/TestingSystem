@@ -65,7 +65,7 @@ export class CreateExamComponent implements OnInit {
       .post('http://localhost:8080/exam/create', exam)
       .subscribe(success => {
         this.notifierService.notify('success', 'Create exam successfully', '');
-        setTimeout(() => { this.router.navigateByUrl('/exam'); }, 2000);
+        setTimeout(() => { this.router.navigateByUrl('cms/exam'); }, 2000);
       });
     }
   onReset() {

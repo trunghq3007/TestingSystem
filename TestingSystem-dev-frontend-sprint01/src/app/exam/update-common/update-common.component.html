@@ -6,10 +6,10 @@
   </h1>
   <ol class="breadcrumb">
     <li>
-      <a routerLink="/"><i class="fa fa-dashboard"></i>Home</a>
+      <a href="cms" routerLink="/"><i class="fa fa-dashboard"></i> Home</a>
     </li>
-    <li class="active" [routerLink]="['/exam']">Exam</li>
-    <li class="active" [routerLink]="['/exam', 1, 'update']">Update</li>
+    <li class="active"><a href="cms/exam">Exam</a></li>
+    <li  [routerLink]="['/cms','exam', examid, 'update']">Update</li>
     <li class="active">UpdateCommon</li>
   </ol>
 </section>

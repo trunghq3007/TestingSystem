@@ -35,7 +35,7 @@
               <img class="profile-user-img img-responsive img-circle" src="../../../assets/image/user3-128x128.jpg"
                 alt="User profile picture">
 
-              <h3 class="profile-username text-center">{{user?.fullName}}</h3>
+              <h3 class="profile-username text-center">{{info.username}}</h3>
 
               <ul class="list-group list-group-unbordered text-center">
                 <li class="list-group-item">
@@ -62,14 +62,14 @@
             <!-- /.box-header -->
             <div class="box-body">
               <strong><i class="fa fa-map-marker margin-r-5"></i>User name</strong>
-              <p class="text-muted ml-3 mt-2 ">{{user?.fullName}}</p>
+              <p class="text-muted ml-3 mt-2 ">{{info.username}}</p>
               <hr>
               <strong><i class="fa fa-pencil margin-r-5"></i> Contact</strong>
                 <p class="text-muted ml-3 mt-2">
-                         Email: {{user?.email}}
+                        Token: {{info.token}}
                 </p>
                 <p class="text-muted ml-3">
-                        Telephone Number: {{user?.mobile}}
+                        Quyền : {{info.authorities}}
                 </p>
             </div>
             <!-- /.box-body -->

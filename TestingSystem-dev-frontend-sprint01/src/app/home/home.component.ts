@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   private roles: string[];
-  private authority: string;
+  private authority: string; // bien quyen
   info: any;
   image = [
     '../../assets/image/slider1.png',
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
+      this.roles = this.tokenStorage.getAuthorities(); // lay thong tin quyen
       this.roles.every(role => {
         if (role === 'ROLE_ADMIN') {
           this.authority = 'admin';

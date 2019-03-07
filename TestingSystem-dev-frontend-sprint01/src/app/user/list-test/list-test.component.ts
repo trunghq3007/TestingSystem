@@ -21,7 +21,7 @@ export class ListTestComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.getExamById(1).subscribe(user => {
+    this.userService.getUserById(1).subscribe(user => {
       this.user = user;
     });
     this.activatedRoute.paramMap

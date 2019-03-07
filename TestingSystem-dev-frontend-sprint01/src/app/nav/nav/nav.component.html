@@ -66,7 +66,7 @@
       <!--Team3-nmanh-->
       <li *ngIf="authority === 'admin'" class="treeview">
         <a>
-          <i class="fa fa-paper-plane"></i>
+          <i class="fa fa-user"></i>
           <span>User</span>
           <span class="pull-right-container">
             <span class="label label-primary pull-right"></span>
@@ -76,14 +76,14 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List User</a></li>
-          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create User</a></li>
+          <li><a [routerLink]="['/user','list']"><i class="fa fa-list"></i> List User</a></li>
+          <li><a [routerLink]="['/user','add']"><i class="fa fa-plus-square" aria-hidden="true"></i> Add User</a></li>
         </ul>
       </li>
       <li *ngIf="authority === 'admin'" class="treeview">
         <a>
-          <i class="fa fa-paper-plane"></i>
-          <span>Group</span>
+          <i class="fa fa-users"></i>
+          <span> Group</span>
           <span class="pull-right-container">
             <span class="label label-primary pull-right"></span>
           </span>
@@ -92,14 +92,15 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List Exam</a></li>
-          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create Exam</a></li>
+          <li><a [routerLink]="['group']"><i class="fa fa-list"></i> List Group</a></li>
+          <!-- <li><a [routerLink]="['group','addUser']"><i class="fa fa-circle-o"></i> add User to Group</a></li> -->
+      
         </ul>
       </li>
       <li *ngIf="authority === 'admin'" class="treeview">
         <a>
-          <i class="fa fa-paper-plane"></i>
-          <span>Menu</span>
+          <i class="fa fa-bars"></i>
+          <span> Menu </span>
           <span class="pull-right-container">
             <span class="label label-primary pull-right"></span>
           </span>
@@ -108,8 +109,24 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a [routerLink]="['exam']"><i class="fa fa-circle-o"></i> List User</a></li>
-          <li><a [routerLink]="['exam','create']"><i class="fa fa-circle-o"></i> Create User</a></li>
+          <li><a [routerLink]="['menu']"><i class="fa fa-list" aria-hidden="true"></i> List Menu</a></li>
+          <!-- <li><a [routerLink]="['group','addUser']"><i class="fa fa-circle-o"></i> add User to Group</a></li> -->
+        </ul>
+      </li>
+      <li *ngIf="authority === 'admin'" class="treeview">
+        <a>
+          <i class="fa fa-bars"></i>
+          <span> Role </span>
+          <span class="pull-right-container">
+            <span class="label label-primary pull-right"></span>
+          </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a [routerLink]="['role']"><i class="fa fa-list" aria-hidden="true"></i> List Role</a></li>
+          <!-- <li><a [routerLink]="['group','addUser']"><i class="fa fa-circle-o"></i> add User to Group</a></li> -->
         </ul>
       </li>
     </ul>
