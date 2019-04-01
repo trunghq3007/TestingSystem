@@ -1,0 +1,55 @@
+<div class="container">
+  <div style="padding:10px 0px;float: left;"><img src="../../../assets/image/logo.jpg" alt="" class="img-responsive"></div>
+  <div style="float: right;padding:80px 10px"><button class="btn btn-danger" [routerLink]="['/home']">Back</button>
+  </div>
+  <div class="row" style="padding-top: 150px">
+    <div class="col-md-2"></div>
+    <div class="input-group col-md-8">
+      <input type="text" class="form-control" placeholder="Semester code" [value]="semesterExamCode"
+        (change)="change($event.target)" />
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-info" (click)="showSemesterTest()">Search</button>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <ng-container *ngIf="tests?.data.length > 0">
+    <br>
+    <div class="form-test">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3 class="title">List test of the Semester</h3>
+          <br>
+          <div class="content-list">
+            <div>
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr class="info">
+                    <th style="width: 28%">Exam name</th>
+                    <th style="width: 28%">Duration</th>
+                    <th>Category Exam</th>
+                    <th style="width: 10%"></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let obj of tests?.data">
+                  <tr>
+                    <td>{{obj?.exam?.title}}</td>
+                    <td>{{obj?.exam?.duration}}</td>
+                    <td>{{obj?.exam?.category?.categoryName}}</td>
+                    <td>
+                      <button class="btn btn-info"
+                        [routerLink]="['semesters',obj?.semesterExam?.id,'testing',obj?.exam?.examId]">Test</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!(tests?.data.length > 0)">
+    <div style="height: 155px"></div>
+  </ng-container>
+</div>
